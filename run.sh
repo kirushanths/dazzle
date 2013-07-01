@@ -1,3 +1,12 @@
 #!/bin/bash
-sudo pip install -r requirements.txt
-python ./dazzle/manage.py runserver [::]:8000
+
+#activate virtualenv
+#cd /
+#source ./venv/bin/activate
+#dazzlevenv
+
+#start server
+sudo service nginx restart
+sudo service uwsgi restart
+
+cd /vagrant/src/
