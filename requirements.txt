@@ -29,3 +29,4 @@ simplejson==2.3.2
 ufw==0.31.1-1
 virtualenv==1.9.1
 wsgiref==0.1.2
+python-memcached
