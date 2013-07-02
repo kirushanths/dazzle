@@ -1,5 +1,17 @@
-# Create your views here.
 from django.shortcuts import render
+from django.template import Template, Context
+from django.http import HttpResponse 
+from dztemplate.manager import get_template_string
+from engine.converter import convert_engine
 
-def test(request):
-    return render(request, 'engine/home.html')
+def convert(request):
+
+	html_string = get_template_string()
+
+	converted_html_string = convert_engine(html_string);
+
+	template = Template(converted_html_string)
+
+	context = Context(request)
+
+	return HttpResponse(template.render(context))
