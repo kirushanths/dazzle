@@ -1,0 +1,261 @@
+
+/*  CSS BROWSER RESET */
+
+    article, aside, details, figcaption, figure, footer, header, hgroup, nav, section { display: block; }
+    audio, canvas, video { display: inline-block; *display: inline; *zoom: 1; }
+    audio:not([controls]) { display: none; }
+    [hidden] { display: none; }
+
+    html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    body { margin: 0; font-size: 13px; line-height: 1.231; border:0; }
+    body, button, input, select, textarea { font-family: sans-serif; color: #222; }
+
+    a { color: #00e; }
+    a:visited { color: #551a8b; }
+    a:hover { color: #06e; }
+    a:focus { outline: thin dotted; }
+    a:hover, a:active { outline: 0; }
+
+    abbr[title] { border-bottom: 1px dotted; }
+    b, strong { font-weight: bold; }
+    blockquote { margin: 1em 40px; }
+    dfn { font-style: italic; }
+    hr { display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0; }
+    ins { background: #ff9; color: #000; text-decoration: none; }
+    mark { background: #ff0; color: #000; font-style: italic; font-weight: bold; }
+    pre, code, kbd, samp { font-family: monospace, monospace; _font-family: 'courier new', monospace; font-size: 1em; }
+    pre { white-space: pre; white-space: pre-wrap; word-wrap: break-word; }
+    q { quotes: none; }
+    q:before, q:after { content: ""; content: none; }
+    small { font-size: 85%; }
+    sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+    sup { top: -0.5em; }
+    sub { bottom: -0.25em; }
+    ul, ol { margin: 1em 0; padding: 0 0 0 40px; }
+    dd { margin: 0 0 0 40px; }
+    nav ul, nav ol { list-style: none; list-style-image: none; margin: 0; padding: 0; }
+    img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+    svg:not(:root) { overflow: hidden; }
+    figure { margin: 0; }
+
+    form { margin: 0; }
+    fieldset { border: 0; margin: 0; padding: 0; }
+    label { cursor: pointer; }
+    legend { border: 0; *margin-left: -7px; padding: 0; }
+    button, input, select, textarea { font-size: 100%; margin: 0; vertical-align: baseline; *vertical-align: middle; }
+    button, input { line-height: normal; *overflow: visible; }
+    table button, table input { *overflow: auto; }
+    button, input[type="button"], input[type="reset"], input[type="submit"] { cursor: pointer; -webkit-appearance: button; }
+    input[type="checkbox"], input[type="radio"] { box-sizing: border-box; }
+    input[type="search"] { -webkit-appearance: textfield; -moz-box-sizing: content-box; -webkit-box-sizing: content-box; box-sizing: content-box; }
+    input[type="search"]::-webkit-search-decoration { -webkit-appearance: none; }
+    button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; }
+    textarea { overflow: auto; vertical-align: top; resize: vertical; }
+    input:valid, textarea:valid { }
+    input:invalid, textarea:invalid { }
+
+    table { border-collapse: collapse; border-spacing: 0; }
+    td { vertical-align: top; }
+
+/* *********************** */
+
+    a, a:visited, a:visited, a:active, a:hover { cursor:pointer; color:#1571B8; }
+
+    body { font-family:'Lucida Grande'; background:#333; }
+
+/*  STRUCTURE */
+
+    /* http://matthewjamestaylor.com/blog/ultimate-2-column-left-menu-pixels.htm */
+    .colmask { position:relative; clear:both; float:left; width:100%; overflow:hidden; background:#333; }
+
+    /* (left) has to equal .col1wrap and is the width of left column = left_col */
+    .leftmenu .colright { float:left; width:200%; position:relative; left:220px; }
+    /* (right) has to equal .colright and is the width of left column = left_col  */
+    .leftmenu .col1wrap { float:right; width:50%; position:relative;right:220px; }
+    /* (margin) = 0 padding 0 left_col+padding  */
+    .leftmenu .col1 { margin:0 0 0 220px; position:relative; right:100%; overflow:hidden; }
+    /* one extra pixel on width to hide double border */
+    /* (width) is left_col-2*padding and (right) is left_col-padding */
+    .leftmenu .col2 { float:left; width:220px; position:relative; right:220px; }
+
+/*  DASHBOARD */
+
+     #dazzle_template_loc { height:30px; background:black; }
+
+
+/* Middle
+-----------------------------------------------------------------------------*/
+#middle {  
+    position: absolute;
+    width: 100%;
+    min-width: 1000px;
+}
+ 
+#container {
+    height: 99%;
+    width: 100%; 
+    float: left;  
+} 
+
+
+/* Sidebar Left
+-----------------------------------------------------------------------------*/
+#sideLeft {
+   
+    background:#333;
+    padding: 0 20 0 20px
+}
+
+/* Sidebar Top
+-----------------------------------------------------------------------------*/
+
+#sidebar_top_wrapper{
+    background-image:url('../img/sidebar_dazzle.jpg');
+    background-size: contain;
+    background-repeat:no-repeat;
+    width: 200px;
+    height: 50px; 
+    position: relative;
+    top: 15px;
+    left: -10px;
+}
+
+/* Sidebar Buttons
+-----------------------------------------------------------------------------*/
+
+.button_row{
+    height: 20px;
+    width: 172px; 
+
+}
+#sidebar_grid_button{
+    padding-top: 50px;
+    padding-left: 2px;
+}
+
+.editor_buttons_2{
+    display:block;
+    width:150px;
+    height: 20px;
+    position: relative;
+    padding: 10px 15px;
+    background: #222;
+    top:59px;
+    left: -2px;
+    color: #FFF !important;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 11.5pt;
+    vertical-align: super;
+    line-height: 50px;
+    -webkit-transition-duration: 0.2s;
+    -moz-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+}
+
+.editor_buttons_2:hover, .editor_buttons_2:focus {
+    background: #305582;
+    border: solid 1px #2A4E77;
+    text-decoration: none;
+   
+}
+
+
+.editor_buttons{
+    display:block;
+    width:50px;
+    height: 50px;
+    position: relative;
+    padding: 10px 15px;
+    background: #222;
+    color: #FFF !important;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 10.0pt;
+    vertical-align: super;
+    line-height: 50px;
+    -webkit-transition-duration: 0.2s;
+    -moz-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+}
+
+.editor_buttons:hover, .editor_buttons:focus {
+    background: #305582;
+    border: solid 1px #2A4E77;
+    text-decoration: none;
+   
+}
+ 
+.sidebar_buttons{
+    display:block;
+    width:150px;
+    height: 20px;
+    position: relative;
+    padding: 10px 15px;
+    background: #305582;
+    color: #FFF !important;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    border: solid 1px #20538D;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
+    text-align: center;
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+    -webkit-transition-duration: 0.2s;
+    -moz-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+
+
+}
+.sidebar_buttons:hover, .sidebar_buttons:focus {
+    background: #356094;
+    border: solid 1px #2A4E77;
+    text-decoration: none;
+   
+}
+
+.sidebar_buttons_2{
+    display:block;
+    width:150px;
+    height: 20px;
+    position: relative;
+    padding: 10px 15px;
+    background: #222;
+    color: #FFF !important;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
+    text-align: center;
+    -webkit-transition-duration: 0.2s;
+    -moz-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+    top: -13px;
+
+}
+.sidebar_buttons_2:hover, .sidebar_buttons_2:focus {
+    background: #356094;
+    border: solid 1px #2A4E77;
+    text-decoration: none;
+   
+}
+
+#sidebar_button{
+    padding-left: 0px;
+    padding-top: 72px;
+}
+
+.grid_1{
+    float: left;    
+}
+
+.grid_2{
+    float: right;
+}
+
