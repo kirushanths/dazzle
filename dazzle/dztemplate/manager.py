@@ -1,6 +1,9 @@
 
 from django.template.loader import render_to_string
+import urllib2 
 
 def get_template_as_string():
-	html_string = render_to_string('dztemplate/home.html')
+
+	response = urllib2.urlopen('http://s3.amazonaws.com/dazzledev/templates/thinksimple/index.html')
+	html_string = response.read() 
 	return html_string
