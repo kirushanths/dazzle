@@ -5,9 +5,12 @@ from engine.converter import Converter
 
 def convert(request):
   
-	converter = Converter('thinksimple', 'index.html')
+  	edit_mode = True
+
+	converter = Converter('thinksimple', 'index.html', edit_mode)
 	
 	converter.run_engine() 
+
 	converted_html_string = converter.get_converted_html()
 
 	template = Template(converted_html_string)

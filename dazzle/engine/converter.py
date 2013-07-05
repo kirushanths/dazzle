@@ -6,9 +6,10 @@ from dztemplate.manager import get_template_as_string
 # MAIN ENGINE
 class Converter:
 
-	def __init__(self, template_name, file_name):
+	def __init__(self, template_name, file_name, edit_mode):
 		template_string = get_template_as_string(template_name, file_name)
 		self.html_obj = PyQuery(template_string.decode('utf-8'))
+		self.edit_mode = edit_mode
 
 	def run_engine(self):
 		self.replace_local_links()
