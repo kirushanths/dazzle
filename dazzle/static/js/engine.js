@@ -1,10 +1,11 @@
 
 $.fn.editable.defaults.mode = 'inline';
 
+alert("it works!!");
+
 $(function(){ 
 	
-	$('* [dztype="text"]').filter(function(){  
-
+	$('* [dztype="text"]').filter(function(){
 		var height = $(this).height();
 		var type = 'text';
 		if (height > 50) type = 'textarea';

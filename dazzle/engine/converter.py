@@ -10,11 +10,14 @@ class Converter:
 		template_string = get_template_as_string(template_name, file_name)
 		self.html_obj = PyQuery(template_string.decode('utf-8'))
 		self.edit_mode = edit_mode
+		self.file_name = file_name
+		self.template_name = template_name
 
 	def run_engine(self):
 		self.replace_local_links()
-		self.include_scripts()
 		self.set_text_editable()
+		self.include_scripts()
+
 
 	def get_converted_html(self):
 		final_html =  '<html>' + self.html_obj.html() + '</html>'
@@ -25,10 +28,10 @@ class Converter:
 		html_obj = self.html_obj
 
 		elements = html_obj('script').filter(lambda: has_js('jquery'))  
-		#if len(elements) == 0: 
-		#	self.add_script(html_obj, '../static/libs/jquery-1.9.1.min.js')
-		# TEMPORARY: bootstrap only supports jquery 1.7+
-		self.add_script(Constants.JQUERY_URL)
+		if len(elements) == 0: 
+			self.add_script(html_obj, Constants.JQUERY_URL)
+		#TEMPORARY: bootstrap only supports jquery 1.7+
+		#self.add_script(Constants.JQUERY_URL)
 
 		elements = html_obj('script').filter(lambda: has_js('bootstrap'))  
 		if len(elements) == 0: 
@@ -47,12 +50,13 @@ class Converter:
 
 	def add_script(self, source):
 		html_obj = self.html_obj 
-		src_str = '<script type="text/javascript" src="' + source + '">/////</script>'
-		html_obj('body').append(src_str) 
+		src_str = '<script type="text/javascript" src="' + source + '">//</script>'
+		html_obj('head').append(src_str) 
  
 	# TEXT FUNCTIONS
 	def set_text_editable(self):
 		html_obj = self.html_obj
+ 
 		elements = html_obj('*').filter(has_text)  
 
 		unique_id = 'dztxt'
@@ -72,7 +76,7 @@ class Converter:
 	def replace_link(self, attr):
 		html_obj = self.html_obj
 
-		location = Constants.S3_TEMPLATE_URL + 'thinksimple/'
+		location = Constants.S3_TEMPLATE_URL + self.template_name + '/'
 
 		elements = html_obj('*').filter('[' + attr + ']')
 		for e in elements:
@@ -96,13 +100,17 @@ def has_js(val):
 			return True
 
 def has_text(i, this):
+
+		if PyQuery(this).is_('script'): 
+			return False
+
 		text = PyQuery(this).clone().children().remove().end().text()
 		
 		if text is None:
 			return False
 
 		if (len(text.strip(' \t\n\r')) > 0):
-			return True;
+			return True
 
 		return False
 		
