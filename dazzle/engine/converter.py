@@ -1,5 +1,6 @@
 from pyquery import PyQuery
 import urlparse   
+import utils.constants as Constants
 
 # MAIN ENGINE
 def convert_engine(html_string):
@@ -23,16 +24,16 @@ def include_scripts(html_obj):
 	#if len(elements) == 0: 
 	#	add_script(html_obj, '../static/libs/jquery-1.9.1.min.js')
 	# TEMPORARY: bootstrap only supports jquery 1.7+
-	add_script(html_obj, '../static/libs/jquery-1.9.1.min.js')
+	add_script(html_obj, Constants.JQUERY_URL)
 
 	elements = html_obj('script').filter(lambda: has_js('bootstrap'))  
 	if len(elements) == 0: 
-		add_script(html_obj, '../static/libs/bootstrap/js/bootstrap.min.js')
-		add_css(html_obj, '../static/libs/bootstrap/css/bootstrap.css')
+		add_script(html_obj, Constants.BOOTSTRAP_JS_URL)
+		add_css(html_obj,  Constants.BOOTSTRAP_CSS_URL)
 
-	add_css(html_obj, '../static/libs/bootstrap-editable/css/bootstrap-editable.css')
-	add_script(html_obj, '../static/libs/bootstrap-editable/js/bootstrap-editable.min.js')
-	add_script(html_obj, '../static/js/engine.js')
+	add_css(html_obj, Constants.XEDITABLE_CSS_URL)
+	add_script(html_obj, Constants.XEDITABLE_JS_URL)
+	add_script(html_obj, Constants.ENGINE_JS_URL)
 
 def add_css(html_obj, source):
 	src_str = '<link type="text/css" href="' + source + '" rel="stylesheet"></link>'
@@ -85,7 +86,7 @@ def replace_local_links(html_obj):
 
 def replace_link(html_obj, attr):
 
-	location = 'http://s3.amazonaws.com/dazzledev/templates/thinksimple/'
+	location = Constants.S3_TEMPLATE_URL + 'thinksimple/'
 
 	elements = html_obj('*').filter('[' + attr + ']')
 	for e in elements:
