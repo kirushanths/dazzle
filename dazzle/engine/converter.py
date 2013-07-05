@@ -20,7 +20,7 @@ class Converter:
 
 
 	def get_converted_html(self):
-		final_html =  '<html>' + self.html_obj.html() + '</html>'
+		final_html =  '<html>' + self.html_obj.html(method='html') + '</html>'
 		return final_html.encode('utf-8')
 
 	# INCLUDE SCRIPTS FUNCTIONS
@@ -45,8 +45,7 @@ class Converter:
 	def add_css(self, source):
 		html_obj = self.html_obj
 		src_str = '<link type="text/css" href="' + source + '" rel="stylesheet"></link>'
-		html_obj('head').append(src_str)
-		return True
+		html_obj('head').append(src_str) 
 
 	def add_script(self, source):
 		html_obj = self.html_obj 
