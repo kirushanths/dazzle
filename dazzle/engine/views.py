@@ -1,14 +1,14 @@
 from django.shortcuts import render
 from django.template import Template, Context
 from django.http import HttpResponse 
-from dztemplate.manager import get_template_as_string
-from engine.converter import convert_engine
+from engine.converter import Converter
 
 def convert(request):
-
-	html_string = get_template_as_string()
-
-	converted_html_string = convert_engine(html_string);
+  
+	converter = Converter('thinksimple', 'index.html')
+	
+	converter.run_engine() 
+	converted_html_string = converter.get_converted_html()
 
 	template = Template(converted_html_string)
 
