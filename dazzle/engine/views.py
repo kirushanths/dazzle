@@ -7,7 +7,7 @@ def convert(request):
   
   	edit_mode = True
 
-	converter = Converter('thinksimple', 'index.html', edit_mode)
+	converter = Converter('legend', 'index.html', edit_mode)
 	
 	converter.run_engine() 
 
@@ -17,4 +17,4 @@ def convert(request):
 
 	context = Context(request)
 
-	return HttpResponse(template.render(context))
+	return HttpResponse(template.render(context)) 
