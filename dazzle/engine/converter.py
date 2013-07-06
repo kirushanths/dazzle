@@ -39,11 +39,10 @@ class Converter:
 
 		html_obj = self.html_obj
 
-		#elements = html_obj('script').filter(lambda: has_js('jquery'))  
-		#if len(elements) == 0: 
-		#	self.add_script(html_obj, Constants.JQUERY_URL)
-		#TEMPORARY: bootstrap only supports jquery 1.7+
-		self.add_script(Constants.JQUERY_URL)
+		elements = html_obj('script').filter(lambda: has_js('jquery'))  
+		if len(elements) == 0: 
+			self.add_script(html_obj, Constants.JQUERY_URL)
+		#TEMPORARY: bootstrap only supports jquery 1.7+ 
 
 		#elements = html_obj('script').filter(lambda: has_js('bootstrap'))  
 		#if len(elements) == 0: 
