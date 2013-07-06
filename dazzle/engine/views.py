@@ -20,4 +20,10 @@ def convert(request, template_name):
 	return HttpResponse(template.render(context)) 
 
 def update(request, template_name):
-	return HttpResponse(template_name)
+
+	if request.method != 'POST':
+		return HttpResponse("error")
+
+	save_data = request.POST.get('data')
+	
+	return HttpResponse(save_data)
