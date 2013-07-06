@@ -23,15 +23,16 @@ $(function(){
 			success: function(response, newValue) {
 				var data = { 
 						'type' : 'saveText',
+						'id' : id,
 						'value' : newValue 
 					   };
-				saveData(id, data);
+				saveData(data);
 			}, 
 		});
  
 	});
 
-	var saveData = function(id, data)
+	var saveData = function(data)
 	{ 
 		$.post(SERVER_URL, data, function(response)
 		{

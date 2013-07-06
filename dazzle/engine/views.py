@@ -8,9 +8,9 @@ def convert(request, template_name):
   
   	edit_mode = True
 
-	converter = Converter(template_name, 'index.html', edit_mode)
+	converter = Converter(template_name, 'index.html')
 	
-	converter.run_engine() 
+	converter.run_edit_engine() 
 
 	converted_html_string = converter.get_converted_html()
 
@@ -26,5 +26,13 @@ def update(request, template_name):
 	if request.method != 'POST':
 		return HttpResponse("error")
 
-	save_data = request.POST.get('value')
-	return HttpResponse(save_data)
+	save_id = request.POST.get('id')
+	save_data = request.POST.get('value') 
+
+	converter = Converter(template_name, 'index.html')
+
+	converter.update_text(save_id, save_data)
+
+	converter.commit_template()
+
+	return HttpResponse('got ' + save_data)
