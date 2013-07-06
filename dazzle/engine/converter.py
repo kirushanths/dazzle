@@ -93,6 +93,7 @@ class Converter:
 	 		#if len(list(e)) == 0:
 	 		e.set('dztype', 'text')
 			e.set('dzid', unique_id + str(num)) 
+			num += 1
 
 	# REPLACE LINK FUNCTIONS
 	def replace_local_links(self):
