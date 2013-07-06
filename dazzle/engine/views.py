@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.template import Template, Context
 from django.http import HttpResponse 
-from engine.converter import Converter
+from django.views.decorators.csrf import csrf_exempt
+from engine.converter import Converter 
 
 def convert(request, template_name):
   
@@ -19,11 +20,11 @@ def convert(request, template_name):
 
 	return HttpResponse(template.render(context)) 
 
+@csrf_exempt
 def update(request, template_name):
 
 	if request.method != 'POST':
 		return HttpResponse("error")
 
-	save_data = request.POST.get('data')
-	
+	save_data = request.POST.get('value')
 	return HttpResponse(save_data)

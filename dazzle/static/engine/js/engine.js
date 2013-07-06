@@ -1,4 +1,5 @@
 
+var SERVER_URL = 'http://10.30.0.2/update/legend'
 //$.fn.editable.defaults.mode = 'inline';
 
 $(function(){ 
@@ -7,6 +8,7 @@ $(function(){
  
 		var height = $(this).height();
 
+		var id = $(this).attr('dzid');
 		var type = 'text';
 		if (height > 60) type = 'textarea';
 
@@ -19,10 +21,22 @@ $(function(){
 			},
 			value: $(this).text(),
 			success: function(response, newValue) {
-				
+				var data = { 
+						'type' : 'saveText',
+						'value' : newValue 
+					   };
+				saveData(id, data);
 			}, 
 		});
  
 	});
+
+	var saveData = function(id, data)
+	{ 
+		$.post(SERVER_URL, data, function(response)
+		{
+			//alert(response);
+		});
+	}
  
 });
