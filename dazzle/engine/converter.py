@@ -45,13 +45,12 @@ class Converter:
 		#TEMPORARY: bootstrap only supports jquery 1.7+
 		self.add_script(Constants.JQUERY_URL)
 
-		elements = html_obj('script').filter(lambda: has_js('bootstrap'))  
-		if len(elements) == 0: 
-			self.add_script(Constants.BOOTSTRAP_JS_URL)
-			self.add_css(Constants.BOOTSTRAP_CSS_URL)
-
-		self.add_css(Constants.XEDITABLE_CSS_URL)
+		#elements = html_obj('script').filter(lambda: has_js('bootstrap'))  
+		#if len(elements) == 0: 
+		#	self.add_script(Constants.BOOTSTRAP_JS_URL)
+		#	self.add_css(Constants.BOOTSTRAP_CSS_URL)
 		self.add_script(Constants.XEDITABLE_JS_URL)
+		self.add_css(Constants.XEDITABLE_CSS_URL)
 		self.add_script(Constants.ENGINE_JS_URL)
 
 
@@ -62,7 +61,7 @@ class Converter:
 
 	def add_script(self, source):
 		html_obj = self.html_obj 
-		src_str = '<script type="text/javascript" src="' + source + '">//</script>'
+		src_str = '<script type="text/javascript" src="' + source + '"></script>'
 		html_obj('body').append(src_str) 
  
 	# TEXT FUNCTIONS
@@ -87,13 +86,13 @@ class Converter:
 		elements = html_obj('*').filter(has_text)  
 
 		unique_id = 'dztxt'
-		
+
 		num = 1
 
 		for e in elements: 
-	 		if len(list(e)) == 0:
-	 			e.set('dztype', 'text')
-				e.set('dzid', unique_id + str(num)) 
+	 		#if len(list(e)) == 0:
+	 		e.set('dztype', 'text')
+			e.set('dzid', unique_id + str(num)) 
 
 	# REPLACE LINK FUNCTIONS
 	def replace_local_links(self):
