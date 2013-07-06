@@ -3,11 +3,11 @@ from django.template import Template, Context
 from django.http import HttpResponse 
 from engine.converter import Converter
 
-def convert(request):
+def convert(request, template_name):
   
   	edit_mode = True
 
-	converter = Converter('legend', 'index.html', edit_mode)
+	converter = Converter(template_name, 'index.html', edit_mode)
 	
 	converter.run_engine() 
 
@@ -18,3 +18,6 @@ def convert(request):
 	context = Context(request)
 
 	return HttpResponse(template.render(context)) 
+
+def update(request, template_name):
+	return HttpResponse(template_name)
