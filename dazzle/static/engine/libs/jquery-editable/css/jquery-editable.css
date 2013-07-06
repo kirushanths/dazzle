@@ -3,6 +3,10 @@
 * http://github.com/vitalets/x-editable
 * Copyright (c) 2013 Vitaliy Potapov; Licensed MIT */
 
+#dz-editable-submit {}
+#dz-editable-cancel {}
+#dz-editable-loading {}
+
 .editableform {
     margin-bottom: 0; /* overwrites bootstrap margin */
 }

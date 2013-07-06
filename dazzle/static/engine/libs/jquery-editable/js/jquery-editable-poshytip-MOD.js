@@ -594,16 +594,16 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
     $.fn.editableform.template = '<form class="form-inline editableform">'+
     '<div class="control-group">' + 
     '<div><div class="editable-input"></div><div class="editable-buttons"></div></div>'+
-    '<div class="editable-error-block"></div>' + 
+    '<div id="dz-editable-error-block" class="editable-error-block"></div>' + 
     '</div>' + 
     '</form>';
 
     //loading div
-    $.fn.editableform.loading = '<div class="editableform-loading"></div>';
+    $.fn.editableform.loading = '<div id="dz-editableform-loading" class="editableform-loading"></div>';
 
     //buttons
-    $.fn.editableform.buttons = '<button type="submit" class="editable-submit">ok</button>'+
-    '<button type="button" class="editable-cancel">cancel</button>';      
+    $.fn.editableform.buttons = '<button id="dz-editable-submit" type="submit" class="editable-submit">ok</button>'+
+    '<button id="dz-editable-cancel" type="button" class="editable-cancel">cancel</button>';      
 
     //error class attached to control-group
     $.fn.editableform.errorGroupClass = null;  

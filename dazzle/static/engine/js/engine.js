@@ -2,18 +2,21 @@
 //$.fn.editable.defaults.mode = 'inline';
 
 $(function(){ 
-	
-	$('* [dztype="text"]').filter(function(){
+
+	$('[dztype="text"]').each(function(index){
  
 		var height = $(this).height();
+
 		var type = 'text';
 		if (height > 60) type = 'textarea';
 
 		$(this).editable({
 			disabled: false,
 			type: type,
-			unsavedclass:null,
-			error: printError,
+			unsavedclass: null,
+			error: function(response, newValue) { 
+				console.log(response);  
+			},
 			value: $(this).text(),
 			success: function(response, newValue) {
 				
@@ -22,10 +25,4 @@ $(function(){
  
 	});
  
- 
-}); 
-
-var printError = function(response, newValue) 
-{ 
-  console.log(response);  
-}  
+});

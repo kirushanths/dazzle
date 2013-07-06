@@ -41,7 +41,7 @@ class Converter:
 
 		elements = html_obj('script').filter(lambda: has_js('jquery'))  
 		if len(elements) == 0: 
-			self.add_script(html_obj, Constants.JQUERY_URL)
+			self.add_jquery()
 		#TEMPORARY: bootstrap only supports jquery 1.7+ 
 
 		#elements = html_obj('script').filter(lambda: has_js('bootstrap'))  
@@ -63,6 +63,11 @@ class Converter:
 		html_obj = self.html_obj 
 		src_str = '<script type="text/javascript" src="' + source + '"></script>'
 		html_obj('body').append(src_str) 
+
+	def add_jquery(self):
+		html_obj = self.html_obj 
+		src_str = '<script type="text/javascript" src="' + Constants.JQUERY_URL + '"></script>'
+		html_obj('head').append(src_str) 
  
 	# TEXT FUNCTIONS
 	def set_text_editable(self):
