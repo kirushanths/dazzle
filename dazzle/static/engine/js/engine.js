@@ -1,5 +1,5 @@
 
-$.fn.editable.defaults.mode = 'inline';
+//$.fn.editable.defaults.mode = 'inline';
 
 $(function(){ 
 	

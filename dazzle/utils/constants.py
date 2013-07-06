@@ -8,7 +8,9 @@ STATIC_JS_URL = DAZZLE_URL + 'static/engine/js/'
 #BOOTSTRAP_JS_URL = STATIC_LIB_URL + 'bootstrap/js/bootstrap.min.js'
 #BOOTSTRAP_CSS_URL = STATIC_LIB_URL + 'bootstrap/css/bootstrap.min.css'
 
-XEDITABLE_JS_URL = STATIC_LIB_URL + 'jquery-editable/js/jquery-editable-poshytip.min.js'
+POSHTIP_JS_URL = STATIC_LIB_URL + 'poshytip/jquery.poshytip.min.js'
+
+XEDITABLE_JS_URL = STATIC_LIB_URL + 'jquery-editable/js/jquery-editable-poshytip-MOD.js'
 XEDITABLE_CSS_URL = STATIC_LIB_URL + 'jquery-editable/css/jquery-editable.css'
 
 JQUERY_URL = STATIC_LIB_URL + 'jquery-1.9.1.min.js'

@@ -48,6 +48,7 @@ class Converter:
 		#if len(elements) == 0: 
 		#	self.add_script(Constants.BOOTSTRAP_JS_URL)
 		#	self.add_css(Constants.BOOTSTRAP_CSS_URL)
+		self.add_script(Constants.POSHTIP_JS_URL)
 		self.add_script(Constants.XEDITABLE_JS_URL)
 		self.add_css(Constants.XEDITABLE_CSS_URL)
 		self.add_script(Constants.ENGINE_JS_URL)
