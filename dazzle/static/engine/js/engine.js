@@ -4,7 +4,7 @@
 $(function(){ 
 
 	$('[dztype="text"]').each(function(index){
- 
+
 		var height = $(this).height();
 
 		var type = 'text';
@@ -17,12 +17,12 @@ $(function(){
 			error: function(response, newValue) { 
 				console.log(response);  
 			},
-			value: $(this).text(),
+			value: $.trim($(this).text()),
 			success: function(response, newValue) {
 				
 			}, 
 		});
- 
+
 	});
- 
+
 });
