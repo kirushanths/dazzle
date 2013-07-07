@@ -63,17 +63,21 @@ class Converter:
 
 		html_obj = self.html_obj
 
-		elements = html_obj('script').filter(lambda: has_js('jquery'))  
-		if len(elements) == 0: 
-			self.add_jquery() 
+		# elements = html_obj('script').filter(lambda: has_js('jquery'))  
+		# if len(elements) == 0: 
+
+		scripts = [Constants.JQUERY_URL, Constants.POSHTIP_JS_URL, Constants.XEDITABLE_JS_URL, Constants.ENGINE_JS_URL]
+		self.add_scripts(scripts)
+
+		# self.add_script(Constants.JQUERY_URL)
 		#elements = html_obj('script').filter(lambda: has_js('bootstrap'))  
 		#if len(elements) == 0: 
 		#	self.add_script(Constants.BOOTSTRAP_JS_URL)
 		#	self.add_css(Constants.BOOTSTRAP_CSS_URL)
-		self.add_script(Constants.POSHTIP_JS_URL)
-		self.add_script(Constants.XEDITABLE_JS_URL)
+		# self.add_script(Constants.POSHTIP_JS_URL)
+		# self.add_script(Constants.XEDITABLE_JS_URL)
 		self.add_css(Constants.XEDITABLE_CSS_URL)
-		self.add_script(Constants.ENGINE_JS_URL)
+		# self.add_script(Constants.ENGINE_JS_URL)
 
 
 	def add_css(self, source):
@@ -81,15 +85,18 @@ class Converter:
 		src_str = '<link type="text/css" href="' + source + '" rel="stylesheet"></link>'
 		html_obj('head').append(src_str) 
 
-	def add_script(self, source):
+	def add_scripts(self, sources):
 		html_obj = self.html_obj 
-		src_str = '<script type="text/javascript" src="' + source + '"></script>'
-		html_obj('body').append(src_str) 
+		src_str = "";
+		for src in sources:
+			src_str += '<script type="text/javascript" src="' + src + '"></script>'
+
+		html_obj('head').prepend(src_str)
 
 	def add_jquery(self):
 		html_obj = self.html_obj 
 		src_str = '<script type="text/javascript" src="' + Constants.JQUERY_URL + '"></script>'
-		html_obj('head').append(src_str) 
+		html_obj('head').prepend(src_str) 
  
 	# TEXT FUNCTIONS
 	def set_text_editable(self):

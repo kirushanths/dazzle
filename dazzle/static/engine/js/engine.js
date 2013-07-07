@@ -2,24 +2,28 @@
 var SERVER_URL = 'http://10.30.0.2/update/legend'
 //$.fn.editable.defaults.mode = 'inline';
 
-$(function(){ 
+window.dazzlejQuery = jQuery.noConflict(true);
 
-	$('[dztype="text"]').each(function(index){
+window.dazzlejQuery(function(){ 
 
-		var height = $(this).height();
+	var dz$ = window.dazzlejQuery;
 
-		var id = $(this).attr('dzid');
+	dz$('[dztype="text"]').each(function(index){
+
+		var height = dz$(this).height();
+
+		var id = dz$(this).attr('dzid');
 		var type = 'text';
 		if (height > 60) type = 'textarea';
 
-		$(this).editable({
+		dz$(this).editable({
 			disabled: false,
 			type: type,
 			unsavedclass: null,
 			error: function(response, newValue) { 
 				console.log(response);  
 			},
-			value: $.trim($(this).text()),
+			value: dz$.trim(dz$(this).text()),
 			success: function(response, newValue) {
 				var data = { 
 						'type' : 'saveText',
@@ -34,7 +38,7 @@ $(function(){
 
 	var saveData = function(data)
 	{ 
-		$.post(SERVER_URL, data, function(response)
+		dz$.post(SERVER_URL, data, function(response)
 		{
 			//alert(response);
 		});
