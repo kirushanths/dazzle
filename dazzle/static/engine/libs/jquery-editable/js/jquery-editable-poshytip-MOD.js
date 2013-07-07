@@ -1485,6 +1485,7 @@ Makes editable any HTML element on the page. Applied as jQuery method.
                 this.$element.addClass('editable-click');
                 this.$element.on(this.options.toggle + '.editable', $.proxy(function(e){
                     //prevent following link if editable enabled
+                    
                     if(!this.options.disabled) {
                         e.preventDefault();
                     }

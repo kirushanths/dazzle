@@ -18,7 +18,7 @@ urlpatterns = patterns('',
 
     url(r'^$', include('core.urls')),
 
-    url(r'update/([^/]+)$', include('engine.urls')),
+    url(r'update/(.+)$', include('engine.urls')),
 
     url(r'', include('engine.urls')),
 

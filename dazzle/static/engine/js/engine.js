@@ -1,7 +1,3 @@
-
-var SERVER_URL = 'http://10.30.0.2/update/legend'
-//$.fn.editable.defaults.mode = 'inline';
-
 window.dazzlejQuery = jQuery.noConflict(true);
 
 window.dazzlejQuery(function(){ 
@@ -38,7 +34,8 @@ window.dazzlejQuery(function(){
 
 	var saveData = function(data)
 	{ 
-		dz$.post(SERVER_URL, data, function(response)
+		var url = 'update' + window.location.pathname;
+		dz$.post(url, data, function(response)
 		{
 			//alert(response);
 		});
