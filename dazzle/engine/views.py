@@ -1,15 +1,16 @@
 from django.shortcuts import render
 from django.template import Template, Context
 from django.http import HttpResponse 
-from engine.converter import Converter
+from django.views.decorators.csrf import csrf_exempt
+from engine.converter import Converter 
 
 def convert(request, template_name):
   
   	edit_mode = True
 
-	converter = Converter(template_name, 'index.html', edit_mode)
+	converter = Converter(template_name, 'index.html')
 	
-	converter.run_engine() 
+	converter.run_edit_engine() 
 
 	converted_html_string = converter.get_converted_html()
 
@@ -19,5 +20,19 @@ def convert(request, template_name):
 
 	return HttpResponse(template.render(context)) 
 
+@csrf_exempt
 def update(request, template_name):
-	return HttpResponse(template_name)
+
+	if request.method != 'POST':
+		return HttpResponse("error")
+
+	save_id = request.POST.get('id')
+	save_data = request.POST.get('value') 
+
+	converter = Converter(template_name, 'index.html')
+
+	converter.update_text(save_id, save_data)
+
+	converter.commit_template()
+
+	return HttpResponse('got ' + save_data)

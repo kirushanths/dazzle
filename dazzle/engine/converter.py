@@ -3,26 +3,50 @@ import urlparse
 import utils.constants as Constants
 from lxml import etree
 from dztemplate.manager import get_template_as_string
+from dztemplate.manager import save_template
 
 # MAIN ENGINE
 class Converter:
 
-	def __init__(self, template_name, file_name, edit_mode):
+	def __init__(self, template_name, file_name):
 		template_string = get_template_as_string(template_name, file_name)
 		self.html_obj = PyQuery(template_string.decode('utf-8'))
-		self.edit_mode = edit_mode
 		self.file_name = file_name
 		self.template_name = template_name
 
-	def run_engine(self):
+	def run_edit_engine(self):
 		self.replace_local_links()
 		self.set_text_editable()
 		self.include_scripts()
 
-
 	def get_converted_html(self):
 		final_html =  '<html>' + self.html_obj.html(method='html') + '</html>'
 		return final_html.encode('utf-8')
+
+	# TEMPLATE FUNCTIONS
+	def commit_template(self):
+		save_template(self.template_name, self.file_name, self.get_converted_html(), False)
+
+	# UPDATE FUNCTIONS
+	def update_text(self, target, value):
+
+		html_obj = self.html_obj
+   
+		elements = html_obj('*').filter(has_text)  
+
+		num = 1
+
+		for e in elements: 
+	 		if target != get_unique_text_id(num):
+	 			num += 1
+	 			continue
+
+			e.text = value
+			break
+
+	# PREVIEW FUNCTIONS
+
+	########## EDIT MODE #########
 
 	# INCLUDE SCRIPTS FUNCTIONS
 	def include_scripts(self): 
@@ -41,9 +65,7 @@ class Converter:
 
 		elements = html_obj('script').filter(lambda: has_js('jquery'))  
 		if len(elements) == 0: 
-			self.add_jquery()
-		#TEMPORARY: bootstrap only supports jquery 1.7+ 
-
+			self.add_jquery() 
 		#elements = html_obj('script').filter(lambda: has_js('bootstrap'))  
 		#if len(elements) == 0: 
 		#	self.add_script(Constants.BOOTSTRAP_JS_URL)
@@ -71,33 +93,17 @@ class Converter:
  
 	# TEXT FUNCTIONS
 	def set_text_editable(self):
-
-		def has_text(i, this):
-			if PyQuery(this).is_('script'): 
-				return False
-
-			text = PyQuery(this).clone().children().remove().end().text()
-			
-			if text is None:
-				return False
-
-			if (len(text.strip(' \t\n\r')) > 0):
-				return True
-
-			return False
  
 		html_obj = self.html_obj
    
 		elements = html_obj('*').filter(has_text)  
-
-		unique_id = 'dztxt'
 
 		num = 1
 
 		for e in elements: 
 	 		#if len(list(e)) == 0:
 	 		e.set('dztype', 'text')
-			e.set('dzid', unique_id + str(num)) 
+			e.set('dzid', get_unique_text_id(num))
 			num += 1
 
 	# REPLACE LINK FUNCTIONS
@@ -107,9 +113,6 @@ class Converter:
 
 
 	def replace_link(self, attr):
-
-		def is_absolute(url):
-			return bool(urlparse.urlparse(url.strip()).scheme)
 
 		html_obj = self.html_obj
 
@@ -124,6 +127,26 @@ class Converter:
 				e.set(attr, value)
 	  
 
+# HELPER FUNCTIONS
 
+def get_unique_text_id(num):
+	return 'dztxt' + str(num)
+
+def is_absolute(url):
+	return bool(urlparse.urlparse(url.strip()).scheme)
+
+def has_text(i, this):
+	if PyQuery(this).is_('script'): 
+		return False
+
+	text = PyQuery(this).clone().children().remove().end().text()
+		
+	if text is None:
+		return False
+
+	if (len(text.strip(' \t\n\r')) > 0):
+		return True
+
+	return False
 
 
