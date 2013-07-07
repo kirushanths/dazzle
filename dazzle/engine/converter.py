@@ -36,13 +36,20 @@ class Converter:
 
 		num = 1
 
-		for e in elements: 
-	 		if target != get_unique_text_id(num):
-	 			num += 1
-	 			continue
+		for e in elements:  
+	 		if e.text is not None and len(e.text.strip()) > 0:
+	 			if target != get_unique_text_id(num):
+	 				num += 1
+	 			else:
+	 				e.text = value
+	 				break
+	 		if e.tail is not None and len(e.tail.strip()) > 0:
+	 			if target != get_unique_text_id(num):
+	 				num += 1
+	 			else:
+	 				e.tail = value
+	 				break
 
-			e.text = value
-			break
 
 	# PREVIEW FUNCTIONS
 
@@ -107,11 +114,25 @@ class Converter:
 
 		num = 1
 
-		for e in elements: 
-	 		#if len(list(e)) == 0:
-	 		e.set('dztype', 'text')
-			e.set('dzid', get_unique_text_id(num))
-			num += 1
+		for e in elements:  
+	 		if e.text is not None and len(e.text.strip()) > 0:
+	 			new_element = self.get_new_text_element(e.text, num)
+				e.text = ''
+				e.insert(0, new_element)
+				num += 1
+
+			if e.tail is not None and len(e.tail.strip()) > 0:
+				new_element = self.get_new_text_element(e.tail, num)
+				e.tail = ''
+				e.addnext(new_element)
+				num += 1
+
+	def get_new_text_element(self, text, num):
+		element = etree.Element('dztag')
+		element.set('dztype', 'text')
+		element.set('dzid', get_unique_text_id(num))
+		element.text = text
+		return element
 
 	# REPLACE LINK FUNCTIONS
 	def replace_local_links(self):
@@ -143,8 +164,9 @@ def is_absolute(url):
 	return bool(urlparse.urlparse(url.strip()).scheme)
 
 def has_text(i, this):
-	if PyQuery(this).is_('script'): 
+	if PyQuery(this).is_('script') or PyQuery(this).is_('title'): 
 		return False
+
 
 	text = PyQuery(this).clone().children().remove().end().text()
 		
