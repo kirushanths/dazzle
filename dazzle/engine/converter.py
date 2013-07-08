@@ -14,78 +14,30 @@ class Converter:
 		self.file_name = file_name
 		self.template_name = template_name
 
+	def run_upload_engine(self):
+		self.insert_element_tags()
+		self.commit_template()
+
 	def run_edit_engine(self):
-		self.replace_local_links()
-		self.set_text_editable()
+		self.replace_local_links() 
 		self.include_scripts()
 
 	def get_converted_html(self):
 		final_html =  '<html>' + self.html_obj.html(method='html') + '</html>'
 		return final_html.encode('utf-8')
-
-	# TEMPLATE FUNCTIONS
+ 
 	def commit_template(self):
 		save_template(self.template_name, self.file_name, self.get_converted_html(), False)
-
-	# UPDATE FUNCTIONS
-	def update_text(self, target, value):
-
-		html_obj = self.html_obj
-   
-		elements = html_obj('*').filter(has_text)  
-
-		num = 1
-
-		for e in elements:  
-	 		if e.text is not None and len(e.text.strip()) > 0:
-	 			if target != get_unique_text_id(num):
-	 				num += 1
-	 			else:
-	 				e.text = value
-	 				break
-	 		if e.tail is not None and len(e.tail.strip()) > 0:
-	 			if target != get_unique_text_id(num):
-	 				num += 1
-	 			else:
-	 				e.tail = value
-	 				break
-
-
-	# PREVIEW FUNCTIONS
-
-	########## EDIT MODE #########
+ 
 
 	# INCLUDE SCRIPTS FUNCTIONS
 	def include_scripts(self): 
-
-		def has_js(val):
-			e = PyQuery(this)
-			source = e.attr('src')
-
-			if source is None: 
-				return False
-
-			if source.lower().find(val) != -1:
-				return True
-
 		html_obj = self.html_obj
-
-		# elements = html_obj('script').filter(lambda: has_js('jquery'))  
-		# if len(elements) == 0: 
 
 		scripts = [Constants.JQUERY_URL, Constants.POSHTIP_JS_URL, Constants.XEDITABLE_JS_URL, Constants.ENGINE_JS_URL]
 		self.add_scripts(scripts)
-
-		# self.add_script(Constants.JQUERY_URL)
-		#elements = html_obj('script').filter(lambda: has_js('bootstrap'))  
-		#if len(elements) == 0: 
-		#	self.add_script(Constants.BOOTSTRAP_JS_URL)
-		#	self.add_css(Constants.BOOTSTRAP_CSS_URL)
-		# self.add_script(Constants.POSHTIP_JS_URL)
-		# self.add_script(Constants.XEDITABLE_JS_URL)
 		self.add_css(Constants.XEDITABLE_CSS_URL)
-		# self.add_script(Constants.ENGINE_JS_URL)
-
+	
 
 	def add_css(self, source):
 		html_obj = self.html_obj
@@ -99,38 +51,49 @@ class Converter:
 			src_str += '<script type="text/javascript" src="' + src + '"></script>'
 
 		html_obj('head').prepend(src_str)
+ 
+ 	# TAG FUNCTIONS
+ 	def insert_element_tags(self): 
 
-	def add_jquery(self):
-		html_obj = self.html_obj 
-		src_str = '<script type="text/javascript" src="' + Constants.JQUERY_URL + '"></script>'
-		html_obj('head').prepend(src_str) 
- 
+ 		self.dzid = 0
+ 		def assign_tag(i, this):
+
+ 			self.dzid += 1
+
+ 			if element_is_type(this, ['script', 'title', 'head', 'header', 'body', 'footer', 'link', 'style']):
+ 				return 
+	
+			# wrap text elements
+			if this.text is not None and len(this.text.strip(' \t\n\r')) > 0:
+				new_element = self.new_text_element(this.text, self.dzid)
+				this.text = ''
+				this.insert(0, new_element)
+				self.dzid += 1
+
+			if this.tail is not None and len(this.tail.strip(' \t\n\r')) > 0:
+				new_element = self.new_text_element(this.tail, self.dzid)
+				this.tail = ''
+				this.addnext(new_element)
+				self.dzid += 1
+
+			this.set('dzid', str(self.dzid))
+
+ 		html_obj = self.html_obj
+ 		html_obj('*').each(assign_tag)
+
 	# TEXT FUNCTIONS
-	def set_text_editable(self):
- 
+	def update_text(self, target, value):
 		html_obj = self.html_obj
    
-		elements = html_obj('*').filter(has_text)  
-
-		num = 1
+		elements = html_obj('dztag').filter('[dzid="' + target + '"]')  
 
 		for e in elements:  
-	 		if e.text is not None and len(e.text.strip()) > 0:
-	 			new_element = self.get_new_text_element(e.text, num)
-				e.text = ''
-				e.insert(0, new_element)
-				num += 1
-
-			if e.tail is not None and len(e.tail.strip()) > 0:
-				new_element = self.get_new_text_element(e.tail, num)
-				e.tail = ''
-				e.addnext(new_element)
-				num += 1
-
-	def get_new_text_element(self, text, num):
+	 		e.text = value
+	 		
+	def new_text_element(self, text, ident):
 		element = etree.Element('dztag')
-		element.set('dztype', 'text')
-		element.set('dzid', get_unique_text_id(num))
+		element.set('dztype', 'text') 
+		element.set('dzid', str(ident))
 		element.text = text
 		return element
 
@@ -141,7 +104,6 @@ class Converter:
 
 
 	def replace_link(self, attr):
-
 		html_obj = self.html_obj
 
 		location = Constants.S3_TEMPLATE_URL + self.template_name + '/'
@@ -156,26 +118,16 @@ class Converter:
 	  
 
 # HELPER FUNCTIONS
-
-def get_unique_text_id(num):
+def unique_text_id(num):
 	return 'dztxt' + str(num)
 
 def is_absolute(url):
 	return bool(urlparse.urlparse(url.strip()).scheme)
 
-def has_text(i, this):
-	if PyQuery(this).is_('script') or PyQuery(this).is_('title'): 
-		return False
-
-
-	text = PyQuery(this).clone().children().remove().end().text()
-		
-	if text is None:
-		return False
-
-	if (len(text.strip(' \t\n\r')) > 0):
-		return True
-
+def element_is_type(element,type_arr):
+	for e_type in type_arr:
+		if PyQuery(element).is_(e_type):
+			return True
 	return False
 
 

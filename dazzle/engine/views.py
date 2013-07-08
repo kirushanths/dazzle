@@ -33,4 +33,4 @@ def update(request, template_name):
 
 	converter.commit_template()
 
-	return HttpResponse('got ' + save_data)
+	return HttpResponse('got ' + save_id + ' ' + save_data)
