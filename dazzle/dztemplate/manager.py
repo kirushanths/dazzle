@@ -5,9 +5,9 @@ from boto import connect_s3
 from boto.s3.key import Key 
 
 def get_template_as_string(template_name, file_name):
-
-	response = urllib2.urlopen(Constants.S3_TEMPLATE_URL + template_name + '/' + file_name)
+	response = urllib2.urlopen(Constants.S3_TEMPLATE_URL + template_name + '/' + file_name, timeout=4)
 	html_string = response.read() 
+	response.close()
 	return html_string
 
 def save_template(template_name, file_name, template_string,  is_original):

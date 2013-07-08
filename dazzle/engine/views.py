@@ -5,8 +5,6 @@ from django.views.decorators.csrf import csrf_exempt
 from engine.converter import Converter 
 
 def convert(request, template_name):
-  
-  	edit_mode = True
 
 	converter = Converter(template_name, 'index.html')
 	
