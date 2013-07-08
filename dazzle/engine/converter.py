@@ -60,7 +60,7 @@ class Converter:
 
  			self.dzid += 1
 
- 			if element_is_type(this, ['script', 'title', 'head', 'header', 'body', 'footer', 'link', 'style']):
+ 			if element_is_type(this, ['script', 'title', 'head', 'header', 'body', 'footer', 'link', 'style', 'meta']):
  				return 
 	
 			# wrap text elements
