@@ -62,10 +62,24 @@ function addTextEditable()
 
 	dz$(this).bind('hallodeactivated', function(event){ 
 			var element = dz$(event.target);
+
+			if (!element.hasClass('dzmodified')) return;
+
 			var ident = element.attr("dzid");
 			var newValue = element.html();
 
 			saveData({'type':'saveText', 'id': ident,'value':newValue });
+
+			element.removeClass('dzmodified');
+		}
+	);
+
+	dz$(this).bind('hallomodified', function(event){
+			var element = dz$(event.target);
+			if (!element.hasClass('dzmodified'))
+			{
+				element.addClass('dzmodified')
+			}
 		}
 	);
 
