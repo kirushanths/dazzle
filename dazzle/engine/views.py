@@ -34,3 +34,8 @@ def update(request, template_name):
 	converter.commit_template()
 
 	return HttpResponse('got ' + save_id + ' ' + save_data)
+
+def upload(request, template_name): 
+	converter = Converter(template_name, 'index.html')
+	converter.run_upload_engine()
+	return HttpResponse(template_name + ' uploaded')

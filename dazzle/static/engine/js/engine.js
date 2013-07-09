@@ -58,14 +58,14 @@ function addTextEditable()
 	        }
 	    });
 
-	});
+	});	
 
 	dz$(this).bind('hallodeactivated', function(event){ 
 			var element = dz$(event.target);
-			var newValue = element.html();
 			var ident = element.attr("dzid");
+			var newValue = element.html();
+
 			saveData({'type':'saveText', 'id': ident,'value':newValue });
-			console.log(newValue);
 		}
 	);
 
@@ -73,7 +73,7 @@ function addTextEditable()
 
 var saveData = function(data)
 { 
-	console.log(data); 
+	console.log(data);   
 	var dz$ = window.dazzlejQuery;
 	var url = 'update' + window.location.pathname;
 	dz$.post(url, data, function(response)

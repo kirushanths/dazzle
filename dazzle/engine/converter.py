@@ -85,7 +85,7 @@ class Converter:
 	def update_text(self, target, value):
 		html_obj = self.html_obj
    
-		elements = html_obj('dztag').filter('[dzid="' + target + '"]')  
+		elements = html_obj('div').filter('[dzid="' + target + '"]')  
 
 		for e in elements:  
 	 		pq = PyQuery(e)
@@ -93,7 +93,7 @@ class Converter:
 	 		pq.append(value)
 	 		
 	def new_text_element(self, text, ident):
-		element = etree.Element('dztag')
+		element = etree.Element('div')
 		element.set('dztype', 'text') 
 		element.set('dzid', str(ident))
 		element.text = text
