@@ -60,7 +60,7 @@ function addTextEditable()
 
 	});
 
-	dz$(this).bind('hallomodified', function(event){ 
+	dz$(this).bind('hallodeactivated', function(event){ 
 			var element = dz$(event.target);
 			var newValue = element.html();
 			var ident = element.attr("dzid");
