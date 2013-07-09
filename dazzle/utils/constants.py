@@ -9,11 +9,11 @@ STATIC_JS_URL = DAZZLE_URL + 'static/engine/js/'
 #BOOTSTRAP_CSS_URL = STATIC_LIB_URL + 'bootstrap/css/bootstrap.min.css'
 
 POSHTIP_JS_URL = STATIC_LIB_URL + 'poshytip/jquery.poshytip.min.js'
+  
+HALLO_JS_URLS = [STATIC_LIB_URL + 'hallo/rangy-core.js', STATIC_LIB_URL + 'jquery/jquery-ui.js', STATIC_LIB_URL + 'hallo/hallo.js']
+FONTAWESOME_CSS_URL = STATIC_LIB_URL + 'font-awesome/css/font-awesome.css'
 
-XEDITABLE_JS_URL = STATIC_LIB_URL + 'jquery-editable/js/jquery-editable-poshytip-MOD.js'
-XEDITABLE_CSS_URL = STATIC_LIB_URL + 'jquery-editable/css/jquery-editable.css'
-
-JQUERY_URL = STATIC_LIB_URL + 'jquery-1.9.1.min.js'
+JQUERY_URL = STATIC_LIB_URL + 'jquery/jquery-1.9.1.min.js'
 ENGINE_JS_URL = STATIC_JS_URL + 'engine.js'
 
 S3_ACCESS_KEY = 'AKIAIT5VHRH3SYEXEX5Q'

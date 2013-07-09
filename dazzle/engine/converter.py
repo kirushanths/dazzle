@@ -35,9 +35,8 @@ class Converter:
 	def include_scripts(self): 
 		html_obj = self.html_obj
 
-		scripts = [Constants.JQUERY_URL, Constants.POSHTIP_JS_URL, Constants.XEDITABLE_JS_URL, Constants.ENGINE_JS_URL]
-		self.add_scripts(scripts)
-		self.add_css(Constants.XEDITABLE_CSS_URL)
+		self.add_scripts([Constants.JQUERY_URL] + Constants.HALLO_JS_URLS + [Constants.ENGINE_JS_URL]) 
+		self.add_css(Constants.FONTAWESOME_CSS_URL)
 	
 
 	def add_css(self, source):
@@ -89,7 +88,9 @@ class Converter:
 		elements = html_obj('dztag').filter('[dzid="' + target + '"]')  
 
 		for e in elements:  
-	 		e.text = value
+	 		pq = PyQuery(e)
+	 		pq.empty()
+	 		pq.append(value)
 	 		
 	def new_text_element(self, text, ident):
 		element = etree.Element('dztag')

@@ -45,32 +45,35 @@ function addTextEditable()
 		var height = dz$(this).height();
 
 		var id = dz$(this).attr('dzid');
-		var type = 'text';
-		if (height > 60) type = 'textarea';
 
-		dz$(this).editable({
-			disabled: false,
-			type: type,
-			unsavedclass: null,
-			error: function(response, newValue) { 
-				console.log(response);  
-			},
-			value: dz$.trim(dz$(this).text()),
-			success: function(response, newValue) {
-				var data = { 
-						'type' : 'saveText',
-						'id' : id,
-						'value' : newValue 
-					   };
-				saveData(data);
-			}, 
-		});
+		dz$(this).hallo({
+	        plugins: {
+		      'halloformat': {}, 
+		      'halloblock':{},
+		      'hallojustify': {},
+		      'hallolists': {},
+		      'halloreundo': {},
+		      'halloheadings': {},
+		      'hallolink': {}
+	        }
+	    });
 
 	});
+
+	dz$(this).bind('hallomodified', function(event){ 
+			var element = dz$(event.target);
+			var newValue = element.html();
+			var ident = element.attr("dzid");
+			saveData({'type':'saveText', 'id': ident,'value':newValue });
+			console.log(newValue);
+		}
+	);
+
 }
 
 var saveData = function(data)
 { 
+	console.log(data); 
 	var dz$ = window.dazzlejQuery;
 	var url = 'update' + window.location.pathname;
 	dz$.post(url, data, function(response)
