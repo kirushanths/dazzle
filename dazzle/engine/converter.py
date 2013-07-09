@@ -4,6 +4,7 @@ import utils.constants as Constants
 from lxml import etree
 from dztemplate.manager import get_template_as_string
 from dztemplate.manager import save_template
+import os
 
 # MAIN ENGINE
 class Converter:
@@ -112,9 +113,15 @@ class Converter:
 		for e in elements:
 			value = e.get(attr);
 
-			if (not is_absolute(value)):  
-				value = location + value
-				e.set(attr, value)
+			if is_absolute(value):
+				continue
+
+			file_name, file_extension = os.path.splitext(value)
+			if file_extension == '' or file_extension.find('.html') > 0:
+				continue
+
+			value = location + value
+			e.set(attr, value)
 	  
 
 # HELPER FUNCTIONS
