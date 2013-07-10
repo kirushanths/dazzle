@@ -63,18 +63,20 @@ class Converter:
  			if element_is_type(this, ['script', 'title', 'head', 'header', 'body', 'footer', 'link', 'style', 'meta']):
  				return 
 	
-			# wrap text elements
-			if this.text is not None and len(this.text.strip(' \t\n\r')) > 0:
-				new_element = self.new_text_element(this.text, self.dzid)
-				this.text = ''
-				this.insert(0, new_element)
-				self.dzid += 1
+			# add text tag
+			element = PyQuery(this)
+			if len(element.text().strip(' \t\n\r')) > 0: 
+				if  this.tag == 'div' and sum(1 for x in element.items('div')) == 1:
+					this.set('dztype', 'text') 
+				else:
+					if (this.text is not None and len(this.text.strip(' \t\n\r')) > 0):
+						this.set('dztype', 'text')
+					if (this.tail is not None and len(this.tail.strip(' \t\n\r')) > 0):
+						new_element = self.new_text_element(this.tail, self.dzid)
+						this.tail = ''
+						this.addnext(new_element)
+						self.dzid += 1
 
-			if this.tail is not None and len(this.tail.strip(' \t\n\r')) > 0:
-				new_element = self.new_text_element(this.tail, self.dzid)
-				this.tail = ''
-				this.addnext(new_element)
-				self.dzid += 1
 
 			this.set('dzid', str(self.dzid))
 
@@ -85,15 +87,15 @@ class Converter:
 	def update_text(self, target, value):
 		html_obj = self.html_obj
    
-		elements = html_obj('div').filter('[dzid="' + target + '"]')  
+		elements = html_obj('*').filter('[dzid="' + target + '"]')  
 
 		for e in elements:  
 	 		pq = PyQuery(e)
 	 		pq.empty()
 	 		pq.append(value)
-	 		
+	 		 
 	def new_text_element(self, text, ident):
-		element = etree.Element('div')
+		element = etree.Element('dztag')
 		element.set('dztype', 'text') 
 		element.set('dzid', str(ident))
 		element.text = text

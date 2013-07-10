@@ -46,17 +46,31 @@ function addTextEditable()
 
 		var id = dz$(this).attr('dzid');
 
-		dz$(this).hallo({
-	        plugins: {
-		      'halloformat': {}, 
-		      'halloblock':{},
-		      'hallojustify': {},
-		      'hallolists': {},
-		      'halloreundo': {},
-		      'halloheadings': {},
-		      'hallolink': {}
-	        }
-	    });
+		if (this.tagName == 'DIV')
+		{
+			dz$(this).hallo({
+		        plugins: {
+			      'halloformat': {}, 
+			      'halloblock':{},
+			      'hallojustify': {},
+			      'hallolists': {},
+			      'halloreundo': {},
+			      'halloheadings': {},
+			      'hallolink': {}
+		        }
+		    });
+		}
+		else
+		{
+			dz$(this).hallo({
+				plugins:{
+					'halloformat': {},
+					'hallojustify': {},
+					'halloreundo': {},
+					'hallolink': {}
+				}
+			})
+		}
 
 	});	
 
