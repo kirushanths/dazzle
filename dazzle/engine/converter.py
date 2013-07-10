@@ -93,6 +93,7 @@ class Converter:
 	 		pq = PyQuery(e)
 	 		pq.empty()
 	 		pq.append(value)
+	 		break
 	 		 
 	def new_text_element(self, text, ident):
 		element = etree.Element('dztag')

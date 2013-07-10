@@ -64,8 +64,7 @@ function addTextEditable()
 		{
 			dz$(this).hallo({
 				plugins:{
-					'halloformat': {},
-					'hallojustify': {},
+					'halloformat': {}, 
 					'halloreundo': {},
 					'hallolink': {}
 				}
