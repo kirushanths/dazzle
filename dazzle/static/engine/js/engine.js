@@ -11,31 +11,39 @@ function addImageEditable()
 {
 	var dz$ = window.dazzlejQuery;
 
-	var toolbar = dz$("<div>upload new image upload new image image upload new image image upload new image image upload new image </div>").attr('id','dz-imageToolbar').appendTo('body').hide();  
-	toolbar.css({ 
-		"z-index": 99999999,
-		"height": "100px",
-		"width": "100px"
-	});
-
 	findImageElements();
+
+	var toolbar = makeImageUploadToolbar(); 
+	toolbar.hide();
 
 	dz$('.dz-image').each(function(index){
 		dz$(this).hover(
-			function(){  
+			function(){    
 				toolbar.show();
 				toolbar.position({
-					my: "center bottom",
-    				at: "center bottom",
+					my: "center",
+    				at: "center",
     				of: this,
     				collision: "fit"
-				});
+				}); 
 			},
 			function(){
-				dz$("dz-imageToolbar").hide();
 			}
 		);
 	});
+}
+
+function makeImageUploadToolbar()
+{ 
+	var dz$ = window.dazzlejQuery;
+	var toolbar = dz$("<div>upload new image upload new image image upload new image image upload new image image upload new image </div>");
+	toolbar.attr('id','dz-imageToolbar');
+	toolbar.appendTo('body');
+	toolbar.css({  
+		"height": "100px",
+		"width": "100px"
+	}); 
+	return toolbar;
 }
 
 function findImageElements()
@@ -46,6 +54,11 @@ function findImageElements()
 
 	for (var i = 0, len = tags.length; i < len; i++) {
 	    element = tags[i];
+
+	    if (element.nodeName == "BODY")
+	    {
+	    	continue;
+	    }
 
 	    if (element.nodeName == "IMG")
 	    {
