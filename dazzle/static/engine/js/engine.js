@@ -67,16 +67,17 @@ function findImageElements()
 	    else if (element.currentStyle)
 	    {
 	    	var image = element.currentStyle['backgroundImage'];
-	        if( image !== 'none' && image.match(/\.(jpg|jpeg|png|gif)$/)) 
-	        {
+	        if( image !== 'none' && image.match(/\.(jpg|jpeg|png|gif)/))
+	        { 
 	            element.className += 'dz-image';
 	        }
 	    }
 	    else if (window.getComputedStyle)
 	    {
 	    	var image = document.defaultView.getComputedStyle(element, null).getPropertyValue('background-image');
-	        if( image !== 'none' && image.match(/\.(jpg|jpeg|png|gif)$/))
+	        if( image !== 'none' && image.match(/\.(jpg|jpeg|png|gif)/))
 	        {
+	        	console.log(image);
 	            element.className += ' dz-image';
 	        }
 	    }
