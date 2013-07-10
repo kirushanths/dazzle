@@ -9,6 +9,38 @@ window.dazzlejQuery(function(){
 
 function addImageEditable()
 {
+	var dz$ = window.dazzlejQuery;
+
+	var toolbar = dz$("<div>upload new image upload new image image upload new image image upload new image image upload new image </div>").attr('id','dz-imageToolbar').appendTo('body').hide();  
+	toolbar.css({ 
+		"z-index": 99999999,
+		"height": "100px",
+		"width": "100px"
+	});
+
+	findImageElements();
+
+	dz$('.dz-image').each(function(index){
+		dz$(this).hover(
+			function(){  
+				toolbar.show();
+				toolbar.position({
+					my: "center bottom",
+    				at: "center bottom",
+    				of: this,
+    				collision: "fit"
+				});
+			},
+			function(){
+				dz$("dz-imageToolbar").hide();
+			}
+		);
+	});
+}
+
+function findImageElements()
+{
+
 	var tags = document.getElementsByTagName('*');
     var element;
 
@@ -17,20 +49,20 @@ function addImageEditable()
 
 	    if (element.nodeName == "IMG")
 	    {
-	    	element.className = 'bg_found';
+	    	element.className = 'dz-image';
 	    }
 	    else if (element.currentStyle)
 	    {
 	        if( element.currentStyle['backgroundImage'] !== 'none' ) 
 	        {
-	            element.className += ' bg_found';
+	            element.className += 'dz-image';
 	        }
 	    }
 	    else if (window.getComputedStyle)
 	    {
 	        if( document.defaultView.getComputedStyle(element, null).getPropertyValue('background-image') !== 'none' ) 
 	        {
-	            element.className += ' bg_found';
+	            element.className += ' dz-image';
 	        }
 	    }
 	}
