@@ -35,7 +35,7 @@ class Converter:
 	def include_scripts(self): 
 		html_obj = self.html_obj
 
-		self.add_scripts([Constants.JQUERY_URL] + Constants.HALLO_JS_URLS + [Constants.ENGINE_JS_URL]) 
+		self.add_scripts([Constants.JQUERY_URL, Constants.DROPZONE_JS_URL] + Constants.HALLO_JS_URLS + [Constants.ENGINE_JS_URL]) 
 		self.add_css([Constants.FONTAWESOME_CSS_URL, Constants.ENGINE_CSS_URL])
 	
 

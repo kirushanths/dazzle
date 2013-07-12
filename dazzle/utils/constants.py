@@ -9,8 +9,7 @@ STATIC_CSS_URL = DAZZLE_URL + 'static/engine/css/'
 #BOOTSTRAP_JS_URL = STATIC_LIB_URL + 'bootstrap/js/bootstrap.min.js'
 #BOOTSTRAP_CSS_URL = STATIC_LIB_URL + 'bootstrap/css/bootstrap.min.css'
 
-POSHTIP_JS_URL = STATIC_LIB_URL + 'poshytip/jquery.poshytip.min.js'
-  
+DROPZONE_JS_URL = STATIC_LIB_URL + 'dropzone/dropzone.js'  
 HALLO_JS_URLS = [STATIC_LIB_URL + 'hallo/rangy-core.js', STATIC_LIB_URL + 'jquery/jquery-ui.js', STATIC_LIB_URL + 'hallo/hallo.js']
 FONTAWESOME_CSS_URL = STATIC_LIB_URL + 'font-awesome/css/font-awesome.css'
 
