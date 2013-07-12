@@ -45,7 +45,7 @@ function addImageEditable()
 				var previewFile = { name: "previewFile", size: 0 };
 				toolbar.dropzone.options.addedfile.call(toolbar.dropzone, previewFile);
 				toolbar.dropzone.options.thumbnail.call(toolbar.dropzone, previewFile, getImageFromElement(this));
-				toolbar.dropzone.customData.targetElement = this;
+				toolbar.dropzone.options.targetElement = this;
 			},
 			function(){
 			}
@@ -66,13 +66,12 @@ function makeImageUploadToolbar()
 	toolbar.appendTo('body');
 	var dropzone = new Dropzone(toolbar.get(0), 
 	{  
-		parallelUploads: 1,
+		parallelUploads: 5,
 		clickable: true,
-		maxFilesize: 2 ,
+		maxFilesize: 5 ,
 		url: "./", 
 		previewsContainer:".dz-preview",
-		accept: function(file, done) { 
-			console.log("accept");
+		accept: function(file, done) {  
 			done();
 		}
 	});
@@ -80,7 +79,7 @@ function makeImageUploadToolbar()
  	dropzone.on("addedfile", function(file)
 	{ 
 		console.log(file);
-		console.log(dropzone.customData.targetElement); 
+		console.log(file.targetElement); 
 		//getImageFromElement(dropzone.customData.targetElement, dropzone.c)
 	});
 
@@ -88,7 +87,7 @@ function makeImageUploadToolbar()
 	dropzone.on("error", function(file, message) { //alert(message); 
 	}); 
 
-	dropzone.on("complete", function() {
+	dropzone.on("success", function(file, response) {
 		/*
 		if (this.filesQueue.length == 0 && this.filesProcessing.length == 0) {
 			console.log("upload complete");
@@ -123,7 +122,7 @@ function getImageFromElement(element, newImage)
     {
     	var image = document.defaultView.getComputedStyle(element, null).getPropertyValue('background-image');
         if( image !== 'none' && image.match(/\.(jpg|jpeg|png|gif)/))
-        { 
+        {  
             return image.replace('url(','').replace(')','');
         }
     }

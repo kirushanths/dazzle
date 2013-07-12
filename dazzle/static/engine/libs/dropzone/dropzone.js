@@ -529,6 +529,7 @@ require.register("dropzone/lib/dropzone.js", function(exports, require, module){
       },
       addedfile: function(file) {
         var _this = this;
+        file.targetElement = this.options.targetElement;
         file.previewElement = Dropzone.createElement(this.options.previewTemplate);
         file.previewTemplate = file.previewElement;
         while (this.previewsContainer.lastChild)
@@ -635,7 +636,6 @@ require.register("dropzone/lib/dropzone.js", function(exports, require, module){
       element.dropzone = this;
       elementOptions = (_ref = Dropzone.optionsForElement(this.element)) != null ? _ref : {};
       this.options = extend({}, this.defaultOptions, elementOptions, options != null ? options : {});
-      this.customData = {};
       if (this.options.url == null) {
         this.options.url = this.element.action;
       }
