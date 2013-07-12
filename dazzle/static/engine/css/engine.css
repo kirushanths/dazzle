@@ -38,6 +38,8 @@
 }
 
 #dz-imageToolbar img
-{
-	height: 40px;
+{ 
+	vertical-align: middle;
+	max-height: 40px;
+	max-width: 40px;
 }

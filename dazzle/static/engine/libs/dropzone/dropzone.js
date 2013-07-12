@@ -566,7 +566,10 @@ require.register("dropzone/lib/dropzone.js", function(exports, require, module){
       },
       error: function(file, message) {
         file.previewElement.classList.add("dz-error");
-        return file.previewElement.querySelector("[data-dz-errormessage]").textContent = message;
+        //return file.previewElement.querySelector("[data-dz-errormessage]").textContent = message;
+        console.log(message);
+        //alert("An error occurred");
+        return message;
       },
       processing: function(file) {
         file.previewElement.classList.add("dz-processing");
@@ -632,6 +635,7 @@ require.register("dropzone/lib/dropzone.js", function(exports, require, module){
       element.dropzone = this;
       elementOptions = (_ref = Dropzone.optionsForElement(this.element)) != null ? _ref : {};
       this.options = extend({}, this.defaultOptions, elementOptions, options != null ? options : {});
+      this.customData = {};
       if (this.options.url == null) {
         this.options.url = this.element.action;
       }

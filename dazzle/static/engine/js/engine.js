@@ -30,7 +30,7 @@ function addImageEditable()
 	    {
 	    	continue;
 	    } 
-	    
+
 	    element.className = ".dz-image";
  
 	    dz$(element).hover(
@@ -45,6 +45,7 @@ function addImageEditable()
 				var previewFile = { name: "previewFile", size: 0 };
 				toolbar.dropzone.options.addedfile.call(toolbar.dropzone, previewFile);
 				toolbar.dropzone.options.thumbnail.call(toolbar.dropzone, previewFile, getImageFromElement(this));
+				toolbar.dropzone.customData.targetElement = this;
 			},
 			function(){
 			}
@@ -64,31 +65,43 @@ function makeImageUploadToolbar()
 
 	toolbar.appendTo('body');
 	var dropzone = new Dropzone(toolbar.get(0), 
-		{  
-			parallelUploads: 1,
-			clickable: true,
-			maxFilesize: 2 ,
-			url: "/file/post", 
-			previewsContainer:".dz-preview",
-			accept: function(file, done) {
-				//done();
-			}
+	{  
+		parallelUploads: 1,
+		clickable: true,
+		maxFilesize: 2 ,
+		url: "./", 
+		previewsContainer:".dz-preview",
+		accept: function(file, done) { 
+			console.log("accept");
+			done();
 		}
-	);
+	});
  
-	dropzone.on("error", function(file, message) { alert(message); }); 
+ 	dropzone.on("addedfile", function(file)
+	{ 
+		console.log(file);
+		console.log(dropzone.customData.targetElement); 
+		//getImageFromElement(dropzone.customData.targetElement, dropzone.c)
+	});
+
+
+	dropzone.on("error", function(file, message) { //alert(message); 
+	}); 
+
 	dropzone.on("complete", function() {
-    	if (this.filesQueue.length == 0 && this.filesProcessing.length == 0) {
-    		console.log("upload complete");
-      	}
-  	});
- 
+		/*
+		if (this.filesQueue.length == 0 && this.filesProcessing.length == 0) {
+			console.log("upload complete");
+	  	}
+	  	*/
+	});
+
 	toolbar.dropzone = dropzone; 
 
 	return toolbar;
 } 
 
-function getImageFromElement(element)
+function getImageFromElement(element, newImage)
 {
 	if (element.nodeName == "IMG")
 	{
