@@ -6,6 +6,7 @@ window.dazzlejQuery(function(){
 	addImageEditable();
 });
 
+var updateUrl = "http://10.30.0.2/update" + window.location.pathname;
 
 function addImageEditable()
 {
@@ -69,7 +70,7 @@ function makeImageUploadToolbar()
 		parallelUploads: 5,
 		clickable: true,
 		maxFilesize: 5 ,
-		url: "./", 
+		url: updateUrl,
 		previewsContainer:".dz-preview",
 		accept: function(file, done) {  
 			done();
@@ -88,6 +89,9 @@ function makeImageUploadToolbar()
 	}); 
 
 	dropzone.on("success", function(file, response) {
+		console.log('success');
+		console.log(file.targetElement);
+		console.log(response);
 		/*
 		if (this.filesQueue.length == 0 && this.filesProcessing.length == 0) {
 			console.log("upload complete");
@@ -174,7 +178,7 @@ function addTextEditable()
 			var ident = element.attr("dzid");
 			var newValue = element.html();
 
-			saveData({'type':'saveText', 'id': ident,'value':newValue });
+			saveData({'requestType':'updateText', 'id': ident,'value':newValue });
 
 			element.removeClass('dzmodified');
 		}
@@ -194,9 +198,8 @@ function addTextEditable()
 var saveData = function(data)
 { 
 	console.log(data);   
-	var dz$ = window.dazzlejQuery;
-	var url = 'update' + window.location.pathname;
-	dz$.post(url, data, function(response)
+	var dz$ = window.dazzlejQuery; 
+	dz$.post(updateUrl, data, function(response)
 	{
 		console.log(response); 
 	});

@@ -24,7 +24,28 @@ def update(request, template_name):
 	if request.method != 'POST':
 		return HttpResponse("error")
 
+	requestType = request.POST.get('requestType')
+
+	if requestType == 'updateImage':
+		return update_image(request, template_name)
+
+	if requestType == 'updateText':
+		return update_text(request, template_name)
+
+	return HttpResponse("unknown request")
+
+def update_image(request, template_name):
+
+	if not request.FILES:
+		return HttpResponse("file error")
+
+	#for f in request.FILES.getlist('file'):
+
+	return HttpResponse('update image')
+
+def update_text(request, template_name):
 	save_id = request.POST.get('id')
+
 	save_data = request.POST.get('value') 
 
 	converter = Converter(template_name, 'index.html')
