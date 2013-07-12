@@ -36,12 +36,15 @@ class Converter:
 		html_obj = self.html_obj
 
 		self.add_scripts([Constants.JQUERY_URL] + Constants.HALLO_JS_URLS + [Constants.ENGINE_JS_URL]) 
-		self.add_css(Constants.FONTAWESOME_CSS_URL)
+		self.add_css([Constants.FONTAWESOME_CSS_URL, Constants.ENGINE_CSS_URL])
 	
 
-	def add_css(self, source):
+	def add_css(self, sources):
 		html_obj = self.html_obj
-		src_str = '<link type="text/css" href="' + source + '" rel="stylesheet"></link>'
+		src_str = "";
+		for src in sources:
+			src_str += '<link type="text/css" href="' + src + '" rel="stylesheet"></link>'
+
 		html_obj('head').append(src_str) 
 
 	def add_scripts(self, sources):

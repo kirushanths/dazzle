@@ -22,7 +22,7 @@ function addImageEditable()
 				toolbar.show();
 				toolbar.position({
 					my: "center",
-    				at: "center",
+    				at: "right top",
     				of: this,
     				collision: "fit"
 				}); 
@@ -36,13 +36,10 @@ function addImageEditable()
 function makeImageUploadToolbar()
 { 
 	var dz$ = window.dazzlejQuery;
-	var toolbar = dz$("<div>upload new image upload new image image upload new image image upload new image image upload new image </div>");
-	toolbar.attr('id','dz-imageToolbar');
-	toolbar.appendTo('body');
-	toolbar.css({  
-		"height": "100px",
-		"width": "100px"
-	}); 
+	var toolbar = dz$("<div id='dz-imageToolbar'> \
+					   		<div class='dz-title'>Replace Image</div> \
+					   </div>");
+	toolbar.appendTo('body'); 
 	return toolbar;
 }
 
