@@ -1,39 +1,99 @@
 window.dazzlejQuery = jQuery.noConflict(true);
 
 window.dazzlejQuery(function(){ 
+ 
+	dzEngine.runEngine();
 
-	addTextEditable();
-	addImageEditable();
 });
 
-var updateUrl = "http://10.30.0.2/update" + window.location.pathname;
 
-function addImageEditable()
-{
+var dzEngine = (function(){
+
 	var dz$ = window.dazzlejQuery;
+	var updateUrl = "http://10.30.0.2/update" + window.location.pathname;
 
-	var toolbar = makeImageUploadToolbar(); 
-	toolbar.hide();
+	/**
+	 *	IMAGE FUNCTIONS
+	 */
+	function runImageEngine() 
+	{ 
+		var toolbar = createImageToolbar(); 
+		toolbar.hide();
 
-	var tags = document.getElementsByTagName('*');
-    var element;
+		var tags = document.getElementsByTagName('*');
+	    var element;
 
-	for (var i = 0, len = tags.length; i < len; i++) {
-	    element = tags[i];
+		for (var i = 0, len = tags.length; i < len; i++) 
+		{
+		    element = tags[i];
+		    if (element.nodeName == "BODY")	continue;
+		   
+		    var imageUrl = getImageFromElement(element);
 
-	    if (element.nodeName == "BODY")
-	    {
-	    	continue;
-	    }
+		    if (imageUrl == null) continue;
 
-	    var image = getImageFromElement(element);
-	    if (image == null) 
-	    {
-	    	continue;
-	    } 
+		    element.className = ".dz-image";
 
-	    element.className = ".dz-image";
- 
+		    addImageToolbar(element, imageUrl, toolbar);
+		}
+	}
+
+	function createImageToolbar()
+	{  
+		var toolbar = dz$("<div id='dz-imageToolbar'> \
+						  		<div class='dz-title'>Replace Image</div> \
+						   		<div class='dz-preview'></div> \
+						   		<div class='dz-text'>Click or drag file here </div> \
+						   </div>");
+		toolbar.appendTo('body');
+		var dropzone = new Dropzone(toolbar.get(0), 
+		{  
+			parallelUploads: 5,
+			clickable: true,
+			maxFilesize: 5 ,
+			url: updateUrl,
+			previewsContainer: ".dz-preview",
+			accept: function(file, done) {  
+				done();
+			}
+		});
+
+		toolbar.dropzone = dropzone; 
+
+		addImageHandlers(dropzone);
+
+		return toolbar;
+	} 
+
+	function addImageHandlers(dropzone)
+	{
+		dropzone.on("addedfile", function(file)
+		{ 
+			console.log(file);
+			console.log(file.targetElement);  
+			//getImageFromElement(dropzone.customData.targetElement, dropzone.c)
+		});
+
+
+		dropzone.on("error", function(file, message) { //alert(message); 
+		}); 
+
+		dropzone.on("success", function(file, response) {
+			console.log('success'); 
+			console.log(response);
+
+			// TEMPORARY CAT PIC
+			updateElementImage(file.targetElement, 'http://hdnaturepictures.com/wp-content/uploads/2013/05/Cute-Little-Cat.jpg');
+			/*
+			if (this.filesQueue.length == 0 && this.filesProcessing.length == 0) {
+				console.log("upload complete");
+		  	}
+		  	*/
+		});
+	}
+
+	function addImageToolbar(element, imageUrl, toolbar)
+	{  
 	    dz$(element).hover(
 			function(){    
 				toolbar.show();
@@ -52,100 +112,66 @@ function addImageEditable()
 			}
 		); 
 	}
-}
 
-
-function makeImageUploadToolbar()
-{ 
-	var dz$ = window.dazzlejQuery;
-	var toolbar = dz$("<div id='dz-imageToolbar'> \
-					  		<div class='dz-title'>Replace Image</div> \
-					   		<div class='dz-preview'></div> \
-					   		<div class='dz-text'>Click or drag file here </div> \
-					   </div>");
-
-	toolbar.appendTo('body');
-	var dropzone = new Dropzone(toolbar.get(0), 
-	{  
-		parallelUploads: 5,
-		clickable: true,
-		maxFilesize: 5 ,
-		url: updateUrl,
-		previewsContainer:".dz-preview",
-		accept: function(file, done) {  
-			done();
-		}
-	});
- 
- 	dropzone.on("addedfile", function(file)
-	{ 
-		console.log(file);
-		console.log(file.targetElement); 
-		//getImageFromElement(dropzone.customData.targetElement, dropzone.c)
-	});
-
-
-	dropzone.on("error", function(file, message) { //alert(message); 
-	}); 
-
-	dropzone.on("success", function(file, response) {
-		console.log('success');
-		console.log(file.targetElement);
-		console.log(response);
-		/*
-		if (this.filesQueue.length == 0 && this.filesProcessing.length == 0) {
-			console.log("upload complete");
-	  	}
-	  	*/
-	});
-
-	toolbar.dropzone = dropzone; 
-
-	return toolbar;
-} 
-
-function getImageFromElement(element, newImage)
-{
-	if (element.nodeName == "IMG")
+	function updateElementImage(element, imageUrl)
 	{
-		var image = element.src;
-		if (image)
-		{
-			return image;
+		if (!element || !imageUrl) return;
+	 
+		if (element.nodeName == "IMG")
+		{  
+			$(element).attr("src", imageUrl);
 		}
-	}
-	if (element.currentStyle)
-    {
-    	var image = element.currentStyle['backgroundImage'];
-        if( image !== 'none' && image.match(/\.(jpg|jpeg|png|gif)/))
-        { 
-            return image.replace('url(','').replace(')','');
-        }
-    }
-    else if (window.getComputedStyle)
-    {
-    	var image = document.defaultView.getComputedStyle(element, null).getPropertyValue('background-image');
-        if( image !== 'none' && image.match(/\.(jpg|jpeg|png|gif)/))
-        {  
-            return image.replace('url(','').replace(')','');
-        }
-    }
-    return null;
-}
-
-function addTextEditable()
-{
-	var dz$ = window.dazzlejQuery;
-
-	dz$('[dztype="text"]').each(function(index){
-
-		var height = dz$(this).height();
-
-		var id = dz$(this).attr('dzid');
-
-		if (this.tagName == 'DIV')
+		else
 		{
-			dz$(this).hallo({
+			$(element).css("background-image", "url(" + imageUrl + ")"); 
+	    }
+	}
+
+	function getImageFromElement(element)
+	{
+		if (element.nodeName == "IMG")
+		{
+			var image = element.src;
+			if (image)
+			{
+				return image;
+			}
+		}
+		if (element.currentStyle)
+	    {
+	    	var image = element.currentStyle['backgroundImage'];
+	        if( image !== 'none' && image.match(/\.(jpg|jpeg|png|gif)/))
+	        { 
+	            return image.replace('url(','').replace(')','');
+	        }
+	    }
+	    else if (window.getComputedStyle)
+	    {
+	    	var image = document.defaultView.getComputedStyle(element, null).getPropertyValue('background-image');
+	        if( image !== 'none' && image.match(/\.(jpg|jpeg|png|gif)/))
+	        {  
+	            return image.replace('url(','').replace(')','');
+	        }
+	    }
+	    return null;
+	}	
+
+	/**
+	 *	TEXT FUNCTIONS
+	 */
+	function runTextEngine()
+	{  
+		dz$('[dztype="text"]').each(function(index){ 
+			addHalloEditor(this);
+			addHalloHandlers(this);
+		});	
+	}
+
+	function addHalloEditor(element)
+	{
+		if (element.tagName == 'DIV')
+		{
+			dz$(element).hallo({
 		        plugins: {
 			      'halloformat': {}, 
 			      'halloblock':{},
@@ -159,7 +185,7 @@ function addTextEditable()
 		}
 		else
 		{
-			dz$(this).hallo({
+			dz$(element).hallo({
 				plugins:{
 					'halloformat': {}, 
 					'halloreundo': {},
@@ -167,40 +193,56 @@ function addTextEditable()
 				}
 			})
 		}
+	}
 
-	});	
-
-	dz$(this).bind('hallodeactivated', function(event){ 
-			var element = dz$(event.target);
-
-			if (!element.hasClass('dzmodified')) return;
-
-			var ident = element.attr("dzid");
-			var newValue = element.html();
-
-			saveData({'requestType':'updateText', 'id': ident,'value':newValue });
-
-			element.removeClass('dzmodified');
-		}
-	);
-
-	dz$(this).bind('hallomodified', function(event){
-			var element = dz$(event.target);
-			if (!element.hasClass('dzmodified'))
-			{
-				element.addClass('dzmodified')
-			}
-		}
-	);
-
-}
-
-var saveData = function(data)
-{ 
-	console.log(data);   
-	var dz$ = window.dazzlejQuery; 
-	dz$.post(updateUrl, data, function(response)
+	function addHalloHandlers(element)
 	{
-		console.log(response); 
-	});
-}
+		dz$(element).bind('hallodeactivated', function(event){ 
+				var el = dz$(event.target);
+
+				if (!el.hasClass('dzmodified')) return;
+
+				var ident = el.attr("dzid");
+				var newValue = el.html();
+
+				saveData({'requestType':'updateText', 'id': ident,'value':newValue });
+
+				el.removeClass('dzmodified');
+			}
+		);
+
+		dz$(element).bind('hallomodified', function(event){
+				var el = dz$(event.target);
+				if (!el.hasClass('dzmodified'))
+				{
+					el.addClass('dzmodified')
+				}
+			}
+		);
+	}
+
+	/**
+	 * HELPERS
+	 */
+	var saveData = function(data)
+	{ 
+		console.log(data);   
+		var dz$ = window.dazzlejQuery; 
+		dz$.post(updateUrl, data, function(response)
+		{
+			console.log(response); 
+		});
+	}
+
+	/**
+	 * PUBLIC
+	 */
+	return {
+		runEngine: function()
+		{
+			runImageEngine();
+			runTextEngine();
+		}
+	}
+
+})();
