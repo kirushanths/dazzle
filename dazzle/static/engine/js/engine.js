@@ -226,8 +226,7 @@ var dzEngine = (function(){
 	 */
 	var saveData = function(data)
 	{ 
-		console.log(data);   
-		var dz$ = window.dazzlejQuery; 
+		console.log(data);    
 		dz$.post(updateUrl, data, function(response)
 		{
 			console.log(response); 
