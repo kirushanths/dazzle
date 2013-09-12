@@ -25,6 +25,6 @@ STATIC_ROOT = '/vagrant/src/dazzle/dazzle/static' # os.path.join(PROJECT_ROOT, '
 STATIC_URL = '/static/'
 
 try:
-    from settings_local import *
+    from local import *
 except ImportError, e:
     print "Error with your local config: %s" % str(e)
