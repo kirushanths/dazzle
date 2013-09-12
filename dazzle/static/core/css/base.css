@@ -1,0 +1,83 @@
+
+/*  STRUCTURE */
+
+    /* http://matthewjamestaylor.com/blog/ultimate-2-column-left-menu-pixels.htm */
+    .colmask { position:relative; clear:both; float:left; width:100%; overflow:hidden; background:#333; }
+
+    /* (left) has to equal .col1wrap and is the width of left column = left_col */
+    .leftmenu .colright { float:left; width:200%; position:relative; left:220px; }
+    /* (right) has to equal .colright and is the width of left column = left_col  */
+    .leftmenu .col1wrap { float:right; width:50%; position:relative;right:220px; }
+    /* (margin) = 0 padding 0 left_col+padding  */
+    .leftmenu .col1 { margin:0 0 0 220px; position:relative; right:100%; overflow:hidden; }
+    /* one extra pixel on width to hide double border */
+    /* (width) is left_col-2*padding and (right) is left_col-padding */
+    .leftmenu .col2 { float:left; width:220px; position:relative; right:220px; }
+
+/*  GENERAL */
+
+    a, a:visited, a:visited, a:active, a:hover { cursor:pointer; color:#1571B8; }
+
+    body { font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; background:white; }
+
+    .h1 { font-size:30px; margin:0px 0 15px; }
+    .h2 { font-size:25px; margin:0px 0 15px; }
+
+    .button { background:#67548b; color:white; height:35px; padding:0 10px; margin:0; padding:0; outline:0; border:0; 
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+    }
+    .button:hover { background:#4a3a67; }
+    .button_action {}
+
+    .input { height:35px; margin:0; padding:0; outline:0; border:0; padding:0 7px; 
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+    }
+
+    .rounded {
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 8px;
+    }
+
+/*  LANDING */
+
+    ._landing {}
+    ._landing .header { background:url('images/work.jpg') repeat-x center; text-align:center; height:500px; overflow:hidden;; }
+    ._landing .header .logo { width:311px; margin:50px auto; }
+    ._landing .header .logo img { width:311px; height:80px; }
+    ._landing .header .slogan { overflow:hidden; padding:40px 40px 60px; background:rgba(0,0,0,0.7); margin:30px 70px 0; }
+    ._landing .header .h1 { color:white; margin:0 0 5px 0; font-weight:bold; font-size:45px; }
+    ._landing .header .h2 { color:white; margin:0 0 35px 0; }
+
+    ._landing .header .slogan .input { margin:0 2px; }
+
+    @media screen and (min-width: 0px) {
+        ._landing .header .logo { margin:30px auto; }
+        ._landing .header .logo img { width:auto; height:60px; }
+        ._landing .header .h1 { font-size:20px; }
+        ._landing .header .h2 { margin:0 0 25px 0; font-size: 14px; }
+        ._landing .header .slogan { margin:10px auto; padding:20px 40px; width:250px; } 
+        ._landing .header .slogan .input { display:block;  margin:0 auto; margin-bottom:10px; }
+    }
+
+    @media screen and (min-width: 480px) {
+        ._landing .header .slogan { width:320px; } 
+    }
+
+    @media screen and (min-width: 768px) {
+        ._landing .header .logo { margin:50px auto; }
+        ._landing .header .logo img { width:311px; height:80px;  }
+        ._landing .header .h1 { font-size:25px; }
+        ._landing .header .h2 { margin:0 0 35px 0; font-size: 23px; }
+        ._landing .header .slogan { padding:40px 40px 60px;margin:30px 70px 0; width:auto; } 
+        ._landing .header .slogan .input { margin:0 2px; display:inline; }
+    }
+    
+    @media screen and (min-width: 900px) {
+        ._landing .header .h1 { font-size:30px; }
+    }
+    
