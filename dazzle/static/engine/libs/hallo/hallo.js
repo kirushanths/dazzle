@@ -1907,7 +1907,7 @@
         if (!this.options.originalZIndex) {
           this.options.originalZIndex = this.options.currentEditable.css("z-index");
         }
-        return this.options.currentEditable.css('z-index', '350');
+        return this.options.currentEditable.css('z-index', '99999');
       },
       resizeOverlay: function() {
         var offset;
@@ -2138,7 +2138,7 @@
           }
         });
         this.element.on('hallounselected', function(event, data) {
-          return _this.toolbar.hide();
+          //return _this.toolbar.hide();
         });
         return this.element.on('hallodeactivated', function(event, data) {
           return _this.toolbar.hide();
@@ -2241,7 +2241,7 @@
         var _this = this;
 
         this.element.on('halloactivated', function(event, data) {
-          _this.setPosition();
+          _this.setPosition(); 
           return _this.toolbar.show();
         });
         return this.element.on('hallodeactivated', function(event, data) {

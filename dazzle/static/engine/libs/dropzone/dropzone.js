@@ -530,6 +530,7 @@ require.register("dropzone/lib/dropzone.js", function(exports, require, module){
       addedfile: function(file) {
         var _this = this;
         file.targetElement = this.options.targetElement;
+        file.targetElementId = this.options.targetElementId;
         file.previewElement = Dropzone.createElement(this.options.previewTemplate);
         file.previewTemplate = file.previewElement;
         while (this.previewsContainer.lastChild)
@@ -1386,7 +1387,10 @@ require.register("dropzone/lib/dropzone.js", function(exports, require, module){
         file = files[_l];
         formData.append("" + this.options.paramName + (this.options.uploadMultiple ? "[]" : ""), file, file.name);
       }
+
       formData.append('requestType', 'updateImage');
+      formData.append('id', file.targetElementId); 
+
       return xhr.send(formData);
     };
 

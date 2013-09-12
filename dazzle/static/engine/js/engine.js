@@ -1,16 +1,109 @@
-window.dazzlejQuery = jQuery.noConflict(true);
 
+String.prototype.trim=function(){return this.replace(/^\s+|\s+$/g, '');};
+String.prototype.ltrim=function(){return this.replace(/^\s+/,'');};
+String.prototype.rtrim=function(){return this.replace(/\s+$/,'');};
+String.prototype.fulltrim=function(){return this.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g,'').replace(/\s+/g,' ');};
+
+$.fn.findAndSelf = function(selector) {
+    return this.find(selector).add(this.filter(selector))
+  }
+
+$.fn.duplicate = function(count, cloneEvents) {
+       var tmp = [];
+       for ( var i = 0; i < count; i++ ) {
+               $.merge( tmp, this.clone( cloneEvents ).get() );
+       }
+       return this.pushStack( tmp );
+};
+
+$.fn.draggableXY = function(options) { 
+  var defaultOptions = { 
+    distance: 5, 
+    dynamic: false 
+  }; 
+  options = $.extend(defaultOptions, options); 
+
+  this.draggable({ 
+    distance: options.distance, 
+    start: function (event, ui) { 
+      ui.helper.data('draggableXY.originalPosition', ui.position || {top: 0, left: 0}); 
+      ui.helper.data('draggableXY.newDrag', true); 
+    }, 
+    drag: function (event, ui) { 
+      var originalPosition = ui.helper.data('draggableXY.originalPosition'); 
+      var deltaX = Math.abs(originalPosition.left - ui.position.left); 
+      var deltaY = Math.abs(originalPosition.top - ui.position.top); 
+
+      var newDrag = options.dynamic || ui.helper.data('draggableXY.newDrag'); 
+      ui.helper.data('draggableXY.newDrag', false); 
+
+      var xMax = newDrag ? Math.max(deltaX, deltaY) === deltaX : ui.helper.data('draggableXY.xMax'); 
+      ui.helper.data('draggableXY.xMax', xMax); 
+
+      var newPosition = ui.position; 
+      if(xMax) { 
+        newPosition.top = originalPosition.top; 
+      } 
+      if(!xMax){ 
+        newPosition.left = originalPosition.left; 
+      } 
+
+      return newPosition; 
+    } 
+  }); 
+};
+
+ 
+
+window.dazzlejQuery = jQuery.noConflict();
 window.dazzlejQuery(function(){ 
  
+	setupDefaults();
 	dzEngine.runEngine();
-
 });
 
+function setupDefaults()
+{  
+	var dz$ = window.dazzlejQuery;
+	dz$.noty.defaults = {
+	  layout: 'top',
+	  theme: 'defaultTheme',
+	  type: 'alert',
+	  text: '',
+	  dismissQueue: true, // If you want to use queue feature set this true
+	  template: '<div class="noty_message"><span class="noty_text"></span><div class="noty_close"></div></div>',
+	  animation: {
+	    open: {height: 'toggle'},
+	    close: {height: 'toggle'},
+	    easing: 'swing',
+	    speed: 500 // opening & closing animation speed
+	  },
+	  timeout: 5000, // delay for closing event. Set false for sticky notifications
+	  force: false, // adds notification to the beginning of queue when set to true
+	  modal: false,
+	  closeWith: ['click'], // ['click', 'button', 'hover']
+	  callback: {
+	    onShow: function() {},
+	    afterShow: function() {},
+	    onClose: function() {},
+	    afterClose: function() {}
+	  },
+	  buttons: false // an array of buttons
+	};
+}
 
 var dzEngine = (function(){
 
 	var dz$ = window.dazzlejQuery;
+	var websiteUrl = 'http://10.30.0.2' + window.location.pathname;
 	var updateUrl = "http://10.30.0.2/update" + window.location.pathname;
+	var notyQueue = {};
+	var imageToolbar;
+	var linkToolbar;
+	var copyToobar;
+	var removeToolbar;
+	var copyRemoveTarget;
+	var nextId = 10000; //temporary
 
 	/**
 	 *	IMAGE FUNCTIONS
@@ -41,11 +134,13 @@ var dzEngine = (function(){
 	function createImageToolbar()
 	{  
 		var toolbar = dz$("<div id='dz-imageToolbar'> \
-						  		<div class='dz-title'>Replace Image</div> \
+						  		<div class='dz-title'>Modify Image</div> \
 						   		<div class='dz-preview'></div> \
 						   		<div class='dz-text'>Click or drag file here </div> \
 						   </div>");
 		toolbar.appendTo('body');
+
+		toolbar.hide();
 		var dropzone = new Dropzone(toolbar.get(0), 
 		{  
 			parallelUploads: 5,
@@ -68,38 +163,61 @@ var dzEngine = (function(){
 	function addImageHandlers(dropzone)
 	{
 		dropzone.on("addedfile", function(file)
-		{ 
-			console.log(file);
-			console.log(file.targetElement);  
-			//getImageFromElement(dropzone.customData.targetElement, dropzone.c)
+		{   
+			if (notyQueue[file]) notyQueue[file].close();
+			var notyid = noty({text: 'Uploading file...', timeout:false});
+			notyQueue[file] = notyid;
 		});
 
 
-		dropzone.on("error", function(file, message) { //alert(message); 
+		dropzone.on("error", function(file, message) { 
+			if (notyQueue[file])
+			{
+				notyQueue[file].close(); 
+				notyQueue[file] = null;
+			}
+
+			noty({text: 'An error occurred during upload.', type:'error'});
+
 		}); 
 
-		dropzone.on("success", function(file, response) {
-			console.log('success'); 
-			console.log(response);
+		dropzone.on("success", function(file, response) { 
+			if (notyQueue[file])
+			{
+				notyQueue[file].close(); 
+				notyQueue[file] = null;
+			}
 
-			// TEMPORARY CAT PIC
-			updateElementImage(file.targetElement, 'http://hdnaturepictures.com/wp-content/uploads/2013/05/Cute-Little-Cat.jpg');
-			/*
-			if (this.filesQueue.length == 0 && this.filesProcessing.length == 0) {
-				console.log("upload complete");
-		  	}
-		  	*/
+			noty({text: 'Upload successful', type:'success'});
+
+			if (response)
+			{
+				updateElementImage(file.targetElement, response);
+			} 
 		});
 	}
 
-	function addImageToolbar(element, imageUrl, toolbar)
-	{  
+	function addImageToolbar(element)
+	{    
+
+		var toolbar = imageToolbar; 
+		  
+		if (element.nodeName == "BODY")	return;
+		   
+		var imageUrl = getImageFromElement(element);
+ 
+		if (imageUrl == null) return;
+  
+		if (!element.getAttribute('dzid')) return;
+
+		element.className = ".dz-image";
+ 
 	    dz$(element).hover(
-			function(){    
+			function(){     
 				toolbar.show();
 				toolbar.position({
 					my: "center",
-    				at: "right top+35",
+    				at: "right top+10",
     				of: this,
     				collision: "fit"
 				}); 
@@ -107,6 +225,7 @@ var dzEngine = (function(){
 				toolbar.dropzone.options.addedfile.call(toolbar.dropzone, previewFile);
 				toolbar.dropzone.options.thumbnail.call(toolbar.dropzone, previewFile, getImageFromElement(this));
 				toolbar.dropzone.options.targetElement = this;
+				toolbar.dropzone.options.targetElementId = this.getAttribute('dzid'); 
 			},
 			function(){
 			}
@@ -114,7 +233,7 @@ var dzEngine = (function(){
 	}
 
 	function updateElementImage(element, imageUrl)
-	{
+	{ 
 		if (!element || !imageUrl) return;
 	 
 		if (element.nodeName == "IMG")
@@ -122,8 +241,8 @@ var dzEngine = (function(){
 			$(element).attr("src", imageUrl);
 		}
 		else
-		{
-			$(element).css("background-image", "url(" + imageUrl + ")"); 
+		{  
+			$(element).css("background-image", 'url("' + imageUrl + '")'); 
 	    }
 	}
 
@@ -160,16 +279,29 @@ var dzEngine = (function(){
 	 *	TEXT FUNCTIONS
 	 */
 	function runTextEngine()
-	{  
-		dz$('[dztype="text"]').each(function(index){ 
-			addHalloEditor(this);
-			addHalloHandlers(this);
-		});	
+	{   
+		dz$('[dzid]').each(function(index)
+		{
+			if (!dz$(this).text().fulltrim().length) 
+				return;
+
+			var text = dz$(this).clone().find('[dzid]').remove().end().text();
+			text = text.replace(/^\s+|\s+$/g,''); 
+
+			if (!text.length) return;
+ 		
+ 			if (!dz$(this).parents(".dz-editor").length)
+			{ 
+				dz$(this).addClass("dz-editor");
+				addHalloEditor(this);
+				addHalloHandlers(this);
+			} 
+		}); 
 	}
 
 	function addHalloEditor(element)
 	{
-		if (element.tagName == 'DIV')
+		if (element.tagName == 'DIV' || element.tagName == 'SECTION')
 		{
 			dz$(element).hallo({
 		        plugins: {
@@ -222,10 +354,242 @@ var dzEngine = (function(){
 	}
 
 	/**
+	 *	MOVEMENT FUNCTIONS
+	 */
+	function runSortEngine(elements)
+	{
+		//dz$( "img" ).draggableXY();
+		var handler = function(index)
+		{  
+
+		}
+		
+		var selector = 'div [dzid]'; //TEMPORARY
+
+	 	if (elements)
+	 	{
+	 		dz$(elements).findAndSelf(selector).each(handler);
+	 	}
+	 	else
+	 	{
+	 		dz$(selector).each(handler);
+	 	}
+	}
+
+	/**
+	 *	COPY REMOVE FUNCTIONS
+	 */
+
+	function runCopyRemoveEngine(elements)
+	{ 
+		var handler = function(index)
+	 	{
+	 		addCopyRemoveToolbars(this, copyToolbar, removeToolbar);
+	 	};
+
+	 	var selector = 'div [dzid]'; //TEMPORARY
+
+	 	if (elements)
+	 	{
+	 		dz$(elements).findAndSelf(selector).each(handler);
+	 	}
+	 	else
+	 	{
+	 		dz$(selector).each(handler);
+	 	}
+	}
+
+	function addCopyRemoveToolbars(element, copy_toolbar, remove_toolbar)
+	{ 
+		dz$(element).hover(
+			function(){   
+				copy_toolbar.show();
+				remove_toolbar.show();
+				copy_toolbar.position({
+					my: "center-45 center",
+    				at: "center bottom+5",
+    				of: this, 
+    				collision: "fit"
+				});   
+				remove_toolbar.position({
+					my: "center+45 center",
+    				at: "center bottom+5",
+    				of: this, 
+    				collision: "fit"
+				});
+
+				$(this).data('bgcolor', $(this).css('outline'));
+		        $(this).css('outline','1px solid rgba(255,0,0,.5)');
+
+				checkToolbarOverlap();	
+				copyRemoveTarget = element;
+			},
+			function()
+			{
+				$(this).css('outline', $(this).data('bgcolor'));
+			}
+		);
+	}
+
+	function createCopyToolbar()
+	{
+		var toolbar = dz$("<div id='dz-copyToolbar'> \
+						  		<div class='dz-title'>Copy</div> \
+						   </div>");
+		toolbar.appendTo('body'); 
+		toolbar.hide();
+
+		dz$(toolbar).click(function()
+		{ 
+			var result = dz$(copyRemoveTarget).clone().insertAfter(copyRemoveTarget); 
+
+			runCopyRemoveEngine(result);
+			runImageEngine(result); 
+			runLinkEngine(result);
+		});
+
+		return toolbar;
+	}
+
+	function createRemoveToolbar()
+	{
+		var toolbar = dz$("<div id='dz-removeToolbar'> \
+						  		<div class='dz-title'>Remove</div> \
+						   </div>");
+		toolbar.appendTo('body'); 
+		toolbar.hide();
+
+		dz$(toolbar).click(function()
+		{
+			dz$(copyRemoveTarget).remove();
+		});
+
+		return toolbar;
+	}
+
+	/**
+	 * LINK FUNCTIONS
+	 */ 
+	 function runLinkEngine(elements)
+	 {
+	 	var handler = function(index)
+	 	{
+	 		addLinkToolbar(this);
+	 	};
+
+	 	var selector = 'img:not([href]), [href]:not([rel]), [href][rel="external"]';
+
+	 	if (elements)
+	 	{
+	 		dz$(elements).findAndSelf(selector).each(handler);
+	 	}
+	 	else
+	 	{
+	 		dz$(selector).each(handler);
+	 	}
+	 }
+
+	function addLinkToolbar(element)
+	{   
+		var toolbar = linkToolbar;
+		if (this.tagName ==  "IMG" && dz$(this).parent().attr("href"))
+		{
+			return;
+		}
+		else if (this.href && (!this.href.indexOf(websiteUrl) && this.href.length > websiteUrl.length + 1))
+		{
+			return;
+		} 
+
+		var linkUrl = this.href;
+		if (!linkUrl) linkUrl = "";
+
+	    dz$(element).hover(
+			function(){     
+
+				if (!linkUrl.length)
+					toolbar.children(".dz-title").text("Insert Link");
+				else
+					toolbar.children(".dz-title").text("Modify Link");
+
+				toolbar.show();
+				toolbar.position({
+					my: "center",
+    				at: "right top+50",
+    				of: this, 
+    				collision: "fit"
+				});   
+
+				dz$("#dz-link-text").val(linkUrl);
+				checkToolbarOverlap();
+			},
+			function(){
+			}
+		); 
+	}
+
+	function createLinkToolbar()
+	{  
+		var toolbar = dz$("<div id='dz-linkToolbar'> \
+						  		<div class='dz-title'>Modify Link</div> \
+						  		<div class='dz-input'><input type='text' id='dz-link-text'></input></div> \
+						   </div>");
+		toolbar.appendTo('body');
+		toolbar.hide();
+		return toolbar;
+	}
+
+	/**
 	 * HELPERS
 	 */
+
+	function checkToolbarOverlap()
+	{  
+		var hit = dz$(linkToolbar).collision(imageToolbar); 
+ 		var lastToolbar;
+
+		if (hit.length)
+		{ 
+			if (linkToolbar.position().left == imageToolbar.position().left || 
+				linkToolbar.position().top == imageToolbar.position().top)
+			{ 
+				linkToolbar.position({
+					my: "center",
+					at: "center bottom+30",
+					of: imageToolbar,
+					collision:"fit"
+				}); 
+				lastToolbar = linkToolbar;
+			}
+		}
+
+		hit = dz$(imageToolbar).collision(removeToolbar);
+		var next_hit = dz$(linkToolbar).collision(removeToolbar);
+
+		if (hit.length || next_hit.length)
+		{
+			if (next_hit.length && !lastToolbar) lastToolbar = linkToolbar;
+			if (hit.length && !lastToolbar) lastToolbar = imageToolbar;
+			copyToolbar.position({ 
+				my: "center-45 center",
+				at: "center bottom+15",
+				of: lastToolbar,
+				collision:"fit"
+			});
+			removeToolbar.position({ 
+				my: "center+45 center",
+				at: "center bottom+15",
+				of: lastToolbar,
+				collision:"fit"
+			});
+		} 
+
+
+
+	}
+
 	var saveData = function(data)
-	{ 
+	{  
 		console.log(data);    
 		dz$.post(updateUrl, data, function(response)
 		{
@@ -238,9 +602,17 @@ var dzEngine = (function(){
 	 */
 	return {
 		runEngine: function()
-		{
+		{	
+			imageToolbar = createImageToolbar();  
+			linkToolbar = createLinkToolbar();  
+			copyToolbar = createCopyToolbar();
+			removeToolbar = createRemoveToolbar();
+
+			runCopyRemoveEngine();
 			runImageEngine();
+			runLinkEngine();
 			runTextEngine();
+			runSortEngine();
 		}
 	}
 

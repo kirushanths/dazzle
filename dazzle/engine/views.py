@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.template import Template, Context
-from django.http import HttpResponse 
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotModified
 from django.views.decorators.csrf import csrf_exempt
 from engine.converter import Converter 
+from dztemplate.manager import upload_image
 
 def convert(request, template_name):
 
@@ -22,7 +23,7 @@ def convert(request, template_name):
 def update(request, template_name):
 
 	if request.method != 'POST':
-		return HttpResponse("error")
+		return HttpResponseBadRequest
 
 	requestType = request.POST.get('requestType')
 
@@ -35,13 +36,28 @@ def update(request, template_name):
 	return HttpResponse("unknown request")
 
 def update_image(request, template_name):
+	save_id = request.POST.get('id')
 
-	if not request.FILES:
-		return HttpResponse("file error")
+	if not request.FILES or not save_id:
+		return HttpResponseBadRequest
 
-	#for f in request.FILES.getlist('file'):
+	for f in request.FILES.getlist('file'):
+		success = upload_image(template_name, f)
 
-	return HttpResponse('update image')
+		if not success:
+			return HttpResponseNotModified
+
+		converter = Converter(template_name, 'index.html')
+		
+		location = converter.replace_image(save_id, f.name)
+
+		if location is not None:
+			converter.commit_template()
+			return HttpResponse(location)
+
+		break
+
+	return HttpResponseNotModified
 
 def update_text(request, template_name):
 	save_id = request.POST.get('id')
@@ -50,13 +66,17 @@ def update_text(request, template_name):
 
 	converter = Converter(template_name, 'index.html')
 
-	converter.update_text(save_id, save_data)
+	success = converter.update_text(save_id, save_data)
 
-	converter.commit_template()
+	if success:
+		converter.commit_template()
 
 	return HttpResponse('got ' + save_id + ' ' + save_data)
 
 def upload(request, template_name): 
 	converter = Converter(template_name, 'index.html')
 	converter.run_upload_engine()
+
 	return HttpResponse(template_name + ' uploaded')
+
+	
