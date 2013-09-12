@@ -9,4 +9,4 @@
 sudo service nginx restart
 sudo service uwsgi restart
 
-cd /vagrant/src/
+cd /vagrant/src/dazzle/
