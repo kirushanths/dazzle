@@ -18,4 +18,7 @@ DATABASES = {
 
 # INSTALLED_APPS += ()
 
-from local import *
+try:
+    from settings_local import *
+except ImportError, e:
+    print "Error with your local config: %s" % str(e)

@@ -35,6 +35,18 @@ Icon?
 ehthumbs.db
 Thumbs.db
 
-
+.project
+.settings
+.vagrant
+.settings/org.eclipse.core.resources.prefs
+Gemfile.lock
+*.sublime-project
+*.sublime-workspace
+*.scssc
 dazzle/dazzle/settings/local.py
-dazzle/dazzle/settings/local.py
+*.pyc
+*~
+*.scssc
+.svn
+.idea*
+.hg*
