@@ -1,9 +1,9 @@
 from pyquery import PyQuery
 import urlparse   
-import utils.constants as Constants
+import libs.utils.constants as Constants
 from lxml import etree
-from dztemplate.manager import get_template_as_string
-from dztemplate.manager import save_template
+from apps.dztemplate.manager import get_template_as_string
+from apps.dztemplate.manager import save_template
 import urllib
 import os
 

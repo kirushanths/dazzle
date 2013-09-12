@@ -1,6 +1,6 @@
 from django.template.loader import render_to_string
 import urllib2 
-import utils.constants as Constants
+import libs.utils.constants as Constants
 from boto import connect_s3
 from boto.s3.key import Key  
 import imghdr

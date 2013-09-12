@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.template import Template, Context
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotModified
 from django.views.decorators.csrf import csrf_exempt
-from engine.converter import Converter 
-from dztemplate.manager import upload_image
+from apps.engine.converter import Converter 
+from apps.dztemplate.manager import upload_image
 
 def convert(request, template_name):
 
