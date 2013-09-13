@@ -23,13 +23,15 @@
     .h1 { font-size:30px; margin:0px 0 15px; }
     .h2 { font-size:25px; margin:0px 0 15px; }
 
-    .button { background:#67548b; color:white; height:35px; padding:0 10px; margin:0; padding:0; outline:0; border:0; 
+    .button { 
+        background:#666; color:white; height:35px; padding:0 10px; 
+        margin:0; outline:0; border:0; 
         -webkit-border-radius: 2px;
         -moz-border-radius: 2px;
         border-radius: 2px;
     }
     .button:hover { background:#4a3a67; }
-    .button_action {}
+    .button_action { background:#67548b; }
 
     .input { height:35px; margin:0; padding:0; outline:0; border:0; padding:0 7px; 
         -webkit-border-radius: 2px;
@@ -46,6 +48,15 @@
 /*  LANDING */
 
     ._landing {}
+
+    /* NAVBAR */
+
+    ._landing .navbar { background:black; padding:10px 20px; overflow:hidden; }
+    ._landing .navbar button { float:right; margin-left:10px; }
+
+
+    /* HEADER */
+
     ._landing .header { background:url('images/work.jpg') repeat-x center; text-align:center; height:500px; overflow:hidden;; }
     ._landing .header .logo { width:311px; margin:50px auto; }
     ._landing .header .logo img { width:311px; height:80px; }
