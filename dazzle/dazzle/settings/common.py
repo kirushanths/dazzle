@@ -73,7 +73,6 @@ ROOT_URLCONF = 'dazzle.urls'
 WSGI_APPLICATION = 'dazzle.wsgi.application'
 
 TEMPLATE_DIRS = (
-    os.path.join(PROJECT_ROOT, "templates")
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -87,10 +86,10 @@ INSTALLED_APPS = (
     # 'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'dazzle.apps.core',
-    'dazzle.apps.engine',
-    'dazzle.apps.dztemplate',
-    'dazzle.libs.utils',
+    'apps.core',
+    'apps.engine',
+    'apps.dztemplate',
+    'libs.utils',
     'south',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',

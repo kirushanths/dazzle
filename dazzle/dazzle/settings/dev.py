@@ -17,11 +17,11 @@ DATABASES = {
 }
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'dazzle/media')
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
 MEDIA_URL = '/media/'
 
 # needs to same value in nginx config , if dev
-STATIC_ROOT = '/vagrant/src/dazzle/dazzle/static' # os.path.join(PROJECT_ROOT, 'dazzle/dazzle/static')
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 STATIC_URL = '/static/'
 
 try:
