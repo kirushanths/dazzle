@@ -16,13 +16,14 @@
 
 /*  GENERAL */
 
-    a, a:visited, a:visited, a:active, a:hover { cursor:pointer; color:#1571B8; }
+    /*a, a:visited, a:visited, a:active, a:hover { cursor:pointer; color:#1571B8; }*/
 
-    body { font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; background:white; }
+    body { font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; background:white; margin:0; padding:0; }
+    
+    .h1 { font-size:30px; margin:0px 0 15px; line-height:1em; }
+    .h2 { font-size:25px; margin:0px 0 15px; line-height:1em; }
 
-    .h1 { font-size:30px; margin:0px 0 15px; }
-    .h2 { font-size:25px; margin:0px 0 15px; }
-
+    /*
     .button { 
         background:#666; color:white; height:35px; padding:0 10px; 
         margin:0; outline:0; border:0; 
@@ -38,6 +39,7 @@
         -moz-border-radius: 2px;
         border-radius: 2px;
     }
+    */
 
     .rounded {
         -webkit-border-radius: 8px;
@@ -47,48 +49,60 @@
 
 /*  LANDING */
 
-    ._landing {}
+    body { padding-top:40px; }
 
     /* NAVBAR */
 
-    ._landing .navbar { background:black; padding:10px 20px; overflow:hidden; }
-    ._landing .navbar button { float:right; margin-left:10px; }
-
+    .navbar { margin-bottom:0; }
 
     /* HEADER */
 
-    ._landing .header { background:url('images/work.jpg') repeat-x center; text-align:center; height:500px; overflow:hidden;; }
-    ._landing .header .logo { width:311px; margin:50px auto; }
-    ._landing .header .logo img { width:311px; height:80px; }
-    ._landing .header .slogan { overflow:hidden; padding:40px 40px 60px; background:rgba(0,0,0,0.7); margin:30px 70px 0; }
-    ._landing .header .h1 { color:white; margin:0 0 5px 0; font-weight:bold; font-size:45px; }
-    ._landing .header .h2 { color:white; margin:0 0 35px 0; }
+    .landing_header { background:url('images/work.jpg') repeat-x center; text-align:center; height:500px; overflow:hidden; }
 
-    ._landing .header .slogan .input { margin:0 2px; }
+    .landing_header .logo { width:311px; margin:50px auto; }
+    .landing_header.logo img { width:311px; height:80px; }
+    .landing_header .slogan { 
+        overflow:hidden; 
+        padding:40px 40px 60px; 
+        background:rgba(0,0,0,0.7); 
+        /*margin:30px 70px 0; */
+    }
+    .landing_header .h1 { color:white; margin:0 0 5px 0; font-weight:bold; font-size:45px; }
+    .landing_header .h2 { color:white; margin:0 0 35px 0; }
+
+    .landing_header .slogan .input { margin:0 2px; }
 
     @media screen and (min-width: 0px) {
-        ._landing .header .logo { margin:30px auto; }
-        ._landing .header .logo img { width:auto; height:60px; }
-        ._landing .header .h1 { font-size:20px; }
-        ._landing .header .h2 { margin:0 0 25px 0; font-size: 14px; }
-        ._landing .header .slogan { margin:10px auto; padding:20px 40px; width:250px; } 
-        ._landing .header .slogan .input { display:block;  margin:0 auto; margin-bottom:10px; }
+        .landing_header .logo { margin:30px auto; }
+        .landing_header .logo img { width:auto; height:60px; }
+        .landing_header .h1 { font-size:20px; }
+        .landing_header .h2 { margin:0 0 25px 0; font-size: 14px; }
+        .landing_header .slogan { 
+            margin:10px auto; 
+            padding:20px 40px; 
+            /*width:250px; */
+        } 
+        .landing_header form input { width:190px; }
+        .landing_header .slogan .input { display:block;  margin:0 auto; margin-bottom:10px; }
     }
 
     @media screen and (min-width: 480px) {
-        ._landing .header .slogan { width:320px; } 
+        /*.landing_header .slogan { width:320px; } */
     }
 
     @media screen and (min-width: 768px) {
-        ._landing .header .logo { margin:50px auto; }
-        ._landing .header .logo img { width:311px; height:80px;  }
-        ._landing .header .h1 { font-size:25px; }
-        ._landing .header .h2 { margin:0 0 35px 0; font-size: 23px; }
-        ._landing .header .slogan { padding:40px 40px 60px;margin:30px 70px 0; width:auto; } 
-        ._landing .header .slogan .input { margin:0 2px; display:inline; }
+        .landing_header .logo { margin:50px auto; }
+        .landing_header .logo img { width:311px; height:80px;  }
+        .landing_header .h1 { font-size:25px; }
+        .landing_header .h2 { margin:0 0 35px 0; font-size: 23px; }
+        .landing_header .slogan { 
+            padding:40px 40px 60px;
+            /*margin:30px 70px 0; */
+            width:auto; } 
+        .landing_header .slogan .input { margin:0 2px; display:inline; }
     }
     
     @media screen and (min-width: 900px) {
-        ._landing .header .h1 { font-size:30px; }
+        .landing_header .h1 { font-size:30px; }
     }
     
