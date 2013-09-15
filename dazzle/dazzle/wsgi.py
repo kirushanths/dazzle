@@ -32,6 +32,15 @@ os.environ['PYTHON_EGG_CACHE'] = '/tmp/python-eggs'
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
 
+import uwsgi
+from uwsgidecorators import timer
+from django.utils import autoreload
+
+@timer(1)
+def change_code_gracefull_reload(sig):
+    if autoreload.code_changed():
+        uwsgi.reload()
+
 # Apply WSGI middleware here.
 # from helloworld.wsgi import HelloWorldApplication
 # application = HelloWorldApplication(application)
