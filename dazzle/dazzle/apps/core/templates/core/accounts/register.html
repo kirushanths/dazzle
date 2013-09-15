@@ -1,0 +1,30 @@
+{% extends "core/_layout_standard.html" %}
+{% load staticfiles i18n %}
+
+{% block main %}
+
+<form class="form-horizontal" method="post">
+	{% csrf_token %}
+	<div class="control-group">
+		<label class="control-label" for="inputEmail">Username</label>
+		<div class="controls">
+			<input type="text" id="username" name="username" placeholder="Username" autocorrect="off" autocapitalize="off">
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="inputPassword">Password</label>
+		<div class="controls">
+			<input id="password" name="password" type="password" placeholder="Password" autocapitalize="off">
+		</div>
+	</div>
+	<div class="control-group">
+		<div class="controls">
+			<label class="checkbox">
+				<input type="checkbox"> Remember me
+			</label>
+			<button type="submit" class="btn">Sign in</button>
+		</div>
+	</div>
+</form>
+
+{% endblock %}

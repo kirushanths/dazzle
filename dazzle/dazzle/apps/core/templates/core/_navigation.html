@@ -30,9 +30,9 @@
 			<form class="navbar-form pull-right btn-toolbar">
 				<!-- <input class="span2" type="text" placeholder="Email">
 				<input class="span2" type="password" placeholder="Password"> -->
-				<button type="button" class="btn btn-primary">Are you a developer?</button>
-				<button type="button" class="btn">Create Account</button>
-				<a href="{% url 'apps.core.views.login' %}" class="btn">Login</a>
+				<a href="{% url 'apps.core.accounts.views.login' %}" class="btn btn-primary">Are you a developer?</button>
+				<a href="{% url 'apps.core.accounts.views.register' %}" class="btn">Create Account</button>
+				<a href="{% url 'apps.core.accounts.views.login' %}" class="btn">Login</a>
 			</form>
 		</div><!--/.nav-collapse -->
 	</div>
