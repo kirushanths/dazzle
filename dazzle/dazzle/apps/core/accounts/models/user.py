@@ -19,7 +19,6 @@ class DZUser(User, BaseModel):
         (ROLE_DEVELOPER, 'Developer'))
 
     role = models.CharField(max_length=60, choices=ROLE_CHOICES)
-    created_date = models.DateTimeField(auto_now_add=True)
     last_active = models.DateTimeField(auto_now=False, null=True, blank=True)
     logged_in = models.BooleanField(default=False)
 

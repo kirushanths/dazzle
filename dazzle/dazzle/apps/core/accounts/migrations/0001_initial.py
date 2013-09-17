@@ -15,7 +15,6 @@ class Migration(SchemaMigration):
             ('time_modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, null=True, blank=True)),
             ('last_modified_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='accounts_dzuser_related', null=True, to=orm['auth.User'])),
             ('role', self.gf('django.db.models.fields.CharField')(max_length=60)),
-            ('created_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
             ('last_active', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
             ('logged_in', self.gf('django.db.models.fields.BooleanField')(default=False)),
         ))
@@ -30,7 +29,6 @@ class Migration(SchemaMigration):
     models = {
         'accounts.dzuser': {
             'Meta': {'object_name': 'DZUser', '_ormbases': [u'auth.User']},
-            'created_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'last_active': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'last_modified_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'accounts_dzuser_related'", 'null': 'True', 'to': u"orm['auth.User']"}),
             'logged_in': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
