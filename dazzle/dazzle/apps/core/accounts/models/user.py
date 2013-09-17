@@ -9,7 +9,7 @@ from django.db.models import Q
 from django.db.models.signals import post_save, pre_save
 from django.core.urlresolvers import reverse
 
-from apps.core.models import BaseModel
+from apps.model.models import BaseModel
 
 class THMUser(User, BaseModel):
 
