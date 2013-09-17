@@ -1,0 +1,1 @@
+from dazzle.apps.core.accounts.models.user import DZUser

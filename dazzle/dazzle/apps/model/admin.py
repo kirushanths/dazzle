@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.contenttypes import generic
 
-from django_base_model.models import ModelAttribute
+from dazzle.apps.model.models import ModelAttribute
 
 
 class ModelAttributeInline(generic.GenericTabularInline):

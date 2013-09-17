@@ -9,13 +9,11 @@ from django.db.models import Q
 from django.db.models.signals import post_save, pre_save
 from django.core.urlresolvers import reverse
 
-from apps.model.models import BaseModel
+from dazzle.apps.model.models import BaseModel
 
-class THMUser(User, BaseModel):
-
-	ROLE_USER = 'user'
+class DZUser(User, BaseModel):
+    ROLE_USER = 'user'
     ROLE_DEVELOPER = 'developer'
-
     ROLE_CHOICES = (
         (ROLE_USER, 'Normal'),
         (ROLE_DEVELOPER, 'Developer'))
@@ -24,5 +22,6 @@ class THMUser(User, BaseModel):
     created_date = models.DateTimeField(auto_now_add=True)
     last_active = models.DateTimeField(auto_now=False, null=True, blank=True)
     logged_in = models.BooleanField(default=False)
-    phone_number = PhoneNumberField(blank=True, default='')
 
+    class Meta:
+        app_label = 'accounts'
