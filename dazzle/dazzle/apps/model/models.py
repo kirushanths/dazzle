@@ -263,6 +263,7 @@ class BaseModel(models.Model):
     across multiple projects.
     """
 
+    disabled = models.BooleanField(default=False)
     time_created = models.DateTimeField(auto_now_add=True, null=True)
     time_modified = models.DateTimeField(auto_now=True, null=True)
     last_modified_by = models.ForeignKey(
