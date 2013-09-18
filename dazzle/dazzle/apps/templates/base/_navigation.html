@@ -8,7 +8,7 @@
 		</button>
 
 		{% if user.is_authenticated %}
-			<a href="{% url 'apps.core.dashboard.views.home' %}" class="brand">Welcome, {{ user.username }}</a>
+			<a href="{% url 'apps.dashboard.views.home' %}" class="brand">Welcome, {{ user.username }}</a>
 		{% else %}
 			<a class="brand" href="#">Dazzle</a>
 		{% endif %}
@@ -36,9 +36,9 @@
 			<form class="navbar-form pull-right btn-toolbar">
 				<!-- <input class="span2" type="text" placeholder="Email">
 				<input class="span2" type="password" placeholder="Password"> -->
-				<a href="{% url 'apps.core.accounts.views.login' %}" class="btn btn-primary">Are you a developer?</button>
-				<a href="{% url 'apps.core.accounts.views.register' %}" class="btn">Create Account</button>
-				<a href="{% url 'apps.core.accounts.views.login' %}" class="btn">Login</a>
+				<a href="{% url 'apps.accounts.views.login' %}" class="btn btn-primary">Are you a developer?</button>
+				<a href="{% url 'apps.accounts.views.register' %}" class="btn">Create Account</button>
+				<a href="{% url 'apps.accounts.views.login' %}" class="btn">Login</a>
 			</form>
 		</div><!--/.nav-collapse -->
 	</div>

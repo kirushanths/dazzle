@@ -8,9 +8,6 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 
-def home(request):
-    return render(request, 'core/home.html')
-
 def login(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -20,7 +17,7 @@ def login(request):
         if user is not None:
             if user.is_active:
                 django_login(request, user)
-                return HttpResponseRedirect(reverse('apps.core.dashboard.views.home'))
+                return HttpResponseRedirect(reverse('apps.dashboard.views.home'))
             else:
                 # Return a 'disabled account' error message
                 print('asdf')
@@ -28,12 +25,12 @@ def login(request):
             # Return an 'invalid login' error message.
             print('asdf')
 
-    return render(request, 'core/accounts/login.html')
+    return render(request, 'accounts/login.html')
 
 def logout(request):
     django_logout(request)
     if not request.user.is_authenticated():
-        return HttpResponseRedirect(reverse('apps.core.accounts.views.login'))
+        return HttpResponseRedirect(reverse('apps.accounts.views.login'))
 
 def register(request):
-    return render(request, 'core/accounts/register.html')
+    return render(request, 'accounts/register.html')

@@ -16,13 +16,7 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^', include('apps.core.urls')),
-
-    url(r'upload/(.+)$', include('apps.engine.urls')),
-
-    url(r'update/(.+)$', include('apps.engine.urls')),
-
-    url(r'', include('apps.engine.urls')),
+    url(r'^', include('apps.urls'))
 
 )
 

@@ -1,1 +1,0 @@
-from dazzle.apps.core.dashboard.models.template import DZTemplate

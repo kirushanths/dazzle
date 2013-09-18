@@ -10,4 +10,4 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 
 def home(request):
-    return render(request, 'core/home.html')
+    return render(request, 'corporate/home.html')

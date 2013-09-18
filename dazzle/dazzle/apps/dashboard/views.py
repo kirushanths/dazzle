@@ -10,4 +10,4 @@ from django.http import HttpResponseRedirect
 
 @login_required
 def home(request):
-    return render(request, 'core/dashboard/home.html')
+    return render(request, 'dashboard/home.html')
