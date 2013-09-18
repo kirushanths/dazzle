@@ -1,12 +1,11 @@
-
 String.prototype.trim=function(){return this.replace(/^\s+|\s+$/g, '');};
 String.prototype.ltrim=function(){return this.replace(/^\s+/,'');};
 String.prototype.rtrim=function(){return this.replace(/\s+$/,'');};
 String.prototype.fulltrim=function(){return this.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g,'').replace(/\s+/g,' ');};
 
 $.fn.findAndSelf = function(selector) {
-    return this.find(selector).add(this.filter(selector))
-  }
+    return this.find(selector).add(this.filter(selector));
+  };
 
 $.fn.duplicate = function(count, cloneEvents) {
        var tmp = [];
@@ -323,7 +322,7 @@ var dzEngine = (function(){
 					'halloreundo': {},
 					'hallolink': {}
 				}
-			})
+			});
 		}
 	}
 
@@ -492,25 +491,29 @@ var dzEngine = (function(){
 	function addLinkToolbar(element)
 	{   
 		var toolbar = linkToolbar;
+
+		var linkUrl = element.getAttribute('href');
+
 		if (this.tagName ==  "IMG" && dz$(this).parent().attr("href"))
 		{
 			return;
 		}
-		else if (this.href && (!this.href.indexOf(websiteUrl) && this.href.length > websiteUrl.length + 1))
+		else if (linkUrl && (!linkUrl.indexOf(websiteUrl) && linkUrl.length > websiteUrl.length + 1))
 		{
 			return;
-		} 
-
-		var linkUrl = this.href;
-		if (!linkUrl) linkUrl = "";
+		}  
 
 	    dz$(element).hover(
 			function(){     
-
+				var linkUrl = this.getAttribute('href');
 				if (!linkUrl.length)
+				{
 					toolbar.children(".dz-title").text("Insert Link");
+				}
 				else
-					toolbar.children(".dz-title").text("Modify Link");
+				{
+					toolbar.children(".dz-title").text("Modify Link"); 
+				} 
 
 				toolbar.show();
 				toolbar.position({
@@ -521,6 +524,17 @@ var dzEngine = (function(){
 				});   
 
 				dz$("#dz-link-text").val(linkUrl);
+				dz$("#dz-link-text").data("target",element);
+				dz$("#dz-link-text").data("linkUrl",linkUrl);
+				dz$("#dz-link-text").keyup(function() { 
+					var el = dz$(this); 
+					if (el.attr('href') != el.data("linkUrl"))
+					{
+						el.data("target").setAttribute('href', el.val());
+						// send to server
+					} 
+				});
+
 				checkToolbarOverlap();
 			},
 			function(){
@@ -598,7 +612,7 @@ var dzEngine = (function(){
 	}
 
 	/**
-	 * PUBLIC
+	 * PUBLIC!
 	 */
 	return {
 		runEngine: function()
@@ -614,6 +628,6 @@ var dzEngine = (function(){
 			runTextEngine();
 			runSortEngine();
 		}
-	}
+	};
 
 })();
