@@ -87,6 +87,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'dazzle.apps',
+    'dazzle.apps.api',
+    'dazzle.apps.billing',
     'dazzle.apps.model',
     'dazzle.apps.corporate',
     'dazzle.apps.accounts',
