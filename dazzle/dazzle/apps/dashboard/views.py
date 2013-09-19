@@ -11,3 +11,7 @@ from django.http import HttpResponseRedirect
 @login_required
 def home(request):
     return render(request, 'dashboard/home.html')
+
+@login_required
+def manager(request):
+	return render(request, 'dashboard/manager.html')    
