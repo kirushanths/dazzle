@@ -441,7 +441,12 @@ var dzEngine = (function(){
 		dz$(toolbar).click(function()
 		{ 
 			var result = dz$(copyRemoveTarget).clone().insertAfter(copyRemoveTarget); 
-
+			var ident = dz$(copyRemoveTarget).attr('dzid'); 
+			
+			console.log(ident);
+			//send to server
+			//saveData({'requestType':'copyElement', 'id': ident });
+				
 			runCopyRemoveEngine(result);
 			runImageEngine(result); 
 			runLinkEngine(result);
@@ -461,6 +466,10 @@ var dzEngine = (function(){
 		dz$(toolbar).click(function()
 		{
 			dz$(copyRemoveTarget).remove();
+			var ident = dz$(copyRemoveTarget).attr('dzid'); 
+			console.log(ident);
+			//send to server
+			//saveData({'requestType':'removeElement', 'id': ident });
 		});
 
 		return toolbar;
@@ -547,8 +556,7 @@ var dzEngine = (function(){
 			var url =  el.data("linkUrl");
 			if (!url || el.attr('href') != url)
 			{ 
-				el.data("target").setAttribute('href', el.val());
-				// send to server
+				el.data("target").setAttribute('href', el.val()); 
 
 				var target = dz$(el.data("target"));
 				var ident = target.attr("dzid");
