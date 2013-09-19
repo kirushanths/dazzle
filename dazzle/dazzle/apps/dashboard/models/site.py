@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from django.db import models
 
 from dazzle.apps.model.models import BaseModel
+from dazzle.apps.dashboard.models import DZTemplate
 from dazzle.apps.accounts.models import DZUser
 
 class DZSiteSettings (BaseModel):
@@ -23,7 +24,7 @@ class DZSite (BaseModel):
     #https://docs.djangoproject.com/en/dev/topics/db/queries/#following-relationships-backward
     created_by = models.ForeignKey(
         DZUser,
-        related_name='sites',
+        related_name='+',
         null=True,
         blank=True
     )
@@ -34,7 +35,19 @@ class DZSite (BaseModel):
         app_label = 'dashboard'
 
 
-class DZSiteCommit (BaseModel):
+class DZSiteCommit (DZTemplate):
+    commited_by = models.ForeignKey(
+        DZUser,
+        related_name='commits',
+        null=True,
+        blank=True
+    )
+    site = models.ForeignKey(
+        DZSite,
+        related_name='commits',
+        null=True,
+        blank=True
+    )
     class Meta:
         app_label = 'dashboard'
 
@@ -49,8 +62,18 @@ class DZSiteOwnership (BaseModel):
         PENDING, 'Pending'
     )
 
-    site = models.ForeignKey(DZSite)
-    owner = models.ForeignKey(DZUser)
+    site = models.ForeignKey(
+        DZSite,
+        related_name='owners',
+        null=True,
+        blank=True
+    )
+    owner = models.ForeignKey(
+        DZUser,
+        related_name='sites',
+        null=True,
+        blank=True
+    )
 
     ownership_type = models.CharField(max_length=100)
 
