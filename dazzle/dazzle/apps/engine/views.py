@@ -29,12 +29,14 @@ def update(request, template_name):
 
 	if requestType == 'updateImage':
 		return update_image(request, template_name)
-
-	if requestType == 'updateText':
+	elif requestType == 'updateText':
 		return update_text(request, template_name)
-
-	if requestType == 'updateLink':
+	elif requestType == 'updateLink':
 		return update_link(request, template_name)
+	elif requestType == 'copyElement':
+		return copy_element(request, template_name)
+	elif requestType == 'removeElement':
+		return remove_element(request, template_name)
 
 	return HttpResponse("unknown request")
 
@@ -61,6 +63,20 @@ def update_image(request, template_name):
 		break
 
 	return HttpResponseNotModified
+
+def copy_element(request, template_name):
+	save_id = request.POST.get('id')
+
+	converter = Converter(template_name, 'index.html')
+
+	return HttpResponse('copied ' + save_id)
+
+def remove_element(request, template_name):
+	save_id = request.POST.get('id')
+
+	converter = Converter(template_name, 'index.html')
+
+	return HttpResponse('removed ' + save_id)
 
 def update_link(request, template_name):
 	save_id = request.POST.get('id')

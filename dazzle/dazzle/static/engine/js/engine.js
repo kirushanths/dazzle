@@ -442,10 +442,9 @@ var dzEngine = (function(){
 		{ 
 			var result = dz$(copyRemoveTarget).clone().insertAfter(copyRemoveTarget); 
 			var ident = dz$(copyRemoveTarget).attr('dzid'); 
-			
+
 			console.log(ident);
-			//send to server
-			//saveData({'requestType':'copyElement', 'id': ident });
+			saveData({'requestType':'copyElement', 'id': ident });
 				
 			runCopyRemoveEngine(result);
 			runImageEngine(result); 
@@ -468,8 +467,7 @@ var dzEngine = (function(){
 			dz$(copyRemoveTarget).remove();
 			var ident = dz$(copyRemoveTarget).attr('dzid'); 
 			console.log(ident);
-			//send to server
-			//saveData({'requestType':'removeElement', 'id': ident });
+			saveData({'requestType':'removeElement', 'id': ident });
 		});
 
 		return toolbar;
