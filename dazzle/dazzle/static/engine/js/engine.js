@@ -501,12 +501,12 @@ var dzEngine = (function(){
 		else if (linkUrl && (!linkUrl.indexOf(websiteUrl) && linkUrl.length > websiteUrl.length + 1))
 		{
 			return;
-		}  
+		}   
 
 	    dz$(element).hover(
 			function(){     
 				var linkUrl = this.getAttribute('href');
-				if (!linkUrl.length)
+				if (!linkUrl)
 				{
 					toolbar.children(".dz-title").text("Insert Link");
 				}
@@ -525,15 +525,7 @@ var dzEngine = (function(){
 
 				dz$("#dz-link-text").val(linkUrl);
 				dz$("#dz-link-text").data("target",element);
-				dz$("#dz-link-text").data("linkUrl",linkUrl);
-				dz$("#dz-link-text").keyup(function() { 
-					var el = dz$(this); 
-					if (el.attr('href') != el.data("linkUrl"))
-					{
-						el.data("target").setAttribute('href', el.val());
-						// send to server
-					} 
-				});
+				dz$("#dz-link-text").data("linkUrl",linkUrl); 
 
 				checkToolbarOverlap();
 			},
@@ -550,6 +542,22 @@ var dzEngine = (function(){
 						   </div>");
 		toolbar.appendTo('body');
 		toolbar.hide();
+		dz$("#dz-link-text").keyup(function() { 
+			var el = dz$(this);  
+			var url =  el.data("linkUrl");
+			if (!url || el.attr('href') != url)
+			{ 
+				el.data("target").setAttribute('href', el.val());
+				// send to server
+
+				var target = dz$(el.data("target"));
+				var ident = target.attr("dzid");
+				var newValue = el.val();
+
+				saveData({'requestType':'updateLink', 'id': ident,'value':newValue });
+			} 
+		});
+
 		return toolbar;
 	}
 

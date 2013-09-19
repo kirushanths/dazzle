@@ -109,6 +109,14 @@ class Converter:
 			value = self.location + value
 			e.set(attr, value)
 	  
+	def update_link(self, target, value):
+		elements = self.html_obj('*').filter('[dzid="' + target + '"]')  
+		for e in elements:  
+ 			pq = PyQuery(e)
+ 			pq.attr('href', value)
+ 			return True
+		return False
+
 	# IMAGE FUNCTIONS
 	def replace_image(self, target, image_name):
 		elements = self.html_obj('*').filter('[dzid="' + target + '"]')  

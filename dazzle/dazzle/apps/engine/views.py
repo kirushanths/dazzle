@@ -33,6 +33,9 @@ def update(request, template_name):
 	if requestType == 'updateText':
 		return update_text(request, template_name)
 
+	if requestType == 'updateLink':
+		return update_link(request, template_name)
+
 	return HttpResponse("unknown request")
 
 def update_image(request, template_name):
@@ -58,6 +61,20 @@ def update_image(request, template_name):
 		break
 
 	return HttpResponseNotModified
+
+def update_link(request, template_name):
+	save_id = request.POST.get('id')
+
+	save_data = request.POST.get('value') 
+
+	converter = Converter(template_name, 'index.html')
+
+	success = converter.update_link(save_id, save_data)
+
+	if success:
+		converter.commit_template()
+
+	return HttpResponse('update link ' + save_id + ' ' + save_data)
 
 def update_text(request, template_name):
 	save_id = request.POST.get('id')
