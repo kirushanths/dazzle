@@ -3,26 +3,32 @@
 
 {% block main %}
 
-<form class="form-horizontal" method="post">
+<form class="form-horizontal" role="form" method="post">
 	{% csrf_token %}
-	<div class="control-group">
-		<label class="control-label" for="inputEmail">Username</label>
-		<div class="controls">
-			<input type="text" id="username" name="username" placeholder="Username" autocorrect="off" autocapitalize="off">
+	<div class="form-group">
+		<label for="inputEmail1" class="col-lg-2 control-label">Username</label>
+		<div class="col-lg-3">
+			<input class="form-control" type="text" id="username" name="username" placeholder="Username" autocorrect="off" autocapitalize="off">
 		</div>
 	</div>
-	<div class="control-group">
-		<label class="control-label" for="inputPassword">Password</label>
-		<div class="controls">
-			<input id="password" name="password" type="password" placeholder="Password" autocapitalize="off">
+	<div class="form-group">
+		<label for="inputPassword1" class="col-lg-2 control-label">Password</label>
+		<div class="col-lg-3">
+			<input id="password" class="form-control" name="password" type="password" placeholder="Password" autocapitalize="off">
 		</div>
 	</div>
-	<div class="control-group">
-		<div class="controls">
-			<label class="checkbox">
-				<input type="checkbox"> Remember me
-			</label>
-			<button type="submit" class="btn">Sign in</button>
+	<div class="form-group">
+		<div class="col-lg-offset-2 col-lg-3">
+			<div class="checkbox">
+				<label>
+					<input type="checkbox"> Remember me
+				</label>
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-lg-offset-2 col-lg-3">
+			<button type="submit" class="btn btn-default">Sign in</button>
 		</div>
 	</div>
 </form>
