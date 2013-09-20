@@ -8,6 +8,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 
+from .forms import DZUserModelForm
+
 def login(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -33,4 +35,20 @@ def logout(request):
         return HttpResponseRedirect(reverse('apps.accounts.views.login'))
 
 def register(request):
-    return render(request, 'accounts/register.html')
+    if request.POST:
+        user_form = DZUserModelForm(request.POST)
+        if user_form.is_valid():
+            # commit=False means the form doesn't save at this time.
+            # commit defaults to True which means it normally saves.
+            dzuser = user_form.save(commit=False)
+            dzuser.save()
+            #redirect
+            return HttpResponseRedirect(reverse('apps.dashboard.views.home'))
+        else:
+            print('error')
+            #failed
+    else:
+        user_form = DZUserModelForm()
+
+    return render(request, 'accounts/register.html', {'user_form': user_form})
+
