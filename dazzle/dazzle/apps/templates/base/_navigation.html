@@ -7,11 +7,7 @@
         <span class="icon-bar"></span>
       </button>
 
-	{% if user.is_authenticated %}
-		<a href="{% url 'apps.dashboard.views.home' %}" class="navbar-brand">Welcome, {{ user.get_display_name }}</a>
-	{% else %}
-		<a class="navbar-brand" href="#">Dazzle</a>
-	{% endif %}
+	<a class="navbar-brand" href="#">Dazzle</a>
 
 	<div class="navbar-collapse collapse">
 		<!--
@@ -33,6 +29,7 @@
 			</li>
 		</ul>
 	-->
+
 		<div class="nav navbar-form navbar-right">
 			{% if user.is_authenticated %}
 				<a href="{% url 'apps.accounts.views.logout' %}" class="btn btn-default">Logout</a>
@@ -42,5 +39,10 @@
 				<a href="{% url 'apps.accounts.views.login' %}" class="btn btn-default">Login</a>
 			{% endif %}
 		</div>
+
+		{% if user.is_authenticated %}
+			<p class="navbar-text pull-right">Welcome, {{ user.get_display_name }}</p>
+		{% endif %}
+
 	</div><!--/.nav-collapse -->
 </div>
