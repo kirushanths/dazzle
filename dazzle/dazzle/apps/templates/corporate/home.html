@@ -15,6 +15,7 @@
                 <div class="h2">Choose from the most beautiful designs on the web</div>
 
                 <form class="form-inline" role="form" method="post">
+                    {% csrf_token %}
                     <div class="form-group">
                         <label class="sr-only" for="landingform_email">Email address</label>
                         <input type="email" class="form-control" id="landingform_email" placeholder="Enter email" name="email">
