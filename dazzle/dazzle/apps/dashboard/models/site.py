@@ -75,7 +75,7 @@ class DZSiteOwnership (BaseModel):
         blank=True
     )
 
-    ownership_type = models.CharField(max_length=100)
+    ownership_type = models.CharField(max_length=100, choices=OWNERSHIP_TYPES)
 
     class Meta:
         app_label = 'dashboard'
