@@ -3,46 +3,61 @@
 
 {% block main %}
 
-    <ol class="breadcrumb">
-    	<li><a href="#">Dashboard</a></li>
-    	<li class="active">Sites</li>
-    </ol>
+	<div class="well well-sm">
+		<h4>
+			<span>Dashboard</span>&nbsp;
+			<small>Manage your sites</small>&nbsp;
+			<span class="label label-default">2</span>
+		</h4>
+	</div>
 
-	<div class="table-responsive">
-		<table class="table table-hover">
-			<thead>
-				<tr>
-					<th>Site ID</th>
-					<th>Description</th>
-					<th>Status</th>
-					<th>Actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>1337</td>
-					<td>Fish &amp; Taco Store</td>
-					<td><span class="label label-success">Active</span></td>
-					<td>
-						<div class="btn-group btn-group-xs">
-							<div class="btn btn-default">Edit</div>
-						</div>
-					</td>
-				</tr>
-				{% for i in c %}
-				<tr class="active">
-					<td>1337</td>
-					<td>Fish &amp; Taco Store</td>
-					<td><span class="label label-success">Active</span></td>
-					<td>
-						<div class="btn-group btn-group-xs">
-							<div class="btn btn-default">Edit</div>
-						</div>
-					</td>
-				</tr>
-				{% endfor %}
-			</tbody>
-		</table>
+<!--div>
+    <ol class="breadcrumb">
+    	<li>Dashboard</li>
+    	<li class="active">Taco Store</li>
+    </ol>
+-->
+
+    <div class="panel panel-default">
+  		<!-- Default panel contents -->
+  		<div class="panel-heading">Current Sites</div>
+
+		<div class="table-responsive">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Site ID</th>
+						<th>Description</th>
+						<th>Status</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1337</td>
+						<td>Fish &amp; Taco Store</td>
+						<td><span class="label label-success">Active</span></td>
+						<td>
+							<div class="btn-group btn-group-xs">
+								<div class="btn btn-default">Edit</div>
+							</div>
+						</td>
+					</tr>
+					{% for i in c %}
+					<tr class="active">
+						<td>1337</td>
+						<td>Fish &amp; Taco Store</td>
+						<td><span class="label label-success">Active</span></td>
+						<td>
+							<div class="btn-group btn-group-xs">
+								<div class="btn btn-default">Edit</div>
+							</div>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
 	</div>
 
 {% endblock %}
