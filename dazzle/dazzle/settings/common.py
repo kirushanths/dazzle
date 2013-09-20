@@ -50,7 +50,9 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'lk!vza-cq($e!b@$!%d^9%vrjxm-74&zv)i!e$=y93rt=y*-rv'
+SECRET_KEY = 'aalk!vza-cq($cce!b@b$!%d^9%vrjxam-74&zv)i!e$=y9dd3rt=y'
+
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
