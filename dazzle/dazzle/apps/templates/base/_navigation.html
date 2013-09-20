@@ -34,9 +34,13 @@
 		</ul>
 	-->
 		<div class="nav navbar-form navbar-right">
-			<a href="{% url 'apps.accounts.views.login' %}" class="btn btn-primary">Are you a developer?</button>
-			<a href="{% url 'apps.accounts.views.register' %}" class="btn">Create Account</a>
-			<a href="{% url 'apps.accounts.views.login' %}" class="btn">Login</a>
+			{% if user.is_authenticated %}
+				<a href="{% url 'apps.accounts.views.logout' %}" class="btn btn-default">Logout</a>
+			{% else %}
+				<a href="{% url 'apps.accounts.views.login' %}" class="btn btn-primary">Are you a developer?</a>&nbsp;
+				<a href="{% url 'apps.accounts.views.register' %}" class="btn btn-default">Create Account</a>&nbsp;
+				<a href="{% url 'apps.accounts.views.login' %}" class="btn btn-default">Login</a>
+			{% endif %}
 		</div>
 	</div><!--/.nav-collapse -->
 </div>
