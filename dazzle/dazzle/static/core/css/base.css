@@ -16,12 +16,34 @@
 
 /*  GENERAL */
 
+    /* BS OVERRIDE */
     /*a, a:visited, a:visited, a:active, a:hover { cursor:pointer; color:#1571B8; }*/
 
-    body { font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; background:white; margin:0; padding:0; }
+    body { font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; background:white; margin:0; padding:0; font-weight:200; }
+    h1, h2, h3, h4, h5, h6 { font-weight:200; }
+    label { font-weight:200; }
+
+    .form-group { margin-right:5px; }
+
+    th { font-weight:400; color:#999; }
+    .table thead>tr>th, .table tbody>tr>th, .table tfoot>tr>th, .table thead>tr>td, .table tbody>tr>td, .table tfoot>tr>td { padding:8px 15px; }
     
+    /* LANDING */
+
+    .landing.jumbotron { background:url('images/work.jpg') repeat-x center; color:white; margin-bottom:0; padding:0; }
+    .landing.jumbotron .container { padding:30px; }
+    .landing.jumbotron .backdrop { background:rgba(0,0,0,0.7); }
+
+    .get-started.jumbotron { padding:20px; }
+
+    .jumbotron h1 { font-size:35px; font-weight:400; font-family:'lucida grande',tahoma,verdana,arial,sans-serif; }
+    .jumbotron p { font-size:18px;  }
+    .jumbotron form { line-height:normal; }
+
+
     .h1 { font-size:25px; margin:0px 0 15px; line-height:1em; }
     .h2 { font-size:25px; margin:0px 0 15px; line-height:1em; }
+
 
     /*
     .button { 
@@ -49,7 +71,7 @@
 
 /*  LANDING */
 
-    body { padding-top:60px; }
+    body { padding-top:50px; }
 
     /* NAVBAR */
 
@@ -70,8 +92,6 @@
     }
     .landing_header .h1 { color:white; margin:0 0 5px 0; font-weight:bold; font-size:30px; }
     .landing_header .h2 { color:white; margin:0 0 35px 0; }
-
-    .landing_header .form-group { margin-right:5px; }
 
 
     
