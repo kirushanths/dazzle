@@ -77,11 +77,30 @@ class DZUser(AbstractBaseUser, PermissionsMixin, BaseModel):
         app_label = 'accounts'
 
     def get_full_name(self):
-        full_name = '%s %s' % (self.first_name, self.last_name)
-        return full_name.strip()
- 
+        fname = lname = None
+        if self.first_name:
+            fname = self.first_name.strip()
+        if self.last_name:
+            lname = self.last_name.strip()
+
+        if fname and lname:
+            return '%s %s' % (fname, lname)
+        elif fname:
+            return fname
+        elif lname:
+            return lname
+
+        return None
+        
     def get_short_name(self):
         return self.first_name
+
+    def get_display_name(self):
+        full_name = self.get_full_name()
+        if full_name:
+            return full_name
+        else:
+            return self.email
 
     def __unicode__(self):
         return self.email
