@@ -61,7 +61,7 @@
     .landing_header { background:url('images/work.jpg') repeat-x center; text-align:center; height:500px; overflow:hidden; margin-top:-20px }
 
     .landing_header .logo { width:311px; margin:50px auto; }
-    .landing_header.logo img { width:311px; height:80px; }
+    .landing_header .logo img { width:311px; height:80px; }
     .landing_header .slogan { 
         overflow:hidden; 
         padding:40px 40px 60px; 
@@ -71,7 +71,7 @@
     .landing_header .h1 { color:white; margin:0 0 5px 0; font-weight:bold; font-size:30px; }
     .landing_header .h2 { color:white; margin:0 0 35px 0; }
 
-    .landing_header .slogan .input { margin:0 2px; }
+    .landing_header .form-group { margin-right:5px; }
 
 
     
