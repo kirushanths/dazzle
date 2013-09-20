@@ -1,25 +1,12 @@
 
-/*  STRUCTURE */
-
-    /* http://matthewjamestaylor.com/blog/ultimate-2-column-left-menu-pixels.htm */
-    .colmask { position:relative; clear:both; float:left; width:100%; overflow:hidden; background:#333; }
-
-    /* (left) has to equal .col1wrap and is the width of left column = left_col */
-    .leftmenu .colright { float:left; width:200%; position:relative; left:220px; }
-    /* (right) has to equal .colright and is the width of left column = left_col  */
-    .leftmenu .col1wrap { float:right; width:50%; position:relative;right:220px; }
-    /* (margin) = 0 padding 0 left_col+padding  */
-    .leftmenu .col1 { margin:0 0 0 220px; position:relative; right:100%; overflow:hidden; }
-    /* one extra pixel on width to hide double border */
-    /* (width) is left_col-2*padding and (right) is left_col-padding */
-    .leftmenu .col2 { float:left; width:220px; position:relative; right:220px; }
-
 /*  GENERAL */
 
     /* BS OVERRIDE */
-    /*a, a:visited, a:visited, a:active, a:hover { cursor:pointer; color:#1571B8; }*/
 
     body { background:white; margin:0; padding:0; }
+    body { padding-top:70px; }
+    body#landing { padding-top:50px; }
+
     body, .btn, h1, h2, h3, h4, h5, h6 { font-weight:200; font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; }
     label { font-weight:200; }
 
@@ -27,6 +14,11 @@
 
     th { font-weight:400; color:#999; }
     .table thead>tr>th, .table tbody>tr>th, .table tfoot>tr>th, .table thead>tr>td, .table tbody>tr>td, .table tfoot>tr>td { padding:8px 15px; }
+
+     /* NAVBAR */
+
+    .navbar { margin-bottom:0; }
+    .navbar .btn-toolbar { margin-top:0; }
     
     /* LANDING */
 
@@ -41,57 +33,10 @@
     .jumbotron form { line-height:normal; }
 
 
-    .h1 { font-size:25px; margin:0px 0 15px; line-height:1em; }
-    .h2 { font-size:25px; margin:0px 0 15px; line-height:1em; }
-
-
-    /*
-    .button { 
-        background:#666; color:white; height:35px; padding:0 10px; 
-        margin:0; outline:0; border:0; 
-        -webkit-border-radius: 2px;
-        -moz-border-radius: 2px;
-        border-radius: 2px;
-    }
-    .button:hover { background:#4a3a67; }
-    .button_action { background:#67548b; }
-
-    .input { height:35px; margin:0; padding:0; outline:0; border:0; padding:0 7px; 
-        -webkit-border-radius: 2px;
-        -moz-border-radius: 2px;
-        border-radius: 2px;
-    }
-    */
-
     .rounded {
         -webkit-border-radius: 8px;
         -moz-border-radius: 8px;
         border-radius: 8px;
     }
-
-/*  LANDING */
-
-    body { padding-top:50px; }
-
-    /* NAVBAR */
-
-    .navbar { margin-bottom:0; }
-    .navbar .btn-toolbar { margin-top:0; }
-
-    /* HEADER */
-
-    .landing_header { background:url('images/work.jpg') repeat-x center; text-align:center; height:500px; overflow:hidden; margin-top:-20px }
-
-    .landing_header .logo { width:311px; margin:50px auto; }
-    .landing_header .logo img { width:311px; height:80px; }
-    .landing_header .slogan { 
-        overflow:hidden; 
-        padding:40px 40px 60px; 
-        background:rgba(0,0,0,0.7); 
-        /*margin:30px 70px 0; */
-    }
-    .landing_header .h1 { color:white; margin:0 0 5px 0; font-weight:bold; font-size:30px; }
-    .landing_header .h2 { color:white; margin:0 0 35px 0; }
-
 
     
