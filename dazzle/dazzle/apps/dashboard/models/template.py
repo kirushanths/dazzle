@@ -8,7 +8,7 @@ from dazzle.apps.model.models import BaseModel
 class DZTemplateSource (BaseModel):
     AMAZONS3 = 'amazons3'
     SOURCE_TYPES = (
-        AMAZONS3, 'Amazon S3'
+        (AMAZONS3, 'Amazon S3'),
     )
 
     source_type = models.CharField(max_length=100, choices=SOURCE_TYPES)

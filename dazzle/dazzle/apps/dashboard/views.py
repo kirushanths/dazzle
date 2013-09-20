@@ -15,17 +15,17 @@ from dazzle.apps.accounts.models.user import DZUser
 
 @login_required
 def home(request):
-    return render(request, 'dashboard/home.html')
+    return HttpResponseRedirect(reverse('apps.dashboard.views.manager'))
 
 @login_required
 def manager(request):
 
     # get user
     try:
-        dzuser = DZUser.objects.get(username = request.user).select_related(depth=1)
+        user = DZUser.objects.filter(email = request.user.email)
     except DZUser.DoesNotExist:
-        return HttpResponse("Invalid username")
+        return HttpResponse("Invalid email")
 
-    print (dzuser)
+    print(request.user.sites.all())
 
     return render(request, 'dashboard/manager.html')    

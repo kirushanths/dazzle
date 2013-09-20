@@ -12,9 +12,9 @@ from .forms import DZUserModelForm
 
 def login(request):
     if request.method == "POST":
-        username = request.POST['username']
+        email = request.POST['email']
         password = request.POST['password']
-        user = django_auth(username=username, password=password)
+        user = django_auth(username=email, password=password)
 
         if user is not None:
             if user.is_active:
@@ -40,8 +40,8 @@ def register(request):
         if user_form.is_valid():
             # commit=False means the form doesn't save at this time.
             # commit defaults to True which means it normally saves.
-            dzuser = user_form.save(commit=False)
-            dzuser.save()
+            DZUser = user_form.save(commit=False)
+            DZUser.save()
             #redirect
             return HttpResponseRedirect(reverse('apps.dashboard.views.home'))
         else:

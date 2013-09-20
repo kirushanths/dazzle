@@ -1,6 +1,6 @@
 import re
 
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
@@ -267,7 +267,7 @@ class BaseModel(models.Model):
     time_created = models.DateTimeField(auto_now_add=True, null=True)
     time_modified = models.DateTimeField(auto_now=True, null=True)
     last_modified_by = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         related_name='%(app_label)s_%(class)s_related',
         null=True,
         blank=True
