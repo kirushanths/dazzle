@@ -4,19 +4,20 @@
 
 {% block main %}
 
-<form class="form-horizontal" method="post">
-	{% csrf_token %}
+<div class="row">
+	<div class="col-xs-12 col-md-8">
+		<form class="form-horizontal" method="post">
+			{% csrf_token %}
 
-	{{ user_form|bootstrap }}
+			{{ user_form|bootstrap_horizontal }}
 
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Create Account</button>
-    </div>
-    <div class="control-group">
-		<div class="controls">
-			<button type="submit" class="btn">Create Account</button>
-		</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10 col-lg-offset-2 col-lg-10">
+					<button type="submit" class="btn btn-primary">Create Account</button>
+				</div>
+			</div>
+		</form>
 	</div>
-</form>
+</div>
 
 {% endblock %}
