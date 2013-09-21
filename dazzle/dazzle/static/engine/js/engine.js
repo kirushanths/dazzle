@@ -464,13 +464,14 @@ var dzEngine = (function(){
 			var result = dz$(copyRemoveTarget).clone().insertAfter(copyRemoveTarget); 
 			var ident = dz$(copyRemoveTarget).attr('dzid'); 
 
-			// todo:add new id
-			console.log(ident);
-			saveData({'requestType':'copyElement', 'id': ident });
+			// todo:apply next id to children
+			result.attr('dzid', nextId); 
+			saveData({'requestType':'copyElement', 'id': ident, 'newId':nextId });
 				
 			runCopyRemoveEngine(result);
 			runImageEngine(result); 
 			runLinkEngine(result);
+			setNextId();
 		});
 
 		return toolbar;
