@@ -466,7 +466,7 @@ var dzEngine = (function(){
 
 			// todo:apply next id to children
 			result.attr('dzid', nextId); 
-			saveData({'requestType':'copyElement', 'id': ident, 'newId':nextId });
+			saveData({'requestType':'copyElement', 'id': ident, 'nextId':nextId });
 				
 			runCopyRemoveEngine(result);
 			runImageEngine(result); 

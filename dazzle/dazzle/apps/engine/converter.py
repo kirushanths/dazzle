@@ -88,7 +88,7 @@ class Converter:
 		return element
 
 	# COPY REMOVE FUNCTIONS
-	def copy_element(self, target):
+	def copy_element(self, target, new_id):
 		elements = self.html_obj('*').filter('[dzid="' + target + '"]') 
 		for e in elements:  
  			pq = PyQuery(e) 

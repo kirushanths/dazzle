@@ -66,9 +66,10 @@ def update_image(request, template_name):
 
 def copy_element(request, template_name):
 	save_id = request.POST.get('id')
+	next_id = request.POST.get('nextId')
 
 	converter = Converter(template_name, 'index.html')
-	success = converter.copy_element(save_id)
+	success = converter.copy_element(save_id, next_id)
 	if success:
 		converter.commit_template()
 
