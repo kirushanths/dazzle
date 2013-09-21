@@ -443,6 +443,7 @@ var dzEngine = (function(){
 			var result = dz$(copyRemoveTarget).clone().insertAfter(copyRemoveTarget); 
 			var ident = dz$(copyRemoveTarget).attr('dzid'); 
 
+			// todo:add new id
 			console.log(ident);
 			saveData({'requestType':'copyElement', 'id': ident });
 				
