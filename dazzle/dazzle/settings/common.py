@@ -94,12 +94,12 @@ INSTALLED_APPS = (
     'dazzle.apps',
     'dazzle.apps.api',
     'dazzle.apps.billing',
-    'dazzle.apps.model',
     'dazzle.apps.corporate',
     'dazzle.apps.accounts',
     'dazzle.apps.dashboard',
     'dazzle.apps.engine',
     'dazzle.apps.dztemplate',
+    'dazzle.libs.model',
     'dazzle.libs.utils',
     'south',
     # Uncomment the next line to enable the admin:

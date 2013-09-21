@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from django.conf import settings
 from django.db import models
 
-from dazzle.apps.model.models import BaseModel
+from dazzle.libs.model.models import BaseModel
 from dazzle.apps.dashboard.models import DZTemplate
 
 class DZSiteSettings (BaseModel):

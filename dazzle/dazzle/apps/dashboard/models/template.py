@@ -3,7 +3,7 @@ import time
 from datetime import datetime, timedelta
 from django.db import models
 
-from dazzle.apps.model.models import BaseModel
+from dazzle.libs.model.models import BaseModel
 
 class DZTemplateSource (BaseModel):
     AMAZONS3 = 'amazons3'
