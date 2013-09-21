@@ -16,7 +16,7 @@
 		</h5>
 		<div class="btn-group pull-right">
 			<button type="button" class="btn btn-default">Refresh</button>
-			<button type="button" class="btn btn-primary">Add Site</button>
+			<a href="{% url 'apps.dashboard.views.library' %}" class="btn btn-primary">Add Site</a>
 		</div>
 		<div class="clearfix">&nbsp;</div>
 	</div>
@@ -37,9 +37,7 @@
 					<td>Fish &amp; Taco Store</td>
 					<td><span class="label label-success">Active</span></td>
 					<td>
-						<div class="btn-group btn-group-xs">
-							<div class="btn btn-default">Edit</div>
-						</div>
+						<a href="{% url 'apps.dashboard.views.site_overview' 1 %}" class="">Edit</a>
 					</td>
 				</tr>
 				{% for i in c %}

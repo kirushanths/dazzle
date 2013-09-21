@@ -4,8 +4,8 @@ from django.utils import html
 class SubmitButtonWidget(forms.Widget):
     def render(self, name, value, attrs=None):
         return html.format_html('\
-            <button type="submit" class="btn btn-primary">%s</button>'\
-            % (html.escape(value)))
+            <input type="submit" class="btn btn-primary" name="%s" value="%s">' \
+            % (html.escape(name), html.escape(value)))
 
 
 class SubmitButtonField(forms.Field):

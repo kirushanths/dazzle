@@ -15,6 +15,8 @@
     th { font-weight:400; color:#999; }
     .table thead>tr>th, .table tbody>tr>th, .table tfoot>tr>th, .table thead>tr>td, .table tbody>tr>td, .table tfoot>tr>td { padding:8px 15px; }
 
+    .page-header { margin-top:20px; }
+
      /* NAVBAR */
 
     .navbar { margin-bottom:0; }
@@ -22,6 +24,7 @@
     
     /* LANDING */
 
+    body#landing .page-header { display:none; }
     .landing.jumbotron { background:url('images/work.jpg') repeat-x center; color:white; margin-bottom:0; padding:0; }
     .landing.jumbotron .container { padding:30px; }
     .landing.jumbotron .backdrop { background:rgba(0,0,0,0.7); }
