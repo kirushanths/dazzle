@@ -8,26 +8,32 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 
-from .forms import DZUserModelForm
+from .forms import DZUserModelForm, DZUserLoginForm
 
 def login(request):
-    if request.method == "POST":
-        email = request.POST['email']
-        password = request.POST['password']
-        user = django_auth(username=email, password=password)
+    if request.POST:
+        login_form = DZUserLoginForm(data=request.POST)
 
-        if user is not None:
-            if user.is_active:
-                django_login(request, user)
-                return HttpResponseRedirect(reverse('apps.dashboard.views.home'))
+        if login_form.is_valid():
+            username = request.POST['username']
+            password = request.POST['password']
+            user = django_auth(username=username, password=password)
+
+            if user is not None:
+                if user.is_active:
+                    django_login(request, user)
+                    return HttpResponseRedirect(reverse('apps.dashboard.views.home'))
+                else:
+                    # Return a 'disabled account' error message
+                    print('asdf')
+                    pass
             else:
-                # Return a 'disabled account' error message
+                # Return an 'invalid login' error message.
                 print('asdf')
-        else:
-            # Return an 'invalid login' error message.
-            print('asdf')
+    else:
+        login_form = DZUserLoginForm()
 
-    return render(request, 'accounts/login.html')
+    return render(request, 'accounts/login.html', {'form': login_form})
 
 def logout(request):
     django_logout(request)

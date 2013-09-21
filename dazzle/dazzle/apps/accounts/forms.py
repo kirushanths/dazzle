@@ -1,6 +1,7 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.forms import (
+    AuthenticationForm,
     UserCreationForm,
     UserChangeForm
 )
@@ -8,6 +9,10 @@ from django.contrib.auth.forms import (
 from .models import DZUser
 
 from dazzle.libs.fields import SubmitButtonField
+
+class DZUserLoginForm(AuthenticationForm):
+    submit = SubmitButtonField(label="", initial=u"Sign In")
+
 
 class DZQuickUserModelForm(UserCreationForm):
     """
