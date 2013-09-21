@@ -87,6 +87,27 @@ class Converter:
 		element.text = text
 		return element
 
+	# COPY REMOVE FUNCTIONS
+	def copy_element(self, target, new_id):
+		elements = self.html_obj('*').filter('[dzid="' + target + '"]') 
+		for e in elements:  
+ 			pq = PyQuery(e) 
+ 			result = pq.clone().insertAfter(pq)
+ 			# todo:add new id
+
+ 			return True
+
+		return False
+
+	def remove_element(self, target):
+		elements = self.html_obj('*').filter('[dzid="' + target + '"]')
+		for e in elements:  
+ 			pq = PyQuery(e) 
+ 			pq.remove()
+ 			return True
+
+		return False
+
 	# REPLACE LINK FUNCTIONS
 	def replace_local_links(self):
 		self.replace_link('src')

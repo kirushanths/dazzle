@@ -66,8 +66,12 @@ def update_image(request, template_name):
 
 def copy_element(request, template_name):
 	save_id = request.POST.get('id')
+	next_id = request.POST.get('nextId')
 
 	converter = Converter(template_name, 'index.html')
+	success = converter.copy_element(save_id, next_id)
+	if success:
+		converter.commit_template()
 
 	return HttpResponse('copied ' + save_id)
 
@@ -75,6 +79,9 @@ def remove_element(request, template_name):
 	save_id = request.POST.get('id')
 
 	converter = Converter(template_name, 'index.html')
+	success = converter.remove_element(save_id)
+	if success:
+		converter.commit_template()
 
 	return HttpResponse('removed ' + save_id)
 

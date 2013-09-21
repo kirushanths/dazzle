@@ -104,6 +104,27 @@ var dzEngine = (function(){
 	var copyRemoveTarget;
 	var nextId = 10000; //temporary
 
+
+	function setNextId()
+	{	
+		var maxId = 0;
+		dz$('[dzid]').each(function(index)
+		{
+			try
+			{
+				var ident = parseInt(this.getAttribute('dzid')); 
+				if (ident && ident > maxId)
+				{
+					maxId = ident;
+				}
+			}
+			catch(err)
+			{
+			}
+		});  
+		nextId = maxId;
+	}
+
 	/**
 	 *	IMAGE FUNCTIONS
 	 */
@@ -443,12 +464,14 @@ var dzEngine = (function(){
 			var result = dz$(copyRemoveTarget).clone().insertAfter(copyRemoveTarget); 
 			var ident = dz$(copyRemoveTarget).attr('dzid'); 
 
-			console.log(ident);
-			saveData({'requestType':'copyElement', 'id': ident });
+			// todo:apply next id to children
+			result.attr('dzid', nextId); 
+			saveData({'requestType':'copyElement', 'id': ident, 'nextId':nextId });
 				
 			runCopyRemoveEngine(result);
 			runImageEngine(result); 
 			runLinkEngine(result);
+			setNextId();
 		});
 
 		return toolbar;
@@ -641,6 +664,7 @@ var dzEngine = (function(){
 			runLinkEngine();
 			runTextEngine();
 			runSortEngine();
+			setNextId();
 		}
 	};
 
