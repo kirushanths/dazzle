@@ -25,6 +25,7 @@
     .landing.jumbotron { background:url('images/work.jpg') repeat-x center; color:white; margin-bottom:0; padding:0; }
     .landing.jumbotron .container { padding:30px; }
     .landing.jumbotron .backdrop { background:rgba(0,0,0,0.7); }
+    .landing.jumbotron p { color:#ccc; }
 
     .get-started.jumbotron { padding:20px; }
 
