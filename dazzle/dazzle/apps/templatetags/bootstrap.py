@@ -19,7 +19,7 @@ def bootstrap_inline(element):
 @register.filter
 def bootstrap_horizontal(element, label_cols={}):
     if not label_cols:
-        label_cols = 'col-sm-2 col-lg-2'
+        label_cols = 'col-sm-3 col-lg-3'
 
     markup_classes = {'label': label_cols,
             'value': '',

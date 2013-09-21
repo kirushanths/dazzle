@@ -2,20 +2,18 @@
 {% load staticfiles i18n %}
 {% load bootstrap %}
 
+{% block header_title %}
+	Create your account
+{% endblock %}
+
 {% block main %}
 
 <div class="row">
-	<div class="col-xs-12 col-md-8">
+	<div class="col-xs-12 col-md-8 col-sm-10">
 		<form class="form-horizontal" method="post">
 			{% csrf_token %}
 
 			{{ user_form|bootstrap_horizontal }}
-
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-10 col-lg-offset-2 col-lg-10">
-					<button type="submit" class="btn btn-primary">Create Account</button>
-				</div>
-			</div>
 		</form>
 	</div>
 </div>

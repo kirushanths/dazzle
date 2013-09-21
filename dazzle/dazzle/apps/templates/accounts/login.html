@@ -1,10 +1,14 @@
 {% extends "base/_layout_standard.html" %}
 {% load staticfiles i18n %}
 
+{% block header_title %}
+	Sign into your account
+{% endblock %}
+
 {% block main %}
 
 <div class="row">
-	<div class="col-xs-12 col-md-8">
+	<div class="col-xs-12 col-md-8 col-sm-10">
 		<form class="form-horizontal" role="form" method="post">
 			{% csrf_token %}
 			<div class="form-group">

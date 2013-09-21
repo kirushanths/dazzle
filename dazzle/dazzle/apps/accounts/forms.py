@@ -7,6 +7,8 @@ from django.contrib.auth.forms import (
 
 from .models import DZUser
 
+from dazzle.libs.fields import SubmitButtonField
+
 class DZQuickUserModelForm(UserCreationForm):
     """
     A form that creates a user, with no privileges, from the given email and
@@ -15,6 +17,8 @@ class DZQuickUserModelForm(UserCreationForm):
     error_messages = {
         'duplicate_email': _("A user with that email already exists.")
     }
+
+    submit = SubmitButtonField(label="", initial=u"Create")
 
     def __init__(self, *args, **kargs):
         super(DZQuickUserModelForm, self).__init__(*args, **kargs)
@@ -39,6 +43,8 @@ class DZQuickUserModelForm(UserCreationForm):
 
 
 class DZUserModelForm(DZQuickUserModelForm):
+    submit = SubmitButtonField(label="", initial=u"Create")
+
     class Meta:
         fields = ('email', 'first_name', 'last_name',)
         model = DZUser
@@ -49,6 +55,8 @@ class DZUserChangeForm(UserChangeForm):
     the user, but replaces the password field with admin's
     password hash display field.
     """
+
+    submit = SubmitButtonField(label="", initial=u"Update")
 
     def __init__(self, *args, **kargs):
         super(DZUserChangeForm, self).__init__(*args, **kargs)

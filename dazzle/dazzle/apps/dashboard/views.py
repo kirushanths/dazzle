@@ -12,7 +12,7 @@ from django.http import (
 )
 
 from dazzle.apps.accounts.models import DZUser
-from dazzle.apps.dashboard.models import DZSite
+from dazzle.apps.dashboard.models import DZSite, DZTemplate
 
 @login_required
 def home(request):
@@ -27,9 +27,25 @@ def manager(request):
     except DZUser.DoesNotExist:
         return HttpResponse("Invalid email")
 
-    print(request.user.sites.all())
+    user_sites = request.user.sites.all()
 
-    return render(request, 'dashboard/manager.html')
+    context = {
+        'sites': user_sites
+    }
+
+    return render(request, 'dashboard/manager.html', dictionary=context)
+
+
+@login_required
+def library(request):
+
+    templates = DZTemplate.objects.all()
+
+    context = {
+        'templates': templates
+    }
+
+    return render(request, 'dashboard/library.html', dictionary=context)
 
 
 @login_required
@@ -41,3 +57,6 @@ def site_overview(request, site_id):
     }
 
     return render(request, 'dashboard/overview.html', dictionary=context)
+
+
+
