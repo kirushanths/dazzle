@@ -104,6 +104,27 @@ var dzEngine = (function(){
 	var copyRemoveTarget;
 	var nextId = 10000; //temporary
 
+
+	function setNextId()
+	{	
+		var maxId = 0;
+		dz$('[dzid]').each(function(index)
+		{
+			try
+			{
+				var ident = parseInt(this.getAttribute('dzid')); 
+				if (ident && ident > maxId)
+				{
+					maxId = ident;
+				}
+			}
+			catch(err)
+			{
+			}
+		});  
+		nextId = maxId;
+	}
+
 	/**
 	 *	IMAGE FUNCTIONS
 	 */
@@ -642,6 +663,7 @@ var dzEngine = (function(){
 			runLinkEngine();
 			runTextEngine();
 			runSortEngine();
+			setNextId();
 		}
 	};
 
