@@ -407,6 +407,7 @@ var dzEngine = (function(){
 	 		addCopyRemoveToolbars(this, copyToolbar, removeToolbar);
 	 	};
 
+	 	// ADD SUPPORT FOR <li> elements
 	 	var selector = 'div [dzid]'; //TEMPORARY
 
 	 	if (elements)
