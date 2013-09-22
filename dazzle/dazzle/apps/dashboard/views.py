@@ -16,7 +16,7 @@ from dazzle.apps.dashboard.models import DZSite, DZTemplate
 
 @login_required
 def home(request):
-    return HttpResponseRedirect(reverse('apps.dashboard.views.manager'))
+    return HttpResponseRedirect(reverse('dashboard_manager'))
 
 
 @login_required

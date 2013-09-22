@@ -53,7 +53,7 @@ class DZUser(AbstractBaseUser, PermissionsMixin, BaseModel):
 
     email = models.EmailField(max_length=254, unique=True, db_index=True)
 
-    role = models.CharField(max_length=60, choices=ROLE_CHOICES, null=True, blank=True)
+    role = models.CharField(max_length=60, choices=ROLE_CHOICES, default=ROLE_USER, null=True, blank=True)
 
     first_name = models.CharField(_('first name'), max_length=50, null=True, blank=True)
     last_name = models.CharField(_('last name'), max_length=50, null=True, blank=True)
@@ -75,6 +75,9 @@ class DZUser(AbstractBaseUser, PermissionsMixin, BaseModel):
 
     class Meta:
         app_label = 'accounts'
+
+    def is_developer(self):
+        return self.role == ROLE_DEVELOPER
 
     def get_full_name(self):
         fname = lname = None

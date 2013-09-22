@@ -23,7 +23,7 @@ class DZQuickUserModelForm(UserCreationForm):
         'duplicate_email': _("A user with that email already exists.")
     }
 
-    submit = SubmitButtonField(label="", initial=u"Create")
+    submit = SubmitButtonField(label="", initial=u"Sign Up")
 
     def __init__(self, *args, **kargs):
         super(DZQuickUserModelForm, self).__init__(*args, **kargs)
@@ -48,8 +48,6 @@ class DZQuickUserModelForm(UserCreationForm):
 
 
 class DZUserModelForm(DZQuickUserModelForm):
-    submit = SubmitButtonField(label="", initial=u"Create")
-
     class Meta:
         fields = ('email', 'first_name', 'last_name',)
         model = DZUser

@@ -7,18 +7,41 @@
         <span class="icon-bar"></span>
       </button>
 
-	<a class="navbar-brand" href="{% url 'apps.corporate.views.home' %}">Dazzle</a>
+	<a class="navbar-brand" href="{% url 'corporate_home' %}">Dazzle</a>
 
 	<div class="navbar-collapse collapse">
 
 		<ul class="nav navbar-nav navbar-right">
 			{% if user.is_authenticated %}
-				<li class="active"><a href="{% url 'apps.dashboard.views.home' %}">Welcome, {{ user.get_display_name }}</a></li>
-				<li><a href="{% url 'apps.accounts.views.logout' %}">Logout</a></li>
+				<li>
+						<a><code class="inverse">
+				<span class="glyphicon glyphicon-chevron-left"></span>
+				dev
+				<span class="glyphicon glyphicon-chevron-right"></span>
+			</code></a></li>
+				<li class="active">
+					<a href="{% url 'dashboard_home' %}">
+						Welcome, {{ user.get_display_name }}&nbsp;
+
+					</a>
+				</li>
+				<li><a href="{% url 'account_logout' %}">Logout</a></li>
 			{% else %}
-				<li class="active"><a href="{% url 'apps.accounts.views.login' %}">Are you a developer?</a></li>
-				<li><a href="{% url 'apps.accounts.views.register' %}">Create Account</a></li></li>
-				<li><a href="{% url 'apps.accounts.views.login' %}">Login</a></li>
+				<li class="active">
+					<a href="{% url 'account_register_developer' %}">
+						Are you a developer?
+					</a>
+				</li>
+				<li>
+					<a href="{% url 'account_register' %}">
+						Create Account
+					</a>
+				</li>
+				<li>
+					<a href="{% url 'account_login' %}">
+						Login
+					</a>
+				</li>
 			{% endif %}
 		</ul>
 
