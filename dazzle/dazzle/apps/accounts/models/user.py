@@ -77,7 +77,7 @@ class DZUser(AbstractBaseUser, PermissionsMixin, BaseModel):
         app_label = 'accounts'
 
     def is_developer(self):
-        return self.role == ROLE_DEVELOPER
+        return self.role == self.ROLE_DEVELOPER
 
     def get_full_name(self):
         fname = lname = None
