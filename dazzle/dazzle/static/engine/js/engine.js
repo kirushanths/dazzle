@@ -122,7 +122,7 @@ var dzEngine = (function(){
 			{
 			}
 		});  
-		nextId = maxId;
+		nextId = maxId+1;
 	}
 
 	/**
@@ -452,6 +452,14 @@ var dzEngine = (function(){
 		);
 	}
 
+
+	function addChildrenIds(elem) {
+    	$(elem).find("[dzid]").each(function() {
+    		nextId++;
+    		$(this).attr('dzid', nextId);    	
+    	})
+	}
+
 	function createCopyToolbar()
 	{
 		var toolbar = dz$("<div id='dz-copyToolbar'> \
@@ -464,9 +472,10 @@ var dzEngine = (function(){
 		{ 
 			var result = dz$(copyRemoveTarget).clone().insertAfter(copyRemoveTarget); 
 			var ident = dz$(copyRemoveTarget).attr('dzid'); 
-
-			// todo:apply next id to children
+ 
 			result.attr('dzid', nextId); 
+			addChildrenIds(result);
+
 			saveData({'requestType':'copyElement', 'id': ident, 'nextId':nextId });
 				
 			runCopyRemoveEngine(result);
