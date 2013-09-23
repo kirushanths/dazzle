@@ -474,9 +474,9 @@ var dzEngine = (function(){
 			var ident = dz$(copyRemoveTarget).attr('dzid'); 
  
 			result.attr('dzid', nextId); 
-			addChildrenIds(result);
-
 			saveData({'requestType':'copyElement', 'id': ident, 'nextId':nextId });
+			
+			addChildrenIds(result);
 				
 			runCopyRemoveEngine(result);
 			runImageEngine(result); 

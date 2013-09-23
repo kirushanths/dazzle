@@ -93,8 +93,11 @@ class Converter:
 		for e in elements:  
  			pq = PyQuery(e) 
  			result = pq.clone().insertAfter(pq)
- 			# todo:add new id
-
+ 			result.attr('dzid', new_id)
+ 			children = result.find('[dzid]') 
+ 			for c in children:
+ 				new_id = str(int(new_id) + 1)
+ 				c.set('dzid', new_id)
  			return True
 
 		return False
