@@ -475,11 +475,11 @@ var dzEngine = (function(){
  
 			result.attr('dzid', nextId); 
 			saveData({'requestType':'copyElement', 'id': ident, 'nextId':nextId });
-			
+
 			addChildrenIds(result);
 				
 			runCopyRemoveEngine(result);
-			runImageEngine(result); 
+			runImageEngine(result); 	
 			runLinkEngine(result);
 			setNextId();
 		});
@@ -582,6 +582,8 @@ var dzEngine = (function(){
 						   </div>");
 		toolbar.appendTo('body');
 		toolbar.hide();
+
+		var delay;
 		dz$("#dz-link-text").keyup(function() { 
 			var el = dz$(this);  
 			var url =  el.data("linkUrl");
@@ -592,8 +594,9 @@ var dzEngine = (function(){
 				var target = dz$(el.data("target"));
 				var ident = target.attr("dzid");
 				var newValue = el.val();
-
-				saveData({'requestType':'updateLink', 'id': ident,'value':newValue });
+				clearTimeout(delay);
+       			delay = setTimeout(function(){saveData({'requestType':'updateLink', 'id': ident,'value':newValue })}, 3000); 
+				
 			} 
 		});
 
