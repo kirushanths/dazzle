@@ -1,4 +1,5 @@
 import os
+from django.core.urlresolvers import reverse_lazy
 
 # Django settings for dazzle project.
 
@@ -102,6 +103,7 @@ INSTALLED_APPS = (
     'dazzle.libs.model',
     'dazzle.libs.utils',
     'south',
+    # 'storages',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -137,7 +139,20 @@ LOGGING = {
     }
 }
 
-LOGIN_REDIRECT_URL = '/accounts/dashboard/'
-LOGIN_URL = '/accounts/login/'
-LOGOUT_URL = '/accounts/logout/'
+# LOGIN_REDIRECT_URL = '/accounts/dashboard/'
+# LOGIN_URL = '/accounts/login/'
+# LOGOUT_URL = '/accounts/logout/'
+
+LOGIN_REDIRECT_URL = reverse_lazy('dashboard_home')
+LOGIN_URL = reverse_lazy('account_login')
+LOGOUT_URL = reverse_lazy('account_logout')
+
+# S3 AMAZON
+
+S3_ACCESS_KEY = 'AKIAIT5VHRH3SYEXEX5Q'
+S3_SECRET_KEY = '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'
+S3_URL = 'http://s3.amazonaws.com/'
+S3_BUCKET = 'dazzledev'
+S3_TEMPLATE_FOLDER = '/templates/'
+S3_TEMPLATE_URL = S3_URL + S3_BUCKET + S3_TEMPLATE_FOLDER
 

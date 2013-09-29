@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 
 from django.conf import settings
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
 from dazzle.libs.model.models import BaseModel
 from dazzle.apps.dashboard.models import DZTemplate
@@ -28,7 +29,7 @@ class DZSite (BaseModel):
         null=True,
         blank=True
     )
-    description = models.TextField(default='')
+    site_name = models.TextField(default='')
     settings = models.ForeignKey(DZSiteSettings)
 
     class Meta:

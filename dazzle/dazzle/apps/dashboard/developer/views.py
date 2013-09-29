@@ -1,3 +1,5 @@
+import urllib2 
+
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import (
     authenticate as django_auth,
@@ -11,8 +13,12 @@ from django.http import (
     HttpResponseRedirect
 )
 
+from boto import connect_s3
+from boto.s3.key import Key  
+
 from dazzle.apps.accounts.models import DZUser
 from dazzle.apps.dashboard.models import DZSite, DZTemplate
+from dazzle.libs.utils import constants as Constants
 
 @login_required
 def home(request):
@@ -35,8 +41,24 @@ def manager(request):
 
 @login_required
 def upload(request):
-    pass
-    #TODO
+
+    if request.POST:
+
+        # TODO get uploaded files
+        # TODO get folder name
+        # TODO iterate over files into folder
+
+        # TODO: security harderning of uploads
+
+        conn = connect_s3(Constants.S3_ACCESS_KEY, Constants.S3_SECRET_KEY)
+        bucket = conn.get_bucket(Constants.S3_BUCKET)
+
+        k = Key(bucket)
+        k.key = Constants.S3_TEMPLATE_FOLDER + '/' + template_name + "/" + file.name
+        k.set_acl('public-read')
+        k.set_contents_from_file(file)
+
+    return render(request, 'developer/upload.html')
 
 
 @login_required

@@ -2,7 +2,7 @@
 {% load staticfiles i18n %}
 
 {% block header_title %}
-	Dashboard Manager
+	Developer Zone
 {% endblock %}
 
 {% block main %}
@@ -11,12 +11,12 @@
 	<!-- Default panel contents -->
 	<div class="panel-heading">
 		<h5 class="pull-left">
-			Current Sites&nbsp;
+			Current Templates&nbsp;
 			<span class="label label-default">1</span>
 		</h5>
 		<div class="btn-group pull-right">
 			<button type="button" class="btn btn-default">Refresh</button>
-			<a href="{% url 'dashboard_library' %}" class="btn btn-primary">Add Site</a>
+			<a href="{% url 'developer_upload' %}" class="btn btn-primary">Upload Site</a>
 		</div>
 		<div class="clearfix">&nbsp;</div>
 	</div>
@@ -37,7 +37,7 @@
 					<td>Fish &amp; Taco Store</td>
 					<td><span class="label label-success">Active</span></td>
 					<td>
-						<a href="{% url 'dashboard_site_overview' 1 %}" class="">Edit</a>
+						<a href="{% url 'developer_site_overview' 1 %}" class="">Edit</a>
 					</td>
 				</tr>
 				{% for i in c %}
