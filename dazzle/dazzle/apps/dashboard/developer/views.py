@@ -12,13 +12,15 @@ from django.http import (
     HttpResponse,
     HttpResponseRedirect
 )
+from django.utils import simplejson
 
 from boto import connect_s3
 from boto.s3.key import Key  
 
+from dazzle.libs.utils import constants as Constants
 from dazzle.apps.accounts.models import DZUser
 from dazzle.apps.dashboard.models import DZSite, DZTemplate
-from dazzle.libs.utils import constants as Constants
+from dazzle.apps.dashboard.forms import DZTemplateUploadForm
 
 @login_required
 def home(request):
@@ -42,23 +44,36 @@ def manager(request):
 @login_required
 def upload(request):
 
+    status = None
     if request.POST:
+        form = DZTemplateUploadForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            uploaded_files = request.FILES.getlist('dzfile[]')
+
+            if not uploaded_files:
+                return HttpResponseBadRequest
+
+            for f in uploaded_files:
+                conn = connect_s3(Constants.S3_ACCESS_KEY, Constants.S3_SECRET_KEY)
+                bucket = conn.get_bucket(Constants.S3_BUCKET)
+
+                k = Key(bucket)
+                k.key = Constants.S3_TEMPLATE_FOLDER + '/' + form.template_name + "/" + f.name
+                k.set_acl('public-read')
+                k.set_contents_from_file(f) 
+        else:
+            status = 400
 
         # TODO get uploaded files
         # TODO get folder name
         # TODO iterate over files into folder
 
         # TODO: security harderning of uploads
+    else:
+        form = DZTemplateUploadForm()
 
-        conn = connect_s3(Constants.S3_ACCESS_KEY, Constants.S3_SECRET_KEY)
-        bucket = conn.get_bucket(Constants.S3_BUCKET)
-
-        k = Key(bucket)
-        k.key = Constants.S3_TEMPLATE_FOLDER + '/' + template_name + "/" + file.name
-        k.set_acl('public-read')
-        k.set_contents_from_file(file)
-
-    return render(request, 'developer/upload.html')
+    return render(request, 'developer/upload.html', dictionary={ 'form': form }, status=status)
 
 
 @login_required
