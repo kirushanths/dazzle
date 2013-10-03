@@ -59,9 +59,9 @@ def upload(request):
                 bucket = conn.get_bucket(Constants.S3_BUCKET)
 
                 k = Key(bucket)
-                k.key = Constants.S3_TEMPLATE_FOLDER + '/' + form.template_name + "/" + f.name
-                k.set_acl('public-read')
-                k.set_contents_from_file(f) 
+                k.key = Constants.S3_TEMPLATE_FOLDER + '/' + request.POST['template_name'] + '/' + f.name
+                k.set_contents_from_file(f, replace=True) 
+                k.make_public()
         else:
             status = 400
 

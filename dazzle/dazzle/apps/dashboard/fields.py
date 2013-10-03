@@ -4,9 +4,9 @@ from django.utils import html
 class DropzoneAreaWidget(forms.Widget):
     def render(self, name, value, attrs=None):
         return html.format_html(
-            '<div class="dz-message dropzone-previews well-lg dz-clickable"><span>' +
+            '<div class="dz-message dz-clickable"><span>' +
             '<span class="btn btn-primary">Upload files</span>&nbsp;&nbsp;&nbsp;or drop files here to upload' +
-            '</span></div>')
+            '</span></div><div class="dropzone-previews"></div>')
 
 
 class DropzoneField(forms.Field):

@@ -1,5 +1,4 @@
-from django.conf.urls import patterns, url
-from django.conf.urls.defaults import *
+from django.conf.urls import patterns, url, include
 from django.contrib import auth
 
 urlpatterns = patterns('apps.accounts.views',
