@@ -12,8 +12,8 @@
 	<div class="col-xs-12 col-md-8 col-sm-10">
 
 		<div class="">
-			<form id="dazzle-dropzone" 
-				class="form-horizontal dropzone"
+			<form
+				class="form-horizontal"
 				action="{% url 'developer_upload' %}" 
 				method="post" enctype="multipart/form-data">
 				{% csrf_token %}
