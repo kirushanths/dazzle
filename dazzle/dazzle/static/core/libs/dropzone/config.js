@@ -5,7 +5,7 @@ $(function() {
   	// event listeners
 
   	var dazzle_dropzone = new Dropzone("#dazzle-dropzone", {
-  		// autoProcessQueue: false,
+  		autoProcessQueue: false,
   		previewsContainer: ".dropzone-previews",
   		paramName: "dzfile",
   		uploadMultiple: true,

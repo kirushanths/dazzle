@@ -1,4 +1,5 @@
 import urllib2 
+import zipfile
 
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import (
@@ -10,14 +11,20 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import (
     HttpResponse,
-    HttpResponseRedirect
+    HttpResponseRedirect,
+    HttpResponseBadRequest,
+    HttpResponseNotAllowed
 )
 from django.utils import simplejson
 
 from boto import connect_s3
 from boto.s3.key import Key  
 
-from dazzle.libs.utils import constants as Constants
+from dazzle.libs.utils import (
+    constants as Constants,
+    storage as Storage,
+    zipreader
+)
 from dazzle.apps.accounts.models import DZUser
 from dazzle.apps.dashboard.models import DZSite, DZTemplate
 from dazzle.apps.dashboard.forms import DZTemplateUploadForm
@@ -49,31 +56,22 @@ def upload(request):
         form = DZTemplateUploadForm(request.POST, request.FILES)
 
         if form.is_valid():
-            uploaded_files = request.FILES.getlist('dzfile[]')
+            template_zipfile = request.FILES.get('template_file')
+            template_file_names = []
+            template_file_contents = []
 
-            if not uploaded_files:
-                return HttpResponseBadRequest
+            for filename, content in zipreader.fileiterator(template_zipfile):
+                template_file_names.append(filename)
+                template_file_contents.append(content)
 
-            for f in uploaded_files:
-                conn = connect_s3(Constants.S3_ACCESS_KEY, Constants.S3_SECRET_KEY)
-                bucket = conn.get_bucket(Constants.S3_BUCKET)
-
-                k = Key(bucket)
-                k.key = Constants.S3_TEMPLATE_FOLDER + '/' + request.POST['template_name'] + '/' + f.name
-                k.set_contents_from_file(f, replace=True) 
-                k.make_public()
-        else:
-            status = 400
-
-        # TODO get uploaded files
-        # TODO get folder name
-        # TODO iterate over files into folder
-
-        # TODO: security harderning of uploads
+            Storage.s3_upload(
+                request.POST.get('template_name'), 
+                template_file_names, 
+                template_file_contents)
     else:
         form = DZTemplateUploadForm()
 
-    return render(request, 'developer/upload.html', dictionary={ 'form': form }, status=status)
+    return render(request, 'developer/upload.html', dictionary={ 'form': form })
 
 
 @login_required
