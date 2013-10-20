@@ -68,8 +68,18 @@ def upload(request):
                 template_file_names.append(filename)
                 template_file_contents.append(content)
 
+            # create temp db entry for template
+
+            dz_template = DZTemplate.objects.create(
+                last_modified_by=request.user,
+                template_name=template_name,
+                is_confirmed=False,
+                is_verified=True,
+                is_upload=True)
+            dz_template.save()
+
             result = Storage.s3_upload(
-                template_name, 
+                dz_template.id, 
                 template_file_names, 
                 template_file_contents)
 
@@ -77,25 +87,14 @@ def upload(request):
                 dz_template_src = DZTemplateSource.objects.create(
                     last_modified_by=request.user,
                     source_type=DZTemplateSource.AMAZONS3,
-                    link=Storage.s3_upload_dir(template_name)
+                    link=Storage.s3_upload_dir(dz_template.id)
                     )
 
-                dz_template = DZTemplate.objects.create(
-                    last_modified_by=request.user,
-                    template_name=template_name,
-                    source=dz_template_src,
-                    is_confirmed=False,
-                    is_verified=True,
-                    is_upload=True)
+                dz_template.source = dz_template_src
+                dz_template_src.save()
+                dz_template.save()
 
-                try:
-                    dz_template_src.save()
-                    dz_template.save()
-                except:
-                    pass
-                    # TODO: show error
-                else:
-                    return HttpResponseRedirect(reverse('developer_upload_confirm'))
+                return HttpResponseRedirect(reverse('developer_upload_confirm'))
 
             else:
                 errors = form._errors.get("template_file")

@@ -34,4 +34,4 @@ def s3_upload (folder_name, file_names, file_contents):
     return Result(success=True)
 
 def s3_upload_dir (template_name):
-    return Constants.S3_TEMPLATE_FOLDER + template_name
+    return "%s%s" % (Constants.S3_TEMPLATE_FOLDER, template_name)
