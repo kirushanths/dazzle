@@ -29,6 +29,8 @@ class DZTemplate (BaseModel):
 
     template_name = models.TextField(default='')
 
+    is_confirmed = models.BooleanField(_('is verified'), default=False,
+        help_text='Designates whether this template was confirmed on upload')
     is_verified = models.BooleanField(_('is verified'), default=False,
         help_text='Designates whether this template was reviewed and verified')
     is_upload = models.BooleanField(_('is upload'), default=False,

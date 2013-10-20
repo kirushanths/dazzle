@@ -27,8 +27,11 @@ def s3_upload (folder_name, file_names, file_contents):
     files = zip(file_names, file_contents)
 
     for name, content in files:
-        k.key = Constants.S3_TEMPLATE_FOLDER + '/' + folder_name + '/' + name
+        k.key = s3_upload_dir(folder_name) + '/' + name
         k.set_contents_from_string(content, replace=True) 
         k.make_public()
 
     return Result(success=True)
+
+def s3_upload_dir (template_name):
+    return Constants.S3_TEMPLATE_FOLDER + template_name
