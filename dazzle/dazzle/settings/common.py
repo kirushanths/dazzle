@@ -154,5 +154,6 @@ S3_SECRET_KEY = 'uIWTbxDmLI9UCN3fUIGSmO0vDRle5VVqtys/3lOp'
 S3_URL = 'http://s3.amazonaws.com/'
 S3_BUCKET = 'dazzledev'
 S3_TEMPLATE_FOLDER = '/templates/'
+S3_TEMPLATE_FOLDER_NAME = 'templates'
 S3_TEMPLATE_URL = S3_URL + S3_BUCKET + S3_TEMPLATE_FOLDER
 

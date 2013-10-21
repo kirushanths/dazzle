@@ -20,6 +20,8 @@ class DZTemplateSource (BaseModel):
 
 
 class DZTemplate (BaseModel):
+    SESSION_TEMPLATE_ID = 'kSessionTemplateID'
+
     source = models.ForeignKey(
         DZTemplateSource,
         related_name='+',

@@ -69,7 +69,6 @@ def upload(request):
                 template_file_contents.append(content)
 
             # create temp db entry for template
-
             dz_template = DZTemplate.objects.create(
                 last_modified_by=request.user,
                 template_name=template_name,
@@ -78,11 +77,13 @@ def upload(request):
                 is_upload=True)
             dz_template.save()
 
+            # use newly created db id for s3 upload
             result = Storage.s3_upload(
                 dz_template.id, 
                 template_file_names, 
                 template_file_contents)
 
+            # on success save everything to db
             if result.success: 
                 dz_template_src = DZTemplateSource.objects.create(
                     last_modified_by=request.user,
@@ -94,6 +95,10 @@ def upload(request):
                 dz_template_src.save()
                 dz_template.save()
 
+                # save template id to session to confirm later
+                request.session[DZTemplate.SESSION_TEMPLATE_ID] = dz_template.id
+
+                # redirect to confirm view
                 return HttpResponseRedirect(reverse('developer_upload_confirm'))
 
             else:
@@ -107,7 +112,19 @@ def upload(request):
 
 @login_required
 def upload_confirm(request):
-    return render(request, 'developer/upload_confirm.html')
+    if DZTemplate.SESSION_TEMPLATE_ID not in request.session:
+        return HttpResponseRedirect(reverse('developer_upload'))
+
+    dz_template_id = request.session[DZTemplate.SESSION_TEMPLATE_ID]
+    dz_template = DZTemplate.objects.get(id=dz_template_id)
+
+    template_list = Storage.s3_dir_contents(dz_template_id)
+
+    context = {
+        'files': template_list
+    }
+
+    return render(request, 'developer/upload_confirm.html', dictionary=context)
 
 
 @login_required

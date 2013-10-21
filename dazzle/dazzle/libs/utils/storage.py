@@ -33,5 +33,31 @@ def s3_upload (folder_name, file_names, file_contents):
 
     return Result(success=True)
 
+
 def s3_upload_dir (template_name):
-    return "%s%s" % (Constants.S3_TEMPLATE_FOLDER, template_name)
+    return '%s/%s' % (Constants.S3_TEMPLATE_FOLDER_NAME, template_name)
+
+
+def s3_dir_contents (template_name):
+    if not template_name:
+        raise ValueError('folder not provided')
+
+    template_loc = s3_upload_dir(template_name)
+
+    conn = connect_s3(Constants.S3_ACCESS_KEY, Constants.S3_SECRET_KEY)
+    bucket = conn.get_bucket(Constants.S3_BUCKET)
+    bucket_entries = bucket.list(prefix=template_loc)
+
+    prefix_len = len(template_loc)
+    file_list = []
+    for key in bucket_entries:
+        file_name = key.name
+        file_list.append(file_name[prefix_len:])
+
+    return file_list
+
+
+
+
+
+
