@@ -1,6 +1,7 @@
 import time
 
 from datetime import datetime, timedelta
+from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -29,9 +30,18 @@ class DZTemplate (BaseModel):
         blank=True
     )
 
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='+',
+        null=True,
+        blank=True
+    )
+
     template_name = models.TextField(default='')
 
-    is_confirmed = models.BooleanField(_('is verified'), default=False,
+    is_active = models.BooleanField(_('is active'), default=True,
+        help_text='Designates whether this template is active for the user')
+    is_confirmed = models.BooleanField(_('is confirmed'), default=False,
         help_text='Designates whether this template was confirmed on upload')
     is_verified = models.BooleanField(_('is verified'), default=False,
         help_text='Designates whether this template was reviewed and verified')

@@ -32,22 +32,27 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>1337</td>
-					<td>Fish &amp; Taco Store</td>
-					<td><span class="label label-success">Active</span></td>
+				{% for item in sites %}
+				<tr class="">
+					<td>{{ item.id }}</td>
+					<td>{{ item.template_name }}</td>
 					<td>
-						<a href="{% url 'developer_site_overview' 1 %}" class="">Edit</a>
+						{% if not item.is_confirmed %}
+							<span class="label label-warning">Unconfirmed</span>
+						{% elif not item.is_active %}
+							<span class="label label-default">Inactive</span>
+						{% elif not item.is_verified %}
+							<span class="label label-info">Verifing</span>
+						{% else %}
+							<span class="label label-success">Active</span>
+						{% endif %}
+
 					</td>
-				</tr>
-				{% for i in c %}
-				<tr class="active">
-					<td>1337</td>
-					<td>Fish &amp; Taco Store</td>
-					<td><span class="label label-success">Active</span></td>
 					<td>
 						<div class="btn-group btn-group-xs">
 							<div class="btn btn-default">Edit</div>
+							<div class="btn btn-default">Deactivate</div>
+							<div class="btn btn-default">Delete</div>
 						</div>
 					</td>
 				</tr>

@@ -43,13 +43,14 @@ def manager(request):
     if not request.user.is_developer():
         return HttpResponseRedirect(reverse('dashboard_home'))
 
-    user_sites = request.user.sites.all()
-
+    user_sites = DZTemplate.objects.all().filter(created_by=request.user)
+    
     context = {
         'sites': user_sites
     }
 
     return render(request, 'developer/manager.html', dictionary=context)
+
 
 @transaction.commit_on_success
 @login_required
@@ -71,6 +72,7 @@ def upload(request):
             # create temp db entry for template
             dz_template = DZTemplate.objects.create(
                 last_modified_by=request.user,
+                created_by=request.user,
                 template_name=template_name,
                 is_confirmed=False,
                 is_verified=True,
@@ -110,6 +112,7 @@ def upload(request):
     return render(request, 'developer/upload.html', dictionary={ 'form': form })
 
 
+@transaction.commit_on_success
 @login_required
 def upload_confirm(request):
     if DZTemplate.SESSION_TEMPLATE_ID not in request.session:
@@ -117,6 +120,14 @@ def upload_confirm(request):
 
     dz_template_id = request.session[DZTemplate.SESSION_TEMPLATE_ID]
     dz_template = DZTemplate.objects.get(id=dz_template_id)
+
+    if request.POST:
+        # did confirm upload
+
+        dz_template.is_confirmed = True
+        dz_template.save()
+
+        return HttpResponseRedirect(reverse('developer_manager'))
 
     template_list = Storage.s3_dir_contents(dz_template_id)
 
